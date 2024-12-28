@@ -1,5 +1,6 @@
 import { Global, Logger, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { EnvSchema } from '../env.schema';
 
 /**
  * Shared Configuration Module.
@@ -10,6 +11,7 @@ import { ConfigModule } from '@nestjs/config';
         ConfigModule.forRoot({
             expandVariables: true,
             isGlobal: true,
+            validationSchema: EnvSchema,
         }),
     ],
     providers: [Logger, ConfigModule],
