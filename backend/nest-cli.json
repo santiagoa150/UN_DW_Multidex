@@ -4,5 +4,6 @@
   "sourceRoot": "src/config",
   "compilerOptions": {
     "deleteOutDir": true
-  }
+  },
+  "entryFile": "config/main"
 }

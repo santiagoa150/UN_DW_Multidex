@@ -3,15 +3,18 @@ import { AppModule } from './app.module';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import * as process from 'node:process';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { GlobalExceptionFilter } from '../contexts/shared/infrastructure/nestjs/global-exception-filter';
 
 /**
  * Bootstraps the API Gateway applications.
  */
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
+    const logger: Logger = app.get(Logger);
     app.useGlobalPipes(new ValidationPipe({ transform: true }));
     // TODO: Configure exception filter and logger interceptor!
     app.enableCors();
+    app.useGlobalFilters(new GlobalExceptionFilter(logger));
     app.setGlobalPrefix(process.env.APP_REST_PREFIX);
     const swaggerConfig = new DocumentBuilder()
         .setTitle('Multidex App')
@@ -20,7 +23,7 @@ async function bootstrap() {
         .build();
     SwaggerModule.setup(process.env.SWAGGER_PREFIX, app, SwaggerModule.createDocument(app, swaggerConfig));
     await app.listen(process.env.APP_PORT);
-    return app.get(Logger);
+    return logger;
 }
 
 bootstrap().then((logger: Logger) => {
