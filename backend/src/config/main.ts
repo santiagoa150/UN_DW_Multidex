@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import * as process from 'node:process';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { GlobalExceptionFilter } from '../contexts/shared/infrastructure/nestjs/global-exception-filter';
+import { GlobalExceptionFilter } from '../contexts/shared/infrastructure/nestjs/filters/global-exception-filter';
 
 /**
  * Bootstraps the API Gateway applications.
@@ -12,7 +12,6 @@ async function bootstrap() {
     const app = await NestFactory.create(AppModule);
     const logger: Logger = app.get(Logger);
     app.useGlobalPipes(new ValidationPipe({ transform: true }));
-    // TODO: Configure exception filter and logger interceptor!
     app.enableCors();
     app.useGlobalFilters(new GlobalExceptionFilter(logger));
     app.setGlobalPrefix(process.env.APP_REST_PREFIX);

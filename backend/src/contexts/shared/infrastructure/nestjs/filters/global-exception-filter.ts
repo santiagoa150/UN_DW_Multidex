@@ -1,8 +1,8 @@
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus, Logger } from '@nestjs/common';
-import { Exception } from '../../domain/exceptions/exception';
-import { SharedMessagesConstants } from '../../domain/exceptions/shared-messages.constants';
+import { Exception } from '../../../domain/exceptions/exception';
+import { SharedMessagesConstants } from '../../../domain/exceptions/shared-messages.constants';
 import { Response } from 'express';
-import { ExceptionDto } from '../../domain/exceptions/exception.dto';
+import { ExceptionDto } from '../../../domain/exceptions/exception.dto';
 
 /**
  * Exception filter for handling NestJS exceptions and providing standardized error responses.
