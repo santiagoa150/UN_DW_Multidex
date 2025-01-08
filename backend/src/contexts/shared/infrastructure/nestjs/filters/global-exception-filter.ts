@@ -1,6 +1,6 @@
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus, Logger } from '@nestjs/common';
 import { Exception } from '../../../domain/exceptions/exception';
-import { SharedMessagesConstants } from '../../../domain/exceptions/shared-messages.constants';
+import { SharedExceptionMessagesConstants } from '../../../domain/exceptions/shared-exception-messages.constants';
 import { Response } from 'express';
 import { ExceptionDto } from '../../../domain/exceptions/exception.dto';
 
@@ -57,7 +57,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     catch(exception: Error, host: ArgumentsHost): void {
         this.logger.error(JSON.stringify(exception));
         let statusCode: number = HttpStatus.INTERNAL_SERVER_ERROR;
-        let message: string = SharedMessagesConstants.INTERNAL_SERVER_ERROR;
+        let message: string = SharedExceptionMessagesConstants.INTERNAL_SERVER_ERROR;
         if (exception instanceof Exception) {
             statusCode = exception.statusCode;
             message = exception.message;

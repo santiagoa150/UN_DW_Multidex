@@ -1,8 +1,16 @@
-import { Global, Logger, Module } from '@nestjs/common';
+import { Global, Logger, Module, Provider } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { EnvSchema } from '../env.schema';
 import { SequelizeModule } from '@nestjs/sequelize';
+import { CqrsModule } from '@nestjs/cqrs';
+import { JwtModule } from '@nestjs/jwt';
+import { JwtTokenRepository } from '../../contexts/shared/infrastructure/jwt/jwt-token.repository';
 import * as process from 'node:process';
+
+/**
+ *  `PROVIDERS` is an array of NestJS providers related to shared module.
+ */
+const PROVIDERS: Provider[] = [Logger, JwtTokenRepository];
 
 /**
  * Shared Configuration Module.
@@ -10,6 +18,8 @@ import * as process from 'node:process';
 @Global()
 @Module({
     imports: [
+        CqrsModule.forRoot(),
+        JwtModule.register({}),
         ConfigModule.forRoot({
             expandVariables: true,
             isGlobal: true,
@@ -25,9 +35,14 @@ import * as process from 'node:process';
             schema: process.env.POSTGRES_SCHEMA,
             autoLoadModels: true,
             synchronize: true,
-            logging: Number(process.env.POSTGRES_SHOW_LOGS) ? (sql: string) => { new Logger().debug(sql); } : false,
-        })
+            logging: Number(process.env.POSTGRES_SHOW_LOGS)
+                ? (sql: string) => {
+                      new Logger().debug(sql);
+                  }
+                : false,
+        }),
     ],
-    providers: [Logger, ConfigModule],
+    providers: [...PROVIDERS],
+    exports: [...PROVIDERS],
 })
 export class SharedModule {}
