@@ -3,7 +3,7 @@
  */
 export enum RoutesConstants {
     UNIVERSE_LIST = '/universe/list',
-    UNIVERSE_INFO = '/universe/info',
+    UNIVERSE_INFO = '/universe/info/:id',
     UNIVERSE_EDIT = '/universe/edit',
     POKEMON_INFO = '/universe/pokemon/info',
     LOGIN_PAGE = '/login',

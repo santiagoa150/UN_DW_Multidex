@@ -30,7 +30,7 @@ export default function HomePage(): JSX.Element {
                 </button>
                 <button
                     className="w-[100px] border-2 border-black"
-                    onClick={() => navigate(RoutesConstants.UNIVERSE_INFO)}
+                    onClick={() => navigate(RoutesConstants.UNIVERSE_INFO.replace(':id', '1'))}
                 >
                     Universe Info
                 </button>
