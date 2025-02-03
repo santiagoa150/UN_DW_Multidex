@@ -22,7 +22,7 @@ export default [
         },
         rules: {
             'arrow-body-style': 'off',
-            'linebreak-style': ['error', 'unix'],
+            'linebreak-style': 'off',
             'max-depth': ['error', 4],
             'object-curly-spacing': ['error', 'always'],
             'prefer-arrow-callback': ['error', { allowUnboundThis: false }],
