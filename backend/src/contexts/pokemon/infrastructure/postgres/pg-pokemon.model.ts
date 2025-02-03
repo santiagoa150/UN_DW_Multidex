@@ -3,6 +3,9 @@ import { PokemonDto } from '../pokemon.dto';
 import { PgPokemonConstants } from './pg-pokemon.constants';
 import { UniverseTypeNameConstants } from '../../../universe/domain/constants/universe-type-name.constants';
 
+/**
+ * The Pokémon model for PostgresSQL.
+ */
 @Table({ tableName: PgPokemonConstants.TABLE_NAME, timestamps: false })
 export class PgPokemonModel extends Model<PokemonDto> implements PokemonDto {
     @PrimaryKey

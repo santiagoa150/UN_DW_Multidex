@@ -7,5 +7,5 @@ export class GetPokemonByIdQuery implements IQuery {
     /**
      * @param id - The Pokémon id.
      */
-    constructor(public readonly id: string) {}
+    constructor(public readonly id: number) {}
 }

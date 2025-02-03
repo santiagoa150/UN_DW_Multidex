@@ -1,4 +1,4 @@
-import { PokemonRepository } from '../../domain/interface/pokemon.repository';
+import { PokemonRepository } from '../../domain/interfaces/pokemon.repository';
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { PgPokemonModel } from './pg-pokemon.model';
@@ -24,7 +24,7 @@ export class PgPokemonRepository implements PokemonRepository {
      * @param id - The id of the Pokémon to retrieve.
      * @returns A promise that resolves to the Pokémon, or `undefined` if the Pokémon is not found.
      */
-    async getById(id: string): Promise<Pokemon | undefined> {
+    async getById(id: number): Promise<Pokemon | undefined> {
         this._logger.log(`[${this.getById.name}] INIT :: id: ${id}`);
         const found: PgPokemonModel = await this._pgPokemonModel.findOne({ where: { id } });
         const mapped: Pokemon | undefined = found ? PokemonMappers.DTO2Pokemon(found) : undefined;

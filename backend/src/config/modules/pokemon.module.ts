@@ -2,8 +2,8 @@ import { Logger, Module, Provider } from '@nestjs/common';
 import { PgPokemonRepository } from '../../contexts/pokemon/infrastructure/postgres/pg-pokemon.repository';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { PgPokemonModel } from '../../contexts/pokemon/infrastructure/postgres/pg-pokemon.model';
-import { GetPokemonByIdQueryHandler } from '../../contexts/pokemon/applications/by-id/get-pokemon-by-id.query-handler';
-import { GetPokemonByIdApplication } from '../../contexts/pokemon/applications/by-id/get-pokemon-by-id.application';
+import { GetPokemonByIdQueryHandler } from '../../contexts/pokemon/applications/get/by-id/get-pokemon-by-id.query-handler';
+import { GetPokemonByIdApplication } from '../../contexts/pokemon/applications/get/by-id/get-pokemon-by-id.application';
 
 /**
  * `PROVIDERS` is an array of NestJS providers related to pokémon module.

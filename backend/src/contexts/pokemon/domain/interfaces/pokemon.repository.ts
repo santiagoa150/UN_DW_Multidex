@@ -9,5 +9,5 @@ export interface PokemonRepository {
      * @param id The id of the Pokémon to search for.
      * @returns The Pokémon if found, otherwise undefined.
      */
-    getById(id: string): Promise<Pokemon | undefined>;
+    getById(id: number): Promise<Pokemon | undefined>;
 }

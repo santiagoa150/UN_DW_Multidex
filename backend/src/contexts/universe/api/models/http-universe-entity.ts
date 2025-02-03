@@ -3,6 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsEnum, IsInt, IsNotEmpty, IsString } from 'class-validator';
 import { UniverseExceptionMessagesConstants } from '../../domain/exceptions/universe-exception-messages.constants';
 import { UniverseTypeNameConstants } from '../../domain/constants/universe-type-name.constants';
+import { Type } from 'class-transformer';
 
 /**
  * Represents a universe entity in the HTTP layer.
@@ -10,6 +11,7 @@ import { UniverseTypeNameConstants } from '../../domain/constants/universe-type-
 export class HttpUniverseEntity implements UniverseEntityDto {
     @ApiProperty({ description: 'The entity id.' })
     @IsInt({ message: UniverseExceptionMessagesConstants.UNIVERSE_ENTITY_ID_MUST_BE_A_NUMBER })
+    @Type(() => Number)
     id: number;
 
     @ApiProperty({ description: 'The entity name.' })

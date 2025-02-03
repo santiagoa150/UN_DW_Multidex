@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Injectable } from '@nestjs/common';
 
 /**
- * Implementation of the `TokenRepository` interface using JWT (JSON Web Token).
+ * Implementation of the `TokenRepository` interfaces using JWT (JSON Web Token).
  * This class provides methods to sign and verify JWT tokens.
  */
 @Injectable()
