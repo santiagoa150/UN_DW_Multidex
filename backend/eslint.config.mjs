@@ -5,7 +5,7 @@ import prettier from 'eslint-config-prettier';
 export default [
     ...tsEslint.config(eslint.configs.recommended, ...tsEslint.configs.recommended, prettier, {
         rules: {
-            'linebreak-style': ['error', 'unix'],
+            'linebreak-style': 'off',
             'max-depth': ['error', 4],
             'object-curly-spacing': ['error', 'always'],
             'prefer-template': ['error'],
