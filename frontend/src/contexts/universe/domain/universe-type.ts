@@ -8,4 +8,6 @@ export type UniverseType = {
     mainColor: string;
     secondaryColor: string;
     tertiaryColor: string;
+    allowDetail: boolean;
+    detailPath?: string;
 };

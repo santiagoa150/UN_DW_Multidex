@@ -1,6 +1,5 @@
 import { UniverseRepository } from '../../../domain/interfaces/universe.repository.ts';
 import { UniverseEntity } from '../../../domain/universe-entity.ts';
-import { UniverseTypeNameToPathConstants } from '../../../domain/constants/universe-type-name-to-path.constants.ts';
 import { UniverseTypeNameConstants } from '../../../domain/constants/universe-type-name.constants.ts';
 
 /**
@@ -19,10 +18,6 @@ export class GetUniverseEntityByIdAndTypeApplication {
      * @returns The universe entity with the specified ID, or `undefined` if no entity was found.
      */
     async exec(id: string, type: UniverseTypeNameConstants): Promise<UniverseEntity | undefined> {
-        const entity = await this.repository.getUniverseEntityByIdAndType(id, type);
-        if (entity && entity.allowDetail) {
-            entity.detailPath = UniverseTypeNameToPathConstants[entity.type];
-        }
-        return entity;
+        return this.repository.getUniverseEntityByIdAndType(id, type);
     }
 }

@@ -10,6 +10,7 @@ import {
 import { RoutesConstants } from '../../../../shared/domain/constants/routes.constants.ts';
 import { UniverseEntity } from '../../../domain/universe-entity.ts';
 import { UniverseType } from '../../../domain/universe-type.ts';
+import Triangle from '../../images/triangle.png';
 
 /**
  * The page that displays information about one element of the universe.
@@ -74,15 +75,69 @@ export default function UniverseInfoPage(): JSX.Element {
                         <div className="w-full h-4/6 flex justify-center flex-col">
                             <div className="h-4/5 w-full flex items-center justify-end">
                                 <div
-                                    className="h-4/5 w-4/5 mr-10"
+                                    className="flex h-4/5 w-4/5 mr-10 items-center text-xs 2xl:text-xl"
                                     style={{ backgroundColor: universeType.secondaryColor }}
-                                ></div>
+                                >
+                                    <div className="w-1/2 h-full box-border p-5 flex flex-col justify-center">
+                                        <div className="text-white flex gap-x-2">
+                                            <p className="font-bold">{`Tipo${universeEntity.entityTypes.length > 1 ? 's' : ''}:`}</p>
+                                            <p>{universeEntity.entityTypes.join(', ')}</p>
+                                        </div>
+                                        {universeEntity.height && (
+                                            <div className="text-white flex gap-x-2">
+                                                <p className="font-bold">Altura:</p>
+                                                <p>{`${universeEntity.height} m`}</p>
+                                            </div>
+                                        )}
+                                        {universeEntity.weight && (
+                                            <div className="text-white flex gap-x-2">
+                                                <p className="font-bold">Peso:</p>
+                                                <p>{`${universeEntity.weight} kg`}</p>
+                                            </div>
+                                        )}
+                                        {universeEntity.status && (
+                                            <div className="text-white flex gap-x-2">
+                                                <p className="font-bold">Estado:</p>
+                                                <p>{universeEntity.status}</p>
+                                            </div>
+                                        )}
+                                        {universeEntity.gender && (
+                                            <div className="text-white flex gap-x-2">
+                                                <p className="font-bold">Género:</p>
+                                                <p>{universeEntity.gender}</p>
+                                            </div>
+                                        )}
+                                        {universeEntity.location && (
+                                            <div className="text-white flex gap-x-2">
+                                                <p className="font-bold">Ubicación:</p>
+                                                <p>{universeEntity.location}</p>
+                                            </div>
+                                        )}
+                                        {universeEntity.origin && (
+                                            <div className="text-white flex gap-x-2">
+                                                <p className="font-bold">Origen:</p>
+                                                <p>{universeEntity.origin}</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="h-4/5 w-[1px] bg-white"></div>
+                                    <div className="w-1/2 flex flex-col items-center justify-center gap-y-2">
+                                        <img
+                                            className="w-3/5"
+                                            src={universeEntity.frontImageUrl}
+                                            alt={universeEntity.name}
+                                        />
+                                        <p className="text-white font-bold">
+                                            {universeEntity.id.toString().padStart(4, '0')}
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                             <div className="flex h-1/5 items-center justify-center gap-x-10">
                                 <div className="bg-green-300 py-3 px-10">
                                     <p className="font-bold">{universeEntity.name}</p>
                                 </div>
-                                {universeEntity.allowDetail && universeEntity.detailPath && (
+                                {universeType.allowDetail && universeType.detailPath && (
                                     <button className="font-bold">Ver detalles</button>
                                 )}
                             </div>
@@ -93,7 +148,30 @@ export default function UniverseInfoPage(): JSX.Element {
                         </div>
                     </div>
                     <div className="w-3/6 flex items-center">
-                        <div className="w-full h-4/5" style={{ backgroundColor: universeType.mainColor }}></div>
+                        <div
+                            className="w-full h-4/5 flex items-center justify-center flex-col"
+                            style={{ backgroundColor: universeType.mainColor }}
+                        >
+                            <div className="w-full h-1/6"></div>
+                            <div
+                                className="w-4/5 h-3/6 flex items-center box-border p-10"
+                                style={{ backgroundColor: universeType.secondaryColor }}
+                            >
+                                <p className="text-white text-xl">{universeEntity.description}</p>
+                            </div>
+                            <div className="w-full h-1/6"></div>
+                            <div className="w-full h-1/6 flex justify-around items-center">
+                                <div className="w-1/5"></div>
+                                <div className="h-full w-3/6 flex items-end gap-x-5">
+                                    <div className="h-4/5 w-[2px] bg-black"></div>
+                                    <div className="h-3/5 w-[2px] bg-black"></div>
+                                </div>
+                                <div className="w-1/5">
+                                    <img className="w-full" src={Triangle} alt="Triangle" />
+                                </div>
+                                <div className="w-1/5"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </main>
