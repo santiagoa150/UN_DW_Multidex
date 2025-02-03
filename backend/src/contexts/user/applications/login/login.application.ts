@@ -9,15 +9,15 @@ import { CreateUserPasswordCommand } from '../create/password/create-user-passwo
  * The `LoginApplication` class is responsible for logging in a user.
  */
 export class LoginApplication {
+    private readonly _logger = new Logger(LoginApplication.name);
+
     /**
-     * @param logger - Class used for logging.
-     * @param queryBus - The query bus used to dispatch queries.
-     * @param commandBus - The command bus used to dispatch commands.
+     * @param _queryBus - The query bus used to dispatch queries.
+     * @param _commandBus - The command bus used to dispatch commands.
      */
     constructor(
-        private readonly logger: Logger,
-        private readonly queryBus: QueryBus,
-        private readonly commandBus: CommandBus,
+        private readonly _queryBus: QueryBus,
+        private readonly _commandBus: CommandBus,
     ) {}
 
     /**
@@ -27,20 +27,20 @@ export class LoginApplication {
      * @returns A promise that resolves to a `UserAuthData` object containing authentication information, or `undefined` if validation fails.
      */
     async exec(email: string, password: string): Promise<UserAuthData | undefined> {
-        this.logger.log(`[${this.exec.name}] INIT :: email: ${email}`);
-        const user: User = await this.queryBus.execute<GetUserByEmailQuery, User>(
+        this._logger.log(`[${this.exec.name}] INIT :: email: ${email}`);
+        const user: User = await this._queryBus.execute<GetUserByEmailQuery, User>(
             new GetUserByEmailQuery(email, false),
         );
         let authData: UserAuthData | undefined = undefined;
         if (user) {
-            const hashedPassword: string = await this.commandBus.execute<CreateUserPasswordCommand, string>(
+            const hashedPassword: string = await this._commandBus.execute<CreateUserPasswordCommand, string>(
                 new CreateUserPasswordCommand(user.userId, password),
             );
             if (hashedPassword === user.password) {
                 authData = { userId: user.userId };
             }
         }
-        this.logger.log(`[${this.exec.name}] FINISH :: authData: ${authData}`);
+        this._logger.log(`[${this.exec.name}] FINISH :: authData: ${authData}`);
         return authData;
     }
 }

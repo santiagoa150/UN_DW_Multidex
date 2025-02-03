@@ -1,4 +1,4 @@
-import { Logger, Module, Provider } from '@nestjs/common';
+import { Module, Provider } from '@nestjs/common';
 import { HttpUniverseController } from '../../contexts/universe/api/http-universe.controller';
 import { GetUniverseEntityByIdAndTypeQueryHandler } from '../../contexts/universe/applications/get/universe-entity-by-id-and-type/get-universe-entity-by-id-and-type.query-handler';
 import { GetUniverseEntityByIdAndTypeApplication } from '../../contexts/universe/applications/get/universe-entity-by-id-and-type/get-universe-entity-by-id-and-type.application';
@@ -9,10 +9,10 @@ import { QueryBus } from '@nestjs/cqrs';
  */
 const APPLICATIONS: Provider[] = [
     {
-        inject: [Logger, QueryBus],
+        inject: [QueryBus],
         provide: GetUniverseEntityByIdAndTypeApplication,
-        useFactory: (logger: Logger, queryBus: QueryBus): GetUniverseEntityByIdAndTypeApplication => {
-            return new GetUniverseEntityByIdAndTypeApplication(logger, queryBus);
+        useFactory: (queryBus: QueryBus): GetUniverseEntityByIdAndTypeApplication => {
+            return new GetUniverseEntityByIdAndTypeApplication(queryBus);
         },
     },
 ];

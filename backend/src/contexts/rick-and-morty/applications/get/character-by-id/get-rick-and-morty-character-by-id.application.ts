@@ -7,14 +7,12 @@ import { RickAndMortyCharacterNotFoundException } from '../../../domain/exceptio
  * Application for getting a Rick and Morty character by its ID.
  */
 export class GetRickAndMortyCharacterByIdApplication {
+    private readonly _logger: Logger = new Logger(GetRickAndMortyCharacterByIdApplication.name);
+
     /**
-     * @param _logger - The application logger.
      * @param _repository - The Rick and Morty repository.
      */
-    constructor(
-        private readonly _logger: Logger,
-        private readonly _repository: RickAndMortyRepository,
-    ) {}
+    constructor(private readonly _repository: RickAndMortyRepository) {}
 
     /**
      * Executes the application.

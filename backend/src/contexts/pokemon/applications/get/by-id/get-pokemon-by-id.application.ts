@@ -7,14 +7,12 @@ import { PokemonNotFoundException } from '../../../domain/exceptions/pokemon-not
  * Application service to get a Pokémon by its id.
  */
 export class GetPokemonByIdApplication {
+    private readonly _logger: Logger = new Logger(GetPokemonByIdApplication.name);
+
     /**
-     * @param _logger - The logger service.
      * @param _repository - The Pokémon repository.
      */
-    constructor(
-        private readonly _logger: Logger,
-        private readonly _repository: PokemonRepository,
-    ) {}
+    constructor(private readonly _repository: PokemonRepository) {}
 
     /**
      * Gets a Pokémon by its id.

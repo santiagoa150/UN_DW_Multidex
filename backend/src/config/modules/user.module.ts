@@ -1,4 +1,4 @@
-import { Logger, Module, Provider, Type } from '@nestjs/common';
+import { Module, Provider, Type } from '@nestjs/common';
 import { HttpUserController } from '../../contexts/user/api/http-user.controller';
 import { LocalAuthStrategy } from '../../contexts/user/infrastructure/nestjs/guards/local/local-auth.strategy';
 import { CommandBus, ICommandHandler, IQueryHandler, QueryBus } from '@nestjs/cqrs';
@@ -27,10 +27,10 @@ const PROVIDERS: Provider[] = [PgUserRepository, LocalAuthStrategy];
  */
 const APPLICATIONS: Provider[] = [
     {
-        inject: [Logger, PgUserRepository],
+        inject: [PgUserRepository],
         provide: GetUserByEmailApplication,
-        useFactory: (logger: Logger, repository: UserRepository): GetUserByEmailApplication => {
-            return new GetUserByEmailApplication(logger, repository);
+        useFactory: (repository: UserRepository): GetUserByEmailApplication => {
+            return new GetUserByEmailApplication(repository);
         },
     },
     {
@@ -38,17 +38,17 @@ const APPLICATIONS: Provider[] = [
         useClass: CreateUserPasswordApplication,
     },
     {
-        inject: [Logger, QueryBus, CommandBus],
+        inject: [QueryBus, CommandBus],
         provide: LoginApplication,
-        useFactory: (logger: Logger, queryBus: QueryBus, commandBus: CommandBus): LoginApplication => {
-            return new LoginApplication(logger, queryBus, commandBus);
+        useFactory: (queryBus: QueryBus, commandBus: CommandBus): LoginApplication => {
+            return new LoginApplication(queryBus, commandBus);
         },
     },
     {
-        inject: [Logger, JwtTokenRepository],
+        inject: [JwtTokenRepository],
         provide: CreateUserAccessTokenApplication,
-        useFactory: (logger: Logger, repository: TokenRepository): CreateUserAccessTokenApplication => {
-            return new CreateUserAccessTokenApplication(logger, repository);
+        useFactory: (repository: TokenRepository): CreateUserAccessTokenApplication => {
+            return new CreateUserAccessTokenApplication(repository);
         },
     },
 ];

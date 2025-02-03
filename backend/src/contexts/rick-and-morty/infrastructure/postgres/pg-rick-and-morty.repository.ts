@@ -10,12 +10,12 @@ import { RickAndMortyCharacterMappers } from '../rick-and-morty-character.mapper
  */
 @Injectable()
 export class PgRickAndMortyRepository implements RickAndMortyRepository {
+    private readonly _logger: Logger = new Logger(PgRickAndMortyRepository.name);
+
     /**
-     * @param _logger - The application logger.
      * @param _pgCharacterModel - The Postgres Rick and Morty character model.
      */
     constructor(
-        private readonly _logger: Logger,
         @InjectModel(PgRickAndMortyCharacterModel)
         private readonly _pgCharacterModel: typeof PgRickAndMortyCharacterModel,
     ) {}

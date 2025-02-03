@@ -11,14 +11,12 @@ import { GetRickAndMortyCharacterByIdQuery } from '../../../../rick-and-morty/ap
  * Application for getting a universe entity by its id and type.
  */
 export class GetUniverseEntityByIdAndTypeApplication {
+    private readonly _logger: Logger = new Logger(GetUniverseEntityByIdAndTypeApplication.name);
+
     /**
-     * @param _logger - The application logger.
      * @param _queryBus - The query bus to dispatch queries.
      */
-    constructor(
-        private readonly _logger: Logger,
-        private readonly _queryBus: QueryBus,
-    ) {}
+    constructor(private readonly _queryBus: QueryBus) {}
 
     /**
      * Executes the application.

@@ -10,14 +10,12 @@ import { UserMappers } from '../user.mappers';
  */
 @Injectable()
 export class PgUserRepository implements UserRepository {
+    private readonly _logger: Logger = new Logger(PgUserRepository.name);
+
     /**
-     * @param logger - Class used for logging.
      * @param pgUserModel - The Postgres user model.
      */
-    constructor(
-        private readonly logger: Logger,
-        @InjectModel(PgUserModel) private readonly pgUserModel: typeof PgUserModel,
-    ) {}
+    constructor(@InjectModel(PgUserModel) private readonly pgUserModel: typeof PgUserModel) {}
 
     /**
      * Retrieves a user by their email address.
@@ -25,10 +23,10 @@ export class PgUserRepository implements UserRepository {
      * @returns A promise that resolves to the user, or `undefined` if the user is not found.
      */
     async getByEmail(email: string): Promise<User | undefined> {
-        this.logger.log(`[${this.getByEmail.name}] INIT :: email: ${email}`);
+        this._logger.log(`[${this.getByEmail.name}] INIT :: email: ${email}`);
         const found: PgUserModel = await this.pgUserModel.findOne({ where: { email } });
         const mapped: User | undefined = found ? UserMappers.DTO2User(found) : undefined;
-        this.logger.log(`[${this.getByEmail.name}] FINISH ::`);
+        this._logger.log(`[${this.getByEmail.name}] FINISH ::`);
         return mapped;
     }
 }

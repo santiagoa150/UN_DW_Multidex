@@ -1,4 +1,4 @@
-import { Logger, Module, Provider } from '@nestjs/common';
+import { Module, Provider } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { PgRickAndMortyCharacterModel } from '../../contexts/rick-and-morty/infrastructure/postgres/pg-rick-and-morty-character.model';
 import { PgRickAndMortyRepository } from '../../contexts/rick-and-morty/infrastructure/postgres/pg-rick-and-morty.repository';
@@ -15,10 +15,10 @@ const PROVIDERS: Provider[] = [PgRickAndMortyRepository];
  */
 const APPLICATIONS: Provider[] = [
     {
-        inject: [Logger, PgRickAndMortyRepository],
+        inject: [PgRickAndMortyRepository],
         provide: GetRickAndMortyCharacterByIdApplication,
-        useFactory: (logger: Logger, repository: PgRickAndMortyRepository) => {
-            return new GetRickAndMortyCharacterByIdApplication(logger, repository);
+        useFactory: (repository: PgRickAndMortyRepository) => {
+            return new GetRickAndMortyCharacterByIdApplication(repository);
         },
     },
 ];

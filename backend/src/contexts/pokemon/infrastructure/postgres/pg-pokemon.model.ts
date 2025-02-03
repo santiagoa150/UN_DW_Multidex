@@ -1,12 +1,14 @@
-import { AllowNull, Column, DataType, Model, PrimaryKey, Table } from 'sequelize-typescript';
+import { AllowNull, BelongsToMany, Column, DataType, Model, PrimaryKey, Table } from 'sequelize-typescript';
 import { PokemonDto } from '../pokemon.dto';
 import { PgPokemonConstants } from './pg-pokemon.constants';
 import { UniverseTypeNameConstants } from '../../../universe/domain/constants/universe-type-name.constants';
+import { PgPokemonTypeRelationModel } from './pg-pokemon-type-relation.model';
+import { PgPokemonTypeModel } from './pg-pokemon-type.model';
 
 /**
  * The Pokémon model for PostgresSQL.
  */
-@Table({ tableName: PgPokemonConstants.TABLE_NAME, timestamps: false })
+@Table({ tableName: PgPokemonConstants.POKEMON_TABLE_NAME, timestamps: false })
 export class PgPokemonModel extends Model<PokemonDto> implements PokemonDto {
     @PrimaryKey
     @AllowNull(false)
@@ -34,10 +36,13 @@ export class PgPokemonModel extends Model<PokemonDto> implements PokemonDto {
     description: string;
 
     get entityTypes(): string[] {
-        return [];
+        return (this.pokemonTypes ?? []).map((type) => type.name);
     }
 
     get universeType(): string {
         return UniverseTypeNameConstants.POKEMON;
     }
+
+    @BelongsToMany(() => PgPokemonTypeModel, () => PgPokemonTypeRelationModel)
+    pokemonTypes?: PgPokemonTypeModel[];
 }

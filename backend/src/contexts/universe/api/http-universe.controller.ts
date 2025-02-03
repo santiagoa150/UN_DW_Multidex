@@ -8,6 +8,7 @@ import { GetUniverseEntityByIdAndTypeQuery } from '../applications/get/universe-
 import { UniverseEntity } from '../domain/universe-entity';
 import { UniverseTypeNameConstants } from '../domain/constants/universe-type-name.constants';
 import { UniverseEntityMappers } from '../infrastructure/universe-entity.mappers';
+import { UniverseEntityDto } from '../infrastructure/universe-entity.dto';
 
 /**
  */
@@ -33,7 +34,21 @@ export class HttpUniverseController {
         const entity = await this._queryBus.execute<GetUniverseEntityByIdAndTypeQuery, UniverseEntity>(
             new GetUniverseEntityByIdAndTypeQuery(query.id, query.universeType as UniverseTypeNameConstants),
         );
-        response.entity = UniverseEntityMappers.UniverseEntity2DTO(entity);
+        const dto: UniverseEntityDto = UniverseEntityMappers.UniverseEntity2DTO(entity);
+        response.entity = {
+            description: dto.description,
+            entityTypes: dto.entityTypes,
+            frontImageUrl: dto.frontImageUrl,
+            gender: dto.gender,
+            height: dto.height,
+            id: dto.id,
+            location: dto.location,
+            name: dto.name,
+            origin: dto.origin,
+            status: dto.status,
+            universeType: dto.universeType,
+            weight: dto.weight,
+        };
         return response;
     }
 }

@@ -7,20 +7,18 @@ import { UserNotFoundException } from '../../../domain/exceptions/user-not-found
  * Application for getting a user by email.
  */
 export class GetUserByEmailApplication {
+    private readonly _logger: Logger = new Logger(GetUserByEmailApplication.name);
+
     /**
-     * @param logger - Class used for logging.
-     * @param repository - The user repository.
+     * @param _repository - The user repository.
      */
-    constructor(
-        private readonly logger: Logger,
-        private readonly repository: UserRepository,
-    ) {}
+    constructor(private readonly _repository: UserRepository) {}
 
     async exec(email: string, throwExceptionIfNotFound: boolean = true): Promise<User | undefined> {
-        this.logger.log(`[${this.exec.name}] INIT :: email: ${email}`);
-        const user: User = await this.repository.getByEmail(email);
+        this._logger.log(`[${this.exec.name}] INIT :: email: ${email}`);
+        const user: User = await this._repository.getByEmail(email);
         if (!user && throwExceptionIfNotFound) throw new UserNotFoundException();
-        this.logger.log(`[${this.exec.name}] FINISH ::`);
+        this._logger.log(`[${this.exec.name}] FINISH ::`);
         return user;
     }
 }
