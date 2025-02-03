@@ -10,14 +10,12 @@ export class UniverseEntity {
      * @param _type The type of the entity
      */
     constructor(
-        private readonly _id: string,
+        private readonly _id: number,
         private readonly _name: string,
         private readonly _type: UniverseTypeNameConstants,
-    ) {
-    }
+    ) {}
 
-
-    get id(): string {
+    get id(): number {
         return this._id;
     }
 

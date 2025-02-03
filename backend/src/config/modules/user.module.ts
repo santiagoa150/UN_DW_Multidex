@@ -5,7 +5,7 @@ import { CommandBus, ICommandHandler, IQueryHandler, QueryBus } from '@nestjs/cq
 import { LoginCommandHandler } from '../../contexts/user/applications/login/login.command-handler';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { PgUserModel } from '../../contexts/user/infrastructure/postgres/pg-user.model';
-import { PostgresUserRepository } from '../../contexts/user/infrastructure/postgres/postgres-user.repository';
+import { PgUserRepository } from '../../contexts/user/infrastructure/postgres/pg-user.repository';
 import { LoginApplication } from '../../contexts/user/applications/login/login.application';
 import { GetUserByEmailQueryHandler } from '../../contexts/user/applications/get/by-email/get-user-by-email.query-handler';
 import { GetUserByEmailApplication } from '../../contexts/user/applications/get/by-email/get-user-by-email.application';
@@ -20,14 +20,14 @@ import { TokenRepository } from '../../contexts/shared/domain/interfaces/token.r
 /**
  * `PROVIDERS` is an array of NestJS providers related to user module.
  */
-const PROVIDERS: Provider[] = [PostgresUserRepository, LocalAuthStrategy];
+const PROVIDERS: Provider[] = [PgUserRepository, LocalAuthStrategy];
 
 /**
  * `APPLICATIONS` is an array of applications related to user module.
  */
 const APPLICATIONS: Provider[] = [
     {
-        inject: [Logger, PostgresUserRepository],
+        inject: [Logger, PgUserRepository],
         provide: GetUserByEmailApplication,
         useFactory: (logger: Logger, repository: UserRepository): GetUserByEmailApplication => {
             return new GetUserByEmailApplication(logger, repository);

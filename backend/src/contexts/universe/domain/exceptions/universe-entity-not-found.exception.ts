@@ -3,10 +3,10 @@ import { UniverseExceptionMessagesConstants } from './universe-exception-message
 import { HttpStatus } from '@nestjs/common';
 
 /**
- * Exception for when a universe type is not supported.
+ * Exception for when a universe entity is not found.
  */
-export class UniverseTypeNotSupportedException extends Exception {
+export class UniverseEntityNotFoundException extends Exception {
     constructor() {
-        super(UniverseExceptionMessagesConstants.UNIVERSE_TYPE_NOT_SUPPORTED, HttpStatus.INTERNAL_SERVER_ERROR);
+        super(UniverseExceptionMessagesConstants.UNIVERSE_ENTITY_NOT_FOUND, HttpStatus.NOT_FOUND);
     }
 }

@@ -5,7 +5,6 @@ import { UniverseEntityDto } from './universe-entity.dto';
  * Utility class to map universe entities.
  */
 export abstract class UniverseEntityMappers {
-
     /**
      * Maps a `UniverseEntity` domain object to a `UniverseEntityDto` object.
      * @param entity - The `UniverseEntity` object to map.

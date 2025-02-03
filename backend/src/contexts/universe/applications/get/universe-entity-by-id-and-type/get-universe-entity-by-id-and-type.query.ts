@@ -12,6 +12,5 @@ export class GetUniverseEntityByIdAndTypeQuery implements IQuery {
     constructor(
         public readonly id: string,
         public readonly type: UniverseTypeNameConstants,
-    ) {
-    }
+    ) {}
 }

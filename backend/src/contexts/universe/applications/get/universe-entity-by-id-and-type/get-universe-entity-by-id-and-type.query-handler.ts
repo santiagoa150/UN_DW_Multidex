@@ -10,12 +10,10 @@ import { GetUniverseEntityByIdAndTypeApplication } from './get-universe-entity-b
 export class GetUniverseEntityByIdAndTypeQueryHandler
     implements IQueryHandler<GetUniverseEntityByIdAndTypeQuery, UniverseEntity>
 {
-
     /**
      * @param _app - The application to handle the query.
      */
-    constructor(private readonly _app: GetUniverseEntityByIdAndTypeApplication) {
-    }
+    constructor(private readonly _app: GetUniverseEntityByIdAndTypeApplication) {}
 
     /**
      * Executes the query.

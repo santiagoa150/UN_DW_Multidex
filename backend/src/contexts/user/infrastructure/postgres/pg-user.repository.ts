@@ -9,7 +9,7 @@ import { UserMappers } from '../user.mappers';
  * The user repository for Postgres.
  */
 @Injectable()
-export class PostgresUserRepository implements UserRepository {
+export class PgUserRepository implements UserRepository {
     /**
      * @param logger - Class used for logging.
      * @param pgUserModel - The Postgres user model.
