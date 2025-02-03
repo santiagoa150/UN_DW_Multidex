@@ -3,4 +3,7 @@ import { UniverseEntityDto } from '../../universe/infrastructure/universe-entity
 /**
  * The `PokemonDto` type defines the shape of the data transfer object (DTO) for a Pokémon.
  */
-export type PokemonDto = {} & UniverseEntityDto;
+export type PokemonDto = {
+    height: number;
+    weight: number;
+} & Omit<UniverseEntityDto, 'status' | 'gender' | 'location' | 'origin'>;

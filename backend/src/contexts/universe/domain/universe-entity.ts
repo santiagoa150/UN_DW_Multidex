@@ -5,14 +5,32 @@ import { UniverseTypeNameConstants } from './constants/universe-type-name.consta
  */
 export class UniverseEntity {
     /**
-     * @param _id The unique identifier of the entity
-     * @param _name The name of the entity
-     * @param _type The type of the entity
+     * @param _id - The unique identifier of the entity
+     * @param _name - The name of the entity
+     * @param _universeType - The type of the entity
+     * @param _entityTypes - The types of entities that this entity can be related to
+     * @param _frontImageUrl - The URL of the image that represents the entity
+     * @param _description - The description of the entity
+     * @param _height - The universe entity height
+     * @param _weight - The universe entity weight
+     * @param _status - The universe entity status
+     * @param _gender - The universe entity gender
+     * @param _location - The place where the entity is located
+     * @param _origin - The origin place of the entity
      */
     constructor(
         private readonly _id: number,
         private readonly _name: string,
-        private readonly _type: UniverseTypeNameConstants,
+        private readonly _universeType: UniverseTypeNameConstants,
+        private readonly _entityTypes: Set<string>,
+        private readonly _frontImageUrl: string,
+        private readonly _description: string,
+        protected readonly _height?: number,
+        protected readonly _weight?: number,
+        protected readonly _status?: string,
+        protected readonly _gender?: string,
+        protected readonly _location?: string,
+        protected readonly _origin?: string,
     ) {}
 
     get id(): number {
@@ -23,7 +41,43 @@ export class UniverseEntity {
         return this._name;
     }
 
-    get type(): UniverseTypeNameConstants {
-        return this._type;
+    get universeType(): UniverseTypeNameConstants {
+        return this._universeType;
+    }
+
+    get entityTypes(): Set<string> {
+        return this._entityTypes;
+    }
+
+    get frontImageUrl(): string {
+        return this._frontImageUrl;
+    }
+
+    get description(): string {
+        return this._description;
+    }
+
+    get height(): number | undefined {
+        return this._height;
+    }
+
+    get weight(): number | undefined {
+        return this._weight;
+    }
+
+    get status(): string | undefined {
+        return this._status;
+    }
+
+    get gender(): string {
+        return this._gender;
+    }
+
+    get location(): string {
+        return this._location;
+    }
+
+    get origin(): string {
+        return this._origin;
     }
 }

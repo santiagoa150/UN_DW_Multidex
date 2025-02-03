@@ -31,7 +31,7 @@ export class HttpUniverseController {
     ): Promise<GetUniverseEntityByIdAndTypeResponse> {
         const response = new GetUniverseEntityByIdAndTypeResponse();
         const entity = await this._queryBus.execute<GetUniverseEntityByIdAndTypeQuery, UniverseEntity>(
-            new GetUniverseEntityByIdAndTypeQuery(query.id, query.type as UniverseTypeNameConstants),
+            new GetUniverseEntityByIdAndTypeQuery(query.id, query.universeType as UniverseTypeNameConstants),
         );
         response.entity = UniverseEntityMappers.UniverseEntity2DTO(entity);
         return response;

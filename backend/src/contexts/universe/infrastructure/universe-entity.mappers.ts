@@ -12,9 +12,18 @@ export abstract class UniverseEntityMappers {
      */
     static UniverseEntity2DTO(entity: UniverseEntity): UniverseEntityDto {
         return {
+            description: entity.description,
+            entityTypes: Array.from(entity.entityTypes),
+            frontImageUrl: entity.frontImageUrl,
+            gender: entity.gender,
+            height: entity.height,
             id: entity.id,
+            location: entity.location,
             name: entity.name,
-            type: entity.type,
+            origin: entity.origin,
+            status: entity.status,
+            universeType: entity.universeType,
+            weight: entity.weight,
         };
     }
 }

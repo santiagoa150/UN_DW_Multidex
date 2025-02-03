@@ -4,5 +4,14 @@
 export type UniverseEntityDto = {
     id: number;
     name: string;
-    type: string;
+    universeType: string;
+    entityTypes: string[];
+    frontImageUrl: string;
+    description: string;
+    height?: number;
+    weight?: number;
+    status?: string;
+    gender?: string;
+    location?: string;
+    origin?: string;
 };

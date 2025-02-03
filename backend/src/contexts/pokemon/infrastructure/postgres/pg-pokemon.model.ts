@@ -17,7 +17,27 @@ export class PgPokemonModel extends Model<PokemonDto> implements PokemonDto {
     @Column
     name: string;
 
-    get type(): string {
+    @AllowNull(false)
+    @Column({ type: DataType.FLOAT })
+    height: number;
+
+    @AllowNull(false)
+    @Column({ type: DataType.FLOAT })
+    weight: number;
+
+    @AllowNull(false)
+    @Column
+    frontImageUrl: string;
+
+    @AllowNull(false)
+    @Column
+    description: string;
+
+    get entityTypes(): string[] {
+        return [];
+    }
+
+    get universeType(): string {
         return UniverseTypeNameConstants.POKEMON;
     }
 }

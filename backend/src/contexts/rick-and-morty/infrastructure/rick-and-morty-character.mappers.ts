@@ -13,6 +13,17 @@ export class RickAndMortyCharacterMappers extends UniverseEntityMappers {
      * @returns A new Rick and Morty character entity.
      */
     static DTO2RickAndMortyCharacter(dto: RickAndMortyCharacterDto): RickAndMortyCharacter {
-        return new RickAndMortyCharacter(dto.id, dto.name, dto.type as UniverseTypeNameConstants);
+        return new RickAndMortyCharacter(
+            dto.id,
+            dto.name,
+            dto.universeType as UniverseTypeNameConstants,
+            new Set<string>(dto.entityTypes),
+            dto.frontImageUrl,
+            dto.description,
+            dto.status,
+            dto.gender,
+            dto.location,
+            dto.origin,
+        );
     }
 }

@@ -13,6 +13,15 @@ export abstract class PokemonMappers extends UniverseEntityMappers {
      * @returns A new Pokémon entity.
      */
     static DTO2Pokemon(dto: PokemonDto): Pokemon {
-        return new Pokemon(dto.id, dto.name, dto.type as UniverseTypeNameConstants);
+        return new Pokemon(
+            dto.id,
+            dto.name,
+            dto.universeType as UniverseTypeNameConstants,
+            new Set(dto.entityTypes),
+            dto.frontImageUrl,
+            dto.description,
+            dto.height,
+            dto.weight,
+        );
     }
 }

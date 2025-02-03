@@ -17,7 +17,39 @@ export class PgRickAndMortyCharacterModel extends Model<RickAndMortyCharacterDto
     @Column
     name: string;
 
-    get type(): string {
+    @AllowNull(false)
+    @Column
+    status: string;
+
+    @AllowNull(false)
+    @Column
+    gender: string;
+
+    @AllowNull(false)
+    @Column
+    location: string;
+
+    @AllowNull(false)
+    @Column
+    origin: string;
+
+    @AllowNull(false)
+    @Column
+    entityType: string;
+
+    @AllowNull(false)
+    @Column
+    frontImageUrl: string;
+
+    @AllowNull(false)
+    @Column
+    description: string;
+
+    get entityTypes(): string[] {
+        return [this.entityType];
+    }
+
+    get universeType(): string {
         return UniverseTypeNameConstants.RICK_AND_MORTY;
     }
 }
