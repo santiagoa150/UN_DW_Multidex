@@ -83,7 +83,7 @@ export default function UniverseInfoPage(): JSX.Element {
                                     <p className="font-bold">{universeEntity.name}</p>
                                 </div>
                                 {universeEntity.allowDetail && universeEntity.detailPath && (
-                                    <button className="font-bold">Ver detalles</button>
+                                    <button className="font-bold text-blue-50">Ver detalles</button>
                                 )}
                             </div>
                         </div>
