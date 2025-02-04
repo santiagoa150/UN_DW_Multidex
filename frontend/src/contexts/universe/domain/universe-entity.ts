@@ -1,9 +1,19 @@
 import { UniverseTypeNameConstants } from './constants/universe-type-name.constants.ts';
 
+/**
+ * The definition of a universe entity.
+ */
 export type UniverseEntity = {
-    allowDetail: boolean;
-    detailPath?: string;
-    id: string;
+    id: number;
     name: string;
-    type: UniverseTypeNameConstants;
+    universeType: UniverseTypeNameConstants;
+    entityTypes: string[];
+    frontImageUrl: string;
+    description: string;
+    height?: number;
+    weight?: number;
+    status?: string;
+    gender?: string;
+    location?: string;
+    origin?: string;
 };

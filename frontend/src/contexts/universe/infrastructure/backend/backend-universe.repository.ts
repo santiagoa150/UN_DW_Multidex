@@ -19,18 +19,41 @@ export class BackendUniverseRepository implements UniverseRepository {
     ): Promise<UniverseEntity | undefined> {
         const entities: UniverseEntity[] = [
             {
-                id: '1',
-                allowDetail: true,
+                id: 1,
                 name: 'Blastoise',
-                type: UniverseTypeNameConstants.POKEMON,
+                universeType: UniverseTypeNameConstants.POKEMON,
+                entityTypes: ['Agua'],
+                frontImageUrl:
+                    'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png',
+                weight: 855,
+                height: 16,
+                description:
+                    'Para acabar con su enemigo, lo aplasta con el peso de su cuerpo. En momentos de apuro, se esconde en el caparazón.',
             },
             {
-                id: '2',
-                allowDetail: false,
+                id: 12,
+                name: 'Butterfree ',
+                universeType: UniverseTypeNameConstants.POKEMON,
+                entityTypes: ['Bicho', 'Volador'],
+                frontImageUrl:
+                    'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/12.png',
+                weight: 320,
+                height: 11,
+                description: '',
+            },
+            {
+                id: 1,
                 name: 'Rick',
-                type: UniverseTypeNameConstants.RICK_AND_MORTY,
+                universeType: UniverseTypeNameConstants.RICK_AND_MORTY,
+                entityTypes: ['Humano'],
+                frontImageUrl: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
+                status: 'Vivo',
+                gender: 'Hombre',
+                location: 'Citadel of Ricks',
+                origin: 'Earth (C-137)',
+                description: '',
             },
         ];
-        return entities.find((entity) => entity.id === id && type === entity.type);
+        return entities.find((entity) => entity.id === Number(id) && type === entity.universeType);
     }
 }

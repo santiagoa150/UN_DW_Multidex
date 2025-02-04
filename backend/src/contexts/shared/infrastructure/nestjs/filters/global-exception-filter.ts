@@ -9,7 +9,7 @@ import { ExceptionDto } from '../../../domain/exceptions/exception.dto';
  */
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
-    constructor(private readonly logger: Logger) {}
+    private readonly _logger: Logger = new Logger(GlobalExceptionFilter.name);
 
     /**
      * Resolves the error message from various types of exceptions.
@@ -55,7 +55,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
      * @param host - The execution context host.
      */
     catch(exception: Error, host: ArgumentsHost): void {
-        this.logger.error(JSON.stringify(exception));
+        this._logger.error(JSON.stringify(exception));
         let statusCode: number = HttpStatus.INTERNAL_SERVER_ERROR;
         let message: string = SharedExceptionMessagesConstants.INTERNAL_SERVER_ERROR;
         if (exception instanceof Exception) {
@@ -79,7 +79,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
                 break;
             }
             default: {
-                this.logger.error(`Protocol not supported :: ${host.getType()}`);
+                this._logger.error(`Protocol not supported :: ${host.getType()}`);
                 break;
             }
         }

@@ -16,9 +16,9 @@ import { CreateUserAccessTokenCommand } from '../applications/create/access-toke
 @ApiTags(HttpUserConstants.API_TAG)
 export class HttpUserController {
     /**
-     * @param commandBus - The command bus used to dispatch commands.
+     * @param _commandBus - The command bus used to dispatch commands.
      */
-    constructor(private readonly commandBus: CommandBus) {}
+    constructor(private readonly _commandBus: CommandBus) {}
 
     /**
      * Endpoint that executes the login operation.
@@ -31,7 +31,7 @@ export class HttpUserController {
     @ApiAcceptedResponse({ type: LoginResponse })
     async login(@GetUserAuthData() authData: UserAuthData): Promise<LoginResponse> {
         const response = new LoginResponse();
-        response.accessToken = await this.commandBus.execute<CreateUserAccessTokenCommand, string>(
+        response.accessToken = await this._commandBus.execute<CreateUserAccessTokenCommand, string>(
             new CreateUserAccessTokenCommand(authData),
         );
         return response;

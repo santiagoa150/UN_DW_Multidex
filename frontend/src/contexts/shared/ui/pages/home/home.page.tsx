@@ -30,18 +30,6 @@ export default function HomePage(): JSX.Element {
                 </button>
                 <button
                     className="w-[100px] border-2 border-black"
-                    onClick={() => navigate(RoutesConstants.UNIVERSE_INFO.replace(':id', '1'))}
-                >
-                    Universe Info
-                </button>
-                <button
-                    className="w-[100px] border-2 border-black"
-                    onClick={() => navigate(RoutesConstants.POKEMON_INFO)}
-                >
-                    Pokemon Info
-                </button>
-                <button
-                    className="w-[100px] border-2 border-black"
                     onClick={() => navigate(RoutesConstants.UNIVERSE_EDIT)}
                 >
                     Universe Edit

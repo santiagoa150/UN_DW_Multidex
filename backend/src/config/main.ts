@@ -13,7 +13,7 @@ async function bootstrap() {
     const logger: Logger = app.get(Logger);
     app.useGlobalPipes(new ValidationPipe({ transform: true }));
     app.enableCors();
-    app.useGlobalFilters(new GlobalExceptionFilter(logger));
+    app.useGlobalFilters(new GlobalExceptionFilter());
     app.setGlobalPrefix(process.env.APP_REST_PREFIX);
     const swaggerConfig = new DocumentBuilder()
         .setTitle('Multidex App')
