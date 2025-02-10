@@ -13,7 +13,7 @@ export default function UniverseListPage(): JSX.Element {
             style={{ backgroundColor: universeType?.mainColor }}
         >
             {/* Primer contenedor con home */}
-            <div className="w-full sm:w-[101px] flex justify-start items-center px-4 sm:px-2">
+            <div className="w-full sm:w-[101px] flex justify-start items-center px-4 sm:px-2 z-10">
                 <img src={universeType?.logo_1} alt="Pokemon" className="w-[100px] h-auto object-contain mb-4" />
                 <button
                     className="font-bold text-white text-[16px] sm:text-[20px] ml-4 "
