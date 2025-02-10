@@ -1,11 +1,16 @@
 import { JSX } from 'react';
-import { UniverseTypeNameToPropertiesConstants } from '../../../../universe/domain/constants/universe-type-name-to-properties.constants';
+import { useUniverse } from '../../../../../config/UniverseContext.tsx';
 
 export default function UniverseListPage(): JSX.Element {
-    const pokemonColors = UniverseTypeNameToPropertiesConstants.POKEMON;
+    const { universeType } = useUniverse();
+    /**
+     * Load the universe type when the component is mounted.
+     */
+
     return (
-        <div className='w-full h-[135px] align-items: flex-end'  style={{ backgroundColor: pokemonColors.mainColor }} >
-            
-        </div>
-    )
+        <div
+            className="w-full h-[135px] align-items: flex-end"
+            style={{ backgroundColor: universeType?.mainColor }}
+        ></div>
+    );
 }
