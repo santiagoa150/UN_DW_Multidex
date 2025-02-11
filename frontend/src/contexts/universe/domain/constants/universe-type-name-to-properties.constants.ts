@@ -13,6 +13,10 @@ export const UniverseTypeNameToPropertiesConstants: Record<UniverseTypeNameConst
         tertiaryColor: '#FEEAEA',
         allowDetail: true,
         detailPath: RoutesConstants.POKEMON_INFO,
+
+        editColor: '#FEEAEA',
+        boxEditColor: '#FDC3C3B2',
+        indexEdit: "#F6D1E6" 
     },
     [UniverseTypeNameConstants.RICK_AND_MORTY]: {
         name: UniverseTypeNameConstants.RICK_AND_MORTY,
@@ -20,5 +24,10 @@ export const UniverseTypeNameToPropertiesConstants: Record<UniverseTypeNameConst
         secondaryColor: '#95B47EE5',
         tertiaryColor: '#7CBC6C',
         allowDetail: false,
+
+        editColor: '#65A954',
+        boxEditColor: "#C9FF8C",
+        indexEdit: "#63A419"
+    
     },
 };

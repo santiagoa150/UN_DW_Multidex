@@ -1,19 +1,27 @@
-import { JSX } from 'react';
-import { UniverseTypeNameToPropertiesConstants } from '../../../domain/constants/universe-type-name-to-properties.constants';
+import { JSX, useEffect, useState } from 'react';
+//import { UniverseTypeNameToPropertiesConstants } from '../../../domain/constants/universe-type-name-to-properties.constants';
 import {Title} from './Title';
-import { pokemones } from '../../../../pokemon/ui/pages/info/pokemon-info.page';
 import { Data } from './Data';
+import { UniverseType } from '../../../domain/universe-type';
+import { getCurrentUniverseApplication } from '../../../../../config/app.providers';
 
 export default function EditUniverseEntityPage(): JSX.Element {
+
+    const [universeType, setUniverseType] = useState<UniverseType | undefined>();
+    
+    useEffect(() => {
+        if (!universeType) {
+            getCurrentUniverseApplication.exec().then((res) => setUniverseType(res));
+        }
+    }, [universeType]);
+
     return (
         <main className="w-full min-h-screen "
-                    style={{ backgroundColor: UniverseTypeNameToPropertiesConstants.POKEMON.tertiaryColor }}>
+                    style={{ backgroundColor: universeType?.tertiaryColor }}>
         
 
         
-            {pokemones.map(({ pokemonName, index, img }) => (
-                <Title key={pokemonName} pokemonName={pokemonName} index={index} img={img} />
-            ))}
+                <Title/>
 
             <Data/>
         
