@@ -1,90 +1,157 @@
-import { JSX, useEffect, useState } from 'react';
+import { JSX } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import { ListEntity } from './ListEntity';
-import { getCurrentUniverseApplication } from '../../../../../config/app.providers.ts';
-import { UniverseType } from '../../../domain/universe-type.ts';
 import { useUniverse } from '../../../../../config/UniverseContext.tsx';
+import { RoutesConstants } from '../../../../shared/domain/constants/routes.constants.ts';
+import { useNavigate } from 'react-router-dom';
+import { UniverseEntity } from '../../../domain/universe-entity.ts';
+import { UniverseTypeNameConstants } from '../../../domain/constants/universe-type-name.constants.ts';
+
 
 // lista de cada pokemon con su numero y nombre
-const itemsExample = [
+const itemsExample: UniverseEntity[] = [
     {
-        itemNumber: '001',
+        id: 1,
         name: 'Pikachu',
-        type: 'Eléctrico',
-        habitat: 'Bosque',
+        entityTypes: ['Eléctrico'],
+        universeType: UniverseTypeNameConstants.POKEMON,
+        location: 'Bosque',
         creator: 'OscarPQ',
-        imageUrl: 'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/025.png',
+        frontImageUrl: 'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/025.png',
     },
     {
-        itemNumber: '002',
+        id: 2, 
         name: 'Charizard',
-        type: 'Fuego/Volador',
-        habitat: 'Montaña',
-        creator: 'Juan19',
-        imageUrl: 'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/006.png',
-    },
-    {
-        itemNumber: '003',
-        name: 'Blastoise',
-        type: 'Agua',
-        habitat: 'Agua dulce',
-        creator: 'AndreaG5',
-        imageUrl: 'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/009.png',
-    },
-    {
-        itemNumber: '004',
-        name: 'Omanyte',
-        type: 'Roca/Agua',
-        habitat: 'Agua salada',
-        creator: 'Mariah',
-        imageUrl: 'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/138.png',
-    },
-    {
-        itemNumber: '005',
-        name: 'Arcanine',
-        type: 'Fuego',
-        habitat: 'Pradera',
-        creator: 'Angel45',
-        imageUrl: 'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/059.png',
-    },
-    {
-        itemNumber: '006',
-        name: 'Sandshrew',
-        type: 'Tierra',
-        habitat: 'Campo',
-        creator: 'Daniel8',
-        imageUrl: 'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/027.png',
-    },
+        entityTypes: ['Fuego', 'Volador'],
+        universeType: UniverseTypeNameConstants.POKEMON,
 
+        location: 'Montaña',
+        creator: 'Juan19',
+        frontImageUrl: 'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/006.png',
+    },
     {
-        itemNumber: '007',
+        id: 3, 
+        name: 'Blastoise',
+        entityTypes: ['Agua'],
+        universeType: UniverseTypeNameConstants.POKEMON,
+        location: 'Agua dulce',
+        creator: 'AndreaG5',
+        frontImageUrl: 'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/009.png',
+    },
+    {
+        id: 4,
+        name: 'Omanyte',
+        entityTypes: ['Roca', 'Agua'],
+        universeType: UniverseTypeNameConstants.POKEMON,
+        location: 'Agua salada',
+        creator: 'Mariah',
+        frontImageUrl: 'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/138.png',
+    },
+    {
+        id: 5,
+        name: 'Arcanine',
+        entityTypes: ['Fuego'],
+        universeType: UniverseTypeNameConstants.POKEMON,
+        location: 'Pradera',
+        creator: 'Angel45',
+        frontImageUrl: 'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/059.png',
+    },
+    {
+        id: 6, 
+        name: 'Sandshrew',
+        entityTypes: ['Tierra'],
+        universeType: UniverseTypeNameConstants.POKEMON,
+        location: 'Campo',
+        creator: 'Daniel8',
+        frontImageUrl: 'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/027.png',
+    },
+    {
+        id: 7,
         name: 'Charmeleon',
-        type: 'Fuego/Volador',
-        habitat: 'Montaña',
+        entityTypes: ['Fuego', 'Volador'],
+        universeType: UniverseTypeNameConstants.POKEMON,
+        location: 'Montaña',
         creator: 'Dana12',
-        imageUrl: 'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/005.png',
+        frontImageUrl: 'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/005.png',
     },
     {
-        itemNumber: '008',
+        id: 8,
         name: 'Butterfree',
-        type: 'Bicho/Volador',
-        habitat: 'Bosque',
+        entityTypes: ['Bicho', 'Volador'],
+        universeType: UniverseTypeNameConstants.POKEMON,
+        location: 'Bosque',
         creator: 'oscar56',
-        imageUrl: 'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/012.png',
+        frontImageUrl: 'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/012.png',
     },
     {
-        itemNumber: '009',
+        id: 9,
         name: 'Muk',
-        type: 'Venenoso',
-        habitat: ' Ciudad',
+        entityTypes: ['Venenoso'],
+        universeType: UniverseTypeNameConstants.POKEMON,
+        location: 'Ciudad',
         creator: 'Carlos4',
-        imageUrl: 'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/089.png',
+        frontImageUrl: 'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/089.png',
     },
+    {
+        id: 1,
+        name: 'Rick',
+        universeType: UniverseTypeNameConstants.RICK_AND_MORTY,
+        entityTypes: ['Humano'],
+        frontImageUrl: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
+        origin: 'Earth (C-137)',
+        creator: 'Daniel8',
+    },
+      {
+        id: 2,
+        name: 'Beth Smith',
+        universeType: UniverseTypeNameConstants.RICK_AND_MORTY,
+        entityTypes: ['Humano'],
+        frontImageUrl: 'https://i.imgur.com/5BqMSjs.png',
+        origin: 'Earth ',
+        creator: 'Daniel8',
+    },
+    {
+      id: 3,
+      name: 'Zeep Xanflorp',
+      universeType: UniverseTypeNameConstants.RICK_AND_MORTY,
+      entityTypes: ['Humanoide'],
+      frontImageUrl: 'https://i.imgur.com/uWmSJfc.png',
+      origin: 'Rick Battery Microverse',
+      creator: 'cami',
+  },
+{
+      id: 4,
+      name: 'Morty Smith',
+      universeType: UniverseTypeNameConstants.RICK_AND_MORTY,
+      entityTypes: ['Humano'],
+      frontImageUrl: 'https://i.imgur.com/IM0PdiE.png',
+      origin: 'Earth ',
+      creator: 'Lau',
+  },
+    {
+      id: 5,
+      name: 'Summer Smith',
+      universeType: UniverseTypeNameConstants.RICK_AND_MORTY,
+      entityTypes: ['Humano'],
+      frontImageUrl: 'https://i.imgur.com/MBFxZaI.png',
+      origin: 'Earth',
+      creator: 'Dani',
+  },
+{
+      id: 6,
+      name: 'Daphne',
+      universeType: UniverseTypeNameConstants.RICK_AND_MORTY,
+      entityTypes: ['Alien'],
+      frontImageUrl: 'https://i.imgur.com/OwRynSO.png',
+      origin: 'Morglutz',
+      creator: 'May',
+  },
 ];
 
 export default function UniverseListPage(): JSX.Element {
     const { universeType } = useUniverse();
+    const navigate = useNavigate();
 
     return (
         <div className="min-h-screen w-full flex flex-col">
@@ -95,7 +162,7 @@ export default function UniverseListPage(): JSX.Element {
                 <input
                     type="text"
                     placeholder="Filtrar por nombre"
-                    className="px-4 py-1 border w-64 h-9  rounded-lg  focus:outline-none focus:ring-1 focus:ring-blue-200"
+                    className="px-4 py-2 border w-11/12 sm:w-3/5 md:w-2/5 lg:w-1/4 xl:w-1/5 h-auto rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-200"
                     style={{ backgroundColor: universeType?.search }}
                 />
                 <img src="/search.png" alt="search" className="w-[35px] h-auto ml-4 mb-2" />
@@ -105,18 +172,18 @@ export default function UniverseListPage(): JSX.Element {
                 className="grow w-full flex flex-col items-center py-8"
                 style={{ backgroundColor: universeType?.tertiaryColor }}
             >
-                <div className="grid grid-cols-3 gap-20 mx-10">
-                    {itemsExample.map((item) => (
-                        <ListEntity
-                            key={item.itemNumber}
-                            itemNumber={item.itemNumber}
-                            name={item.name}
-                            type={item.type}
-                            habitat={item.habitat}
-                            creator={item.creator}
-                            imageUrl={item.imageUrl}
-                        />
-                    ))}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-20 mx-10">
+                    {itemsExample
+                        .filter((item) => item.universeType === universeType?.name)
+                        .map((item) => (
+                            <ListEntity
+                                key={item.id}
+                                universeEntity={item}
+                                onClick={() =>
+                                    navigate(RoutesConstants.UNIVERSE_INFO.replace(':id', item.id.toString()))
+                                }
+                            />
+                        ))}
                 </div>
             </main>
 

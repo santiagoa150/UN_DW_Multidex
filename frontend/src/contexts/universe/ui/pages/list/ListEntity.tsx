@@ -1,42 +1,54 @@
 import { useUniverse } from '../../../../../config/UniverseContext.tsx';
+import { UniverseEntity } from '../../../domain/universe-entity.ts';
 
-type ListEntityProps = {
-    itemNumber: string;
-    name: string;
-    type: string;
-    habitat: string;
-    creator: string;
-    imageUrl: string;
-};
+interface ListEntityProps {
+    universeEntity: UniverseEntity;
+    onClick: () => void;
+    // other props if any
+}
 
-export function ListEntity({ itemNumber, name, type, habitat, creator, imageUrl }: ListEntityProps) {
+export const ListEntity: React.FC<ListEntityProps> = ({ universeEntity, onClick }) => {
     const { universeType } = useUniverse();
     return (
         <div
             className="w-full sm:w-64  shadow-lg rounded-2xl overflow-hidden mb-6"
             style={{ backgroundColor: universeType?.entityColor }}
+            onClick={onClick}
         >
-            <img
-                src={imageUrl}
-                alt={name}
-                className="w-full h-48 sm:h-40 object-contain "
-                style={{ backgroundColor: universeType?.entityColor }}
+            <div className="w-full h-40 sm:h-40 flex justify-center items-center overflow-hidden">
+        <img
+            src={universeEntity.frontImageUrl}
+            alt={universeEntity.name}
+            className="max-w-[80%] max-h-[80%] object-contain"
+            style={{ backgroundColor: universeType?.entityColor }}
             />
+         </div>
+            
+            
             <div className="p-4 text-left sm:ml-5">
                 <h1 className="text-base sm:text-lg font-bold">
-                    {itemNumber}: {name}
+                    {String(universeEntity.id).padStart(3, '0')}: {universeEntity.name}
                 </h1>
-                <h2>
-                    <strong>Tipo:</strong> {type}
-                </h2>
-                <p>
-                    <strong>Hábitat:</strong> {habitat}
-                </p>
-                <p>
-                    <strong>Creador:</strong> {creator}
-                </p>
+                  <p>
+                    <strong>Tipo:</strong> {universeEntity.entityTypes.join('/')}
+                  </p>
+                {universeEntity.location && (
+                  <p>
+                    <strong>Hábitat:</strong> {universeEntity.location}
+                  </p>
+                )} 
+                {universeEntity.origin && (
+                  <p>
+                    <strong>Origen:</strong> {universeEntity.origin}
+                  </p>
+                )} 
+                {universeEntity.creator && (
+                  <p>
+                    <strong>Creador:</strong> {universeEntity.creator}
+                  </p>
+                )}
                 <button className="mt-2 text-black  font-bold hover:underline  sm:text-right">DESCUBRIR MÁS...</button>
             </div>
         </div>
     );
-}
+};
