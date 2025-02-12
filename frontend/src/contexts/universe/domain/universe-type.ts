@@ -10,4 +10,8 @@ export type UniverseType = {
     tertiaryColor: string;
     allowDetail: boolean;
     detailPath?: string;
+    
+    editColor: string;
+    boxEditColor: string;
+    indexEdit: string;
 };
