@@ -1,9 +1,20 @@
-import { AllowNull, BelongsToMany, Column, DataType, Model, PrimaryKey, Table } from 'sequelize-typescript';
+import {
+    AllowNull,
+    BelongsTo,
+    BelongsToMany,
+    Column,
+    DataType,
+    ForeignKey,
+    Model,
+    PrimaryKey,
+    Table,
+} from 'sequelize-typescript';
 import { PokemonDto } from '../pokemon.dto';
 import { PgPokemonConstants } from './pg-pokemon.constants';
 import { UniverseTypeNameConstants } from '../../../universe/domain/constants/universe-type-name.constants';
 import { PgPokemonTypeRelationModel } from './pg-pokemon-type-relation.model';
 import { PgPokemonTypeModel } from './pg-pokemon-type.model';
+import { PgUserModel } from '../../../user/infrastructure/postgres/pg-user.model';
 
 /**
  * The Pokémon model for PostgresSQL.
@@ -35,6 +46,15 @@ export class PgPokemonModel extends Model<PokemonDto> implements PokemonDto {
     @Column
     description: string;
 
+    @AllowNull(true)
+    @ForeignKey(() => PgUserModel)
+    @Column({ type: DataType.UUID })
+    creatorId?: string;
+
+    get creatorName(): string | undefined {
+        return this.creator?.username;
+    }
+
     get entityTypes(): string[] {
         return (this.pokemonTypes ?? []).map((type) => type.name);
     }
@@ -45,4 +65,7 @@ export class PgPokemonModel extends Model<PokemonDto> implements PokemonDto {
 
     @BelongsToMany(() => PgPokemonTypeModel, () => PgPokemonTypeRelationModel)
     pokemonTypes?: PgPokemonTypeModel[];
+
+    @BelongsTo(() => PgUserModel)
+    creator?: PgUserModel;
 }

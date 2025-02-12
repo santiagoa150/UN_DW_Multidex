@@ -24,7 +24,7 @@ export default function PokemonInfoPage(): JSX.Element {
     useEffect(() => {
         if (!universeEntityLoaded && universeType) {
             getUniverseEntityByIdAndTypeApplication
-                .exec(id as string, universeType.name)
+                .exec(Number(id), universeType.name)
                 .then((res) => {
                     setUniverseEntityLoaded(true);
                     setUniverseEntity(res);

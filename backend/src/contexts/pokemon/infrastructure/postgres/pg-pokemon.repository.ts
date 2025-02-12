@@ -5,6 +5,7 @@ import { PgPokemonModel } from './pg-pokemon.model';
 import { Pokemon } from '../../domain/pokemon';
 import { PokemonMappers } from '../pokemon.mappers';
 import { PgPokemonTypeModel } from './pg-pokemon-type.model';
+import { PgUserModel } from '../../../user/infrastructure/postgres/pg-user.model';
 
 /**
  * The Pokémon repository for Postgres.
@@ -26,13 +27,16 @@ export class PgPokemonRepository implements PokemonRepository {
     async getById(id: number): Promise<Pokemon | undefined> {
         this._logger.log(`[${this.getById.name}] INIT :: id: ${id}`);
         const found: PgPokemonModel = await this._pgPokemonModel.findOne({
-            where: { id },
             include: [
                 {
                     model: PgPokemonTypeModel,
                     order: [['order', 'ASC']],
                 },
+                {
+                    model: PgUserModel,
+                },
             ],
+            where: { id },
         });
         const mapped: Pokemon | undefined = found ? PokemonMappers.DTO2Pokemon(found) : undefined;
         this._logger.log(`[${this.getById.name}] FINISH ::`);

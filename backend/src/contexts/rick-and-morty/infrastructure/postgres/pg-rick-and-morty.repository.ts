@@ -4,6 +4,7 @@ import { RickAndMortyCharacter } from '../../domain/rick-and-morty-character';
 import { InjectModel } from '@nestjs/sequelize';
 import { PgRickAndMortyCharacterModel } from './pg-rick-and-morty-character.model';
 import { RickAndMortyCharacterMappers } from '../rick-and-morty-character.mappers';
+import { PgUserModel } from '../../../user/infrastructure/postgres/pg-user.model';
 
 /**
  * The Rick and Morty repository for Postgres.
@@ -27,7 +28,14 @@ export class PgRickAndMortyRepository implements RickAndMortyRepository {
      */
     async getCharacterById(id: number): Promise<RickAndMortyCharacter | undefined> {
         this._logger.log(`[${this.getCharacterById.name}] INIT :: id: ${id}`);
-        const found: PgRickAndMortyCharacterModel = await this._pgCharacterModel.findOne({ where: { id } });
+        const found: PgRickAndMortyCharacterModel = await this._pgCharacterModel.findOne({
+            include: [
+                {
+                    model: PgUserModel,
+                },
+            ],
+            where: { id },
+        });
         const mapped: RickAndMortyCharacter | undefined = found
             ? RickAndMortyCharacterMappers.DTO2RickAndMortyCharacter(found)
             : undefined;

@@ -14,8 +14,10 @@ export class Pokemon extends UniverseEntity {
         description: string,
         protected readonly _height: number,
         protected readonly _weight: number,
+        creatorId?: string,
+        creatorName?: string,
     ) {
-        super(id, name, universeType, entityTypes, frontImageUrl, description);
+        super(id, name, universeType, entityTypes, frontImageUrl, description, creatorId, creatorName);
     }
 
     get height(): number {

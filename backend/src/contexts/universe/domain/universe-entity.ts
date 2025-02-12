@@ -11,6 +11,8 @@ export class UniverseEntity {
      * @param _entityTypes - The types of entities that this entity can be related to
      * @param _frontImageUrl - The URL of the image that represents the entity
      * @param _description - The description of the entity
+     * @param _creatorId - The unique identifier of the creator
+     * @param _creatorName - The name of the creator
      * @param _height - The universe entity height
      * @param _weight - The universe entity weight
      * @param _status - The universe entity status
@@ -25,6 +27,8 @@ export class UniverseEntity {
         private readonly _entityTypes: Set<string>,
         private readonly _frontImageUrl: string,
         private readonly _description: string,
+        private readonly _creatorId?: string,
+        private readonly _creatorName?: string,
         protected readonly _height?: number,
         protected readonly _weight?: number,
         protected readonly _status?: string,
@@ -55,6 +59,14 @@ export class UniverseEntity {
 
     get description(): string {
         return this._description;
+    }
+
+    get creatorId(): string {
+        return this._creatorId;
+    }
+
+    get creatorName(): string {
+        return this._creatorName;
     }
 
     get height(): number | undefined {

@@ -1,6 +1,9 @@
+import axios from 'axios';
 import { UniverseRepository } from '../../domain/interfaces/universe.repository.ts';
 import { UniverseEntity } from '../../domain/universe-entity.ts';
 import { UniverseTypeNameConstants } from '../../domain/constants/universe-type-name.constants.ts';
+import { BackendUniverseConstants } from './backend-universe.constants.ts';
+import { GetUniverseEntityByIdAndTypeResponse } from './responses/get-universe-entity-by-id-and-type.response.ts';
 
 /**
  * Backend implementation of the universe repository.
@@ -14,46 +17,41 @@ export class BackendUniverseRepository implements UniverseRepository {
      * @returns The universe entity with the specified ID, or `undefined` if no entity was found.
      */
     async getUniverseEntityByIdAndType(
-        id: string,
+        id: number,
         type: UniverseTypeNameConstants,
     ): Promise<UniverseEntity | undefined> {
-        const entities: UniverseEntity[] = [
-            {
-                id: 1,
-                name: 'Blastoise',
-                universeType: UniverseTypeNameConstants.POKEMON,
-                entityTypes: ['Agua'],
-                frontImageUrl:
-                    'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png',
-                weight: 855,
-                height: 16,
-                description:
-                    'Para acabar con su enemigo, lo aplasta con el peso de su cuerpo. En momentos de apuro, se esconde en el caparazón.',
-            },
-            {
-                id: 12,
-                name: 'Butterfree ',
-                universeType: UniverseTypeNameConstants.POKEMON,
-                entityTypes: ['Bicho', 'Volador'],
-                frontImageUrl:
-                    'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/12.png',
-                weight: 320,
-                height: 11,
-                description: '',
-            },
-            {
-                id: 1,
-                name: 'Rick',
-                universeType: UniverseTypeNameConstants.RICK_AND_MORTY,
-                entityTypes: ['Humano'],
-                frontImageUrl: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
-                status: 'Vivo',
-                gender: 'Hombre',
-                location: 'Citadel of Ricks',
-                origin: 'Earth (C-137)',
-                description: '',
-            },
-        ];
-        return entities.find((entity) => entity.id === Number(id) && type === entity.universeType);
+        let mapped: UniverseEntity | undefined;
+        try {
+            const { entity } = await axios
+                .get<GetUniverseEntityByIdAndTypeResponse>(
+                    BackendUniverseConstants.GET_UNIVERSE_ENTITY_BY_ID_AND_TYPE_URI,
+                    {
+                        baseURL: import.meta.env.VITE_BACKEND_BASE_URL,
+                        params: {
+                            id,
+                            universeType: type,
+                        },
+                    },
+                )
+                .then((res) => res.data);
+            mapped = {
+                creator: entity.creatorName,
+                description: entity.description,
+                entityTypes: entity.entityTypes,
+                frontImageUrl: entity.frontImageUrl,
+                gender: entity.gender,
+                height: entity.height,
+                id: entity.id,
+                location: entity.location,
+                name: entity.name,
+                origin: entity.origin,
+                status: entity.status,
+                universeType: entity.universeType as UniverseTypeNameConstants,
+                weight: entity.weight,
+            };
+        } catch (e) {
+            console.error(e);
+        }
+        return mapped;
     }
 }

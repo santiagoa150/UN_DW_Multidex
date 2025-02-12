@@ -7,6 +7,7 @@ import { EnvironmentConstants } from './src/contexts/shared/domain/constants/env
 export const EnvSchema: Joi.ObjectSchema = Joi.object({
     VITE_APP_PORT: Joi.number().port(),
     VITE_ENVIRONMENT: Joi.string().valid(...Object.values(EnvironmentConstants)),
+    VITE_BACKEND_BASE_URL: Joi.string().uri(),
 })
     .options({ presence: 'required' })
     .required();

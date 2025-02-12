@@ -8,6 +8,8 @@ export type UniverseEntityDto = {
     entityTypes: string[];
     frontImageUrl: string;
     description: string;
+    creatorId?: string;
+    creatorName?: string;
     height?: number;
     weight?: number;
     status?: string;

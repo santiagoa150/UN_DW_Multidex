@@ -70,4 +70,14 @@ export class HttpUniverseEntity implements UniverseEntityDto {
     @IsString({ message: UniverseExceptionMessagesConstants.UNIVERSE_ENTITY_ORIGIN_MUST_BE_A_STRING })
     @IsOptional()
     origin?: string;
+
+    @ApiProperty({ description: 'The creator id.' })
+    @IsString({ message: UniverseExceptionMessagesConstants.UNIVERSE_ENTITY_CREATOR_ID_MUST_BE_A_STRING })
+    @IsOptional()
+    creatorId?: string;
+
+    @ApiProperty({ description: 'The creator name.' })
+    @IsString({ message: UniverseExceptionMessagesConstants.UNIVERSE_ENTITY_CREATOR_NAME_MUST_BE_A_STRING })
+    @IsOptional()
+    creatorName?: string;
 }

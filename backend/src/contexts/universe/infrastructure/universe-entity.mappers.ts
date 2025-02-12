@@ -12,6 +12,8 @@ export abstract class UniverseEntityMappers {
      */
     static UniverseEntity2DTO(entity: UniverseEntity): UniverseEntityDto {
         return {
+            creatorId: entity.creatorId,
+            creatorName: entity.creatorName,
             description: entity.description,
             entityTypes: Array.from(entity.entityTypes),
             frontImageUrl: entity.frontImageUrl,

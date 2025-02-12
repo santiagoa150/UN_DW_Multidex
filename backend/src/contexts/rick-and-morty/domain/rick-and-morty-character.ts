@@ -16,8 +16,10 @@ export class RickAndMortyCharacter extends UniverseEntity {
         protected readonly _gender: string,
         protected readonly _location: string,
         protected readonly _origin: string,
+        creatorId?: string,
+        creatorName?: string,
     ) {
-        super(id, name, universeType, entityTypes, frontImageUrl, description);
+        super(id, name, universeType, entityTypes, frontImageUrl, description, creatorId, creatorName);
     }
 
     get status(): string {

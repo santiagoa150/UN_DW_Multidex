@@ -17,7 +17,7 @@ export class GetUniverseEntityByIdAndTypeApplication {
      * @param type - The type of the universe entity to retrieve.
      * @returns The universe entity with the specified ID, or `undefined` if no entity was found.
      */
-    async exec(id: string, type: UniverseTypeNameConstants): Promise<UniverseEntity | undefined> {
+    async exec(id: number, type: UniverseTypeNameConstants): Promise<UniverseEntity | undefined> {
         return this.repository.getUniverseEntityByIdAndType(id, type);
     }
 }

@@ -22,6 +22,8 @@ export abstract class PokemonMappers extends UniverseEntityMappers {
             dto.description,
             dto.height,
             dto.weight,
+            dto.creatorId,
+            dto.creatorName,
         );
     }
 }

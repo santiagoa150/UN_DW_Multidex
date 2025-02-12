@@ -1,7 +1,8 @@
-import { AllowNull, Column, DataType, Model, PrimaryKey, Table } from 'sequelize-typescript';
+import { AllowNull, BelongsTo, Column, DataType, ForeignKey, Model, PrimaryKey, Table } from 'sequelize-typescript';
 import { RickAndMortyCharacterDto } from '../rick-and-morty-character.dto';
 import { PgRickAndMortyConstants } from './pg-rick-and-morty.constants';
 import { UniverseTypeNameConstants } from '../../../universe/domain/constants/universe-type-name.constants';
+import { PgUserModel } from '../../../user/infrastructure/postgres/pg-user.model';
 
 /**
  * The Rick and Morty character model for PostgresSQL.
@@ -45,6 +46,15 @@ export class PgRickAndMortyCharacterModel extends Model<RickAndMortyCharacterDto
     @Column
     description: string;
 
+    @AllowNull(true)
+    @ForeignKey(() => PgUserModel)
+    @Column({ type: DataType.UUID })
+    creatorId?: string;
+
+    get creatorName(): string | undefined {
+        return this.creator?.username;
+    }
+
     get entityTypes(): string[] {
         return [this.entityType];
     }
@@ -52,4 +62,7 @@ export class PgRickAndMortyCharacterModel extends Model<RickAndMortyCharacterDto
     get universeType(): string {
         return UniverseTypeNameConstants.RICK_AND_MORTY;
     }
+
+    @BelongsTo(() => PgUserModel)
+    creator?: PgUserModel;
 }

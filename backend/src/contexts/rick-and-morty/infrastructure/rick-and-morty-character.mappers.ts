@@ -24,6 +24,8 @@ export class RickAndMortyCharacterMappers extends UniverseEntityMappers {
             dto.gender,
             dto.location,
             dto.origin,
+            dto.creatorId,
+            dto.creatorName,
         );
     }
 }

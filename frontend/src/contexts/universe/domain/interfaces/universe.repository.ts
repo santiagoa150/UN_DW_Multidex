@@ -11,5 +11,5 @@ export interface UniverseRepository {
      * @param type - The type of the universe entity to retrieve.
      * @returns The universe entity with the specified ID, or `undefined` if no entity was found.
      */
-    getUniverseEntityByIdAndType(id: string, type: UniverseTypeNameConstants): Promise<UniverseEntity | undefined>;
+    getUniverseEntityByIdAndType(id: number, type: UniverseTypeNameConstants): Promise<UniverseEntity | undefined>;
 }

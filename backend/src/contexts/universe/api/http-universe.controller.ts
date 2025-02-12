@@ -48,6 +48,8 @@ export class HttpUniverseController {
             status: dto.status,
             universeType: dto.universeType,
             weight: dto.weight,
+            creatorId: dto.creatorId,
+            creatorName: dto.creatorName,
         };
         return response;
     }
