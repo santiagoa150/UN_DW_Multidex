@@ -2,12 +2,11 @@ import { JSX } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import { ListEntity } from './ListEntity';
-import { useUniverse } from '../../../../../config/UniverseContext.tsx';
 import { RoutesConstants } from '../../../../shared/domain/constants/routes.constants.ts';
 import { useNavigate } from 'react-router-dom';
 import { UniverseEntity } from '../../../domain/universe-entity.ts';
 import { UniverseTypeNameConstants } from '../../../domain/constants/universe-type-name.constants.ts';
-
+import { useUniverse } from '../../../../../config/universe/use-universe.hook.ts';
 
 // lista de cada pokemon con su numero y nombre
 const itemsExample: UniverseEntity[] = [
@@ -21,7 +20,7 @@ const itemsExample: UniverseEntity[] = [
         frontImageUrl: 'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/025.png',
     },
     {
-        id: 2, 
+        id: 2,
         name: 'Charizard',
         entityTypes: ['Fuego', 'Volador'],
         universeType: UniverseTypeNameConstants.POKEMON,
@@ -31,7 +30,7 @@ const itemsExample: UniverseEntity[] = [
         frontImageUrl: 'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/006.png',
     },
     {
-        id: 3, 
+        id: 3,
         name: 'Blastoise',
         entityTypes: ['Agua'],
         universeType: UniverseTypeNameConstants.POKEMON,
@@ -58,7 +57,7 @@ const itemsExample: UniverseEntity[] = [
         frontImageUrl: 'https://www.pokemon.com/static-assets/content-assets/cms2/img/pokedex/full/059.png',
     },
     {
-        id: 6, 
+        id: 6,
         name: 'Sandshrew',
         entityTypes: ['Tierra'],
         universeType: UniverseTypeNameConstants.POKEMON,
@@ -102,7 +101,7 @@ const itemsExample: UniverseEntity[] = [
         origin: 'Earth (C-137)',
         creator: 'Daniel8',
     },
-      {
+    {
         id: 2,
         name: 'Beth Smith',
         universeType: UniverseTypeNameConstants.RICK_AND_MORTY,
@@ -112,41 +111,41 @@ const itemsExample: UniverseEntity[] = [
         creator: 'Daniel8',
     },
     {
-      id: 3,
-      name: 'Zeep Xanflorp',
-      universeType: UniverseTypeNameConstants.RICK_AND_MORTY,
-      entityTypes: ['Humanoide'],
-      frontImageUrl: 'https://i.imgur.com/uWmSJfc.png',
-      origin: 'Rick Battery Microverse',
-      creator: 'cami',
-  },
-{
-      id: 4,
-      name: 'Morty Smith',
-      universeType: UniverseTypeNameConstants.RICK_AND_MORTY,
-      entityTypes: ['Humano'],
-      frontImageUrl: 'https://i.imgur.com/IM0PdiE.png',
-      origin: 'Earth ',
-      creator: 'Lau',
-  },
+        id: 3,
+        name: 'Zeep Xanflorp',
+        universeType: UniverseTypeNameConstants.RICK_AND_MORTY,
+        entityTypes: ['Humanoide'],
+        frontImageUrl: 'https://i.imgur.com/uWmSJfc.png',
+        origin: 'Rick Battery Microverse',
+        creator: 'cami',
+    },
     {
-      id: 5,
-      name: 'Summer Smith',
-      universeType: UniverseTypeNameConstants.RICK_AND_MORTY,
-      entityTypes: ['Humano'],
-      frontImageUrl: 'https://i.imgur.com/MBFxZaI.png',
-      origin: 'Earth',
-      creator: 'Dani',
-  },
-{
-      id: 6,
-      name: 'Daphne',
-      universeType: UniverseTypeNameConstants.RICK_AND_MORTY,
-      entityTypes: ['Alien'],
-      frontImageUrl: 'https://i.imgur.com/OwRynSO.png',
-      origin: 'Morglutz',
-      creator: 'May',
-  },
+        id: 4,
+        name: 'Morty Smith',
+        universeType: UniverseTypeNameConstants.RICK_AND_MORTY,
+        entityTypes: ['Humano'],
+        frontImageUrl: 'https://i.imgur.com/IM0PdiE.png',
+        origin: 'Earth ',
+        creator: 'Lau',
+    },
+    {
+        id: 5,
+        name: 'Summer Smith',
+        universeType: UniverseTypeNameConstants.RICK_AND_MORTY,
+        entityTypes: ['Humano'],
+        frontImageUrl: 'https://i.imgur.com/MBFxZaI.png',
+        origin: 'Earth',
+        creator: 'Dani',
+    },
+    {
+        id: 6,
+        name: 'Daphne',
+        universeType: UniverseTypeNameConstants.RICK_AND_MORTY,
+        entityTypes: ['Alien'],
+        frontImageUrl: 'https://i.imgur.com/OwRynSO.png',
+        origin: 'Morglutz',
+        creator: 'May',
+    },
 ];
 
 export default function UniverseListPage(): JSX.Element {

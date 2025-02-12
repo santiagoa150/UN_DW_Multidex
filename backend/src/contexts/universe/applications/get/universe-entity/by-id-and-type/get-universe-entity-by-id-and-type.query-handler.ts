@@ -1,6 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { GetUniverseEntityByIdAndTypeQuery } from './get-universe-entity-by-id-and-type.query';
-import { UniverseEntity } from '../../../domain/universe-entity';
+import { UniverseEntity } from '../../../../domain/universe-entity';
 import { GetUniverseEntityByIdAndTypeApplication } from './get-universe-entity-by-id-and-type.application';
 
 /**

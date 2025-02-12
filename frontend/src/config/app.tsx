@@ -2,7 +2,7 @@ import Routes from './routes.tsx';
 import { Outlet } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getCurrentUniverseApplication } from './app.providers.ts';
-import { UniverseProvider } from './UniverseContext.tsx';
+import { UniverseProvider } from './universe/universe-context.tsx';
 
 /**
  * The main application component that sets up the routing.

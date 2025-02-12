@@ -1,5 +1,5 @@
 /**
- * Constants for the Pokémon Postgres model.
+ * Constants for the Pokémon Postgres models.
  */
 export enum PgPokemonConstants {
     POKEMON_TABLE_NAME = 'pokemon',

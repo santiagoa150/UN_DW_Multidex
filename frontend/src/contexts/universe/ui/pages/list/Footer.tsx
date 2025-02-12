@@ -1,5 +1,6 @@
 import { JSX } from 'react';
-import { useUniverse } from '../../../../../config/UniverseContext.tsx';
+
+import { useUniverse } from '../../../../../config/universe/use-universe.hook.ts';
 
 export default function UniverseListPage(): JSX.Element {
     const { universeType } = useUniverse();

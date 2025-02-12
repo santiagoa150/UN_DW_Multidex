@@ -8,16 +8,14 @@ export type UniverseType = {
     mainColor: string;
     secondaryColor: string;
     tertiaryColor: string;
-    entityColor : string;
+    entityColor: string;
     allowDetail: boolean;
     detailPath?: string;
+    editColor: string;
+    boxEditColor: string;
+    indexEdit: string;
     logo_1: string;
-    logo_2:string;
-    logo_3:string;
+    logo_2: string;
+    logo_3: string;
     search: string;
-   
 };
-
-
-
-

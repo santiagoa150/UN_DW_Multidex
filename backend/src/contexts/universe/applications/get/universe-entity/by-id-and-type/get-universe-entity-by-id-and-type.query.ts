@@ -1,5 +1,5 @@
 import { IQuery } from '@nestjs/cqrs';
-import { UniverseTypeNameConstants } from '../../../domain/constants/universe-type-name.constants';
+import { UniverseTypeNameConstants } from '../../../../domain/constants/universe-type-name.constants';
 
 /**
  * Represents a query to retrieve a universe entity by its type and id.
