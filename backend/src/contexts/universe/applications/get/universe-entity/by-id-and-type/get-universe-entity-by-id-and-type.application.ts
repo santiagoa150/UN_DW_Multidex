@@ -1,11 +1,11 @@
-import { UniverseEntity } from '../../../domain/universe-entity';
-import { UniverseTypeNameConstants } from '../../../domain/constants/universe-type-name.constants';
+import { UniverseEntity } from '../../../../domain/universe-entity';
+import { UniverseTypeNameConstants } from '../../../../domain/constants/universe-type-name.constants';
 import { HttpStatus, Logger } from '@nestjs/common';
-import { UniverseTypeNotSupportedException } from '../../../domain/exceptions/universe-type-not-supported.exception';
+import { UniverseTypeNotSupportedException } from '../../../../domain/exceptions/universe-type-not-supported.exception';
 import { QueryBus } from '@nestjs/cqrs';
-import { UniverseEntityNotFoundException } from '../../../domain/exceptions/universe-entity-not-found.exception';
-import { GetPokemonByIdQuery } from '../../../../pokemon/applications/get/by-id/get-pokemon-by-id.query';
-import { GetRickAndMortyCharacterByIdQuery } from '../../../../rick-and-morty/applications/get/character-by-id/get-rick-and-morty-character-by-id.query';
+import { UniverseEntityNotFoundException } from '../../../../domain/exceptions/universe-entity-not-found.exception';
+import { GetPokemonByIdQuery } from '../../../../../pokemon/applications/get/by-id/get-pokemon-by-id.query';
+import { GetRickAndMortyCharacterByIdQuery } from '../../../../../rick-and-morty/applications/get/character-by-id/get-rick-and-morty-character-by-id.query';
 
 /**
  * Application for getting a universe entity by its id and type.

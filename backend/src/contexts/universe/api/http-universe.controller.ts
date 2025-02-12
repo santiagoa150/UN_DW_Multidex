@@ -4,7 +4,7 @@ import { HttpUniverseConstants } from './http-universe.constants';
 import { QueryBus } from '@nestjs/cqrs';
 import { GetUniverseEntityByIdAndTypeRequest } from './requests/get-universe-entity-by-id-and-type.request';
 import { GetUniverseEntityByIdAndTypeResponse } from './responses/get-universe-entity-by-id-and-type.response';
-import { GetUniverseEntityByIdAndTypeQuery } from '../applications/get/universe-entity-by-id-and-type/get-universe-entity-by-id-and-type.query';
+import { GetUniverseEntityByIdAndTypeQuery } from '../applications/get/universe-entity/by-id-and-type/get-universe-entity-by-id-and-type.query';
 import { UniverseEntity } from '../domain/universe-entity';
 import { UniverseTypeNameConstants } from '../domain/constants/universe-type-name.constants';
 import { UniverseEntityMappers } from '../infrastructure/universe-entity.mappers';
