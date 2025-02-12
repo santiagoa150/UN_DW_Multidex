@@ -1,6 +1,6 @@
 import { UniverseTypeNameToPropertiesConstants } from '../../../../universe/domain/constants/universe-type-name-to-properties.constants';
 
-export function Evolution() {
+export function PokemonInfoEvolution() {
     return (
         <>
             <p className="ml-12 mt-5 font-semibold text-[30px]">Línea evolutiva</p>

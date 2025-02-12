@@ -2,7 +2,7 @@ import { JSX } from 'react';
 
 import { useUniverse } from '../../../../../config/universe/use-universe.hook.ts';
 
-export default function UniverseListPage(): JSX.Element {
+export default function UniverseListFooter(): JSX.Element {
     const { universeType } = useUniverse();
     /**
      * Load the universe type when the component is mounted.

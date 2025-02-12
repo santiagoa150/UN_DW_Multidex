@@ -1,7 +1,7 @@
 import { JSX } from 'react';
-import Header from './Header';
-import Footer from './Footer';
-import { ListEntity } from './ListEntity';
+import Header from './universe-list-header.tsx';
+import Footer from './universe-list-footer.tsx';
+import ListEntity from './list-entity.tsx';
 import { RoutesConstants } from '../../../../shared/domain/constants/routes.constants.ts';
 import { useNavigate } from 'react-router-dom';
 import { UniverseEntity } from '../../../domain/universe-entity.ts';

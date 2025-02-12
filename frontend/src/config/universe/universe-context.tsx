@@ -5,6 +5,10 @@ import { UniverseTypeNameConstants } from '../../contexts/universe/domain/consta
 import { UniverseTypeNameToPropertiesConstants } from '../../contexts/universe/domain/constants/universe-type-name-to-properties.constants.ts';
 import { UniverseContext } from './universe.context.ts';
 
+/**
+ * Provider to manage the universe of the application.
+ * @param children - The children of the provider.
+ */
 export function UniverseProvider({ children }: { children: ReactNode }) {
     const [universeType, setUniverseType] = useState<UniverseType | undefined>();
 
@@ -12,12 +16,19 @@ export function UniverseProvider({ children }: { children: ReactNode }) {
         getCurrentUniverseApplication.exec().then(setUniverseType);
     }, []);
 
+    /**
+     * Sets the universe type.
+     * @param universeTypeName - The name of the universe type.
+     */
     const setUniverseTypeLocal = (universeTypeName: UniverseTypeNameConstants) => {
         const universeType = UniverseTypeNameToPropertiesConstants[universeTypeName];
         setCurrentUniverseApplication.exec(universeTypeName).then();
         setUniverseType(universeType);
     };
 
+    /**
+     * Toggles the universe type.
+     */
     const toggleUniverse = () => {
         const newUniverseName =
             universeType?.name === UniverseTypeNameConstants.POKEMON

@@ -8,4 +8,7 @@ type UniverseContextType = {
     toggleUniverse: () => void;
 };
 
+/**
+ * Context to manage the universe of the application.
+ */
 export const UniverseContext = createContext<UniverseContextType | undefined>(undefined);

@@ -4,14 +4,13 @@ import { useUniverse } from '../../../../../config/universe/use-universe.hook.ts
 interface ListEntityProps {
     universeEntity: UniverseEntity;
     onClick: () => void;
-    // other props if any
 }
 
-export const ListEntity: React.FC<ListEntityProps> = ({ universeEntity, onClick }) => {
+export default function ListEntity({ universeEntity, onClick }: ListEntityProps) {
     const { universeType } = useUniverse();
     return (
         <div
-            className="w-full sm:w-64  shadow-lg rounded-2xl overflow-hidden mb-6"
+            className="w-full sm:w-64  shadow-lg rounded-2xl overflow-hidden mb-6 cursor-pointer hover:shadow-2xl"
             style={{ backgroundColor: universeType?.entityColor }}
             onClick={onClick}
         >
@@ -50,4 +49,4 @@ export const ListEntity: React.FC<ListEntityProps> = ({ universeEntity, onClick 
             </div>
         </div>
     );
-};
+}

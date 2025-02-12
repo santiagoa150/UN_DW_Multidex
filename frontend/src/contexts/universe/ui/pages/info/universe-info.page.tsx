@@ -3,14 +3,11 @@ import { CgClose } from 'react-icons/cg';
 import { HiPencil } from 'react-icons/hi2';
 import { MdDelete } from 'react-icons/md';
 import { useNavigate, useParams } from 'react-router-dom';
-import {
-    getCurrentUniverseApplication,
-    getUniverseEntityByIdAndTypeApplication,
-} from '../../../../../config/app.providers.ts';
+import { getUniverseEntityByIdAndTypeApplication } from '../../../../../config/app.providers.ts';
 import { RoutesConstants } from '../../../../shared/domain/constants/routes.constants.ts';
 import { UniverseEntity } from '../../../domain/universe-entity.ts';
-import { UniverseType } from '../../../domain/universe-type.ts';
 import Triangle from '../../images/triangle.png';
+import { useUniverse } from '../../../../../config/universe/use-universe.hook.ts';
 
 /**
  * The page that displays information about one element of the universe.
@@ -19,19 +16,9 @@ export default function UniverseInfoPage(): JSX.Element {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const [universeType, setUniverseType] = useState<UniverseType | undefined>();
-
+    const { universeType } = useUniverse();
     const [universeEntityLoaded, setUniverseEntityLoaded] = useState<boolean>(false);
     const [universeEntity, setUniverseEntity] = useState<UniverseEntity | undefined>();
-
-    /**
-     * Load the universe type when the component is mounted.
-     */
-    useEffect(() => {
-        if (!universeType) {
-            getCurrentUniverseApplication.exec().then((res) => setUniverseType(res));
-        }
-    }, [universeType]);
 
     /**
      * Load the universe entity when the component is mounted.
@@ -138,7 +125,16 @@ export default function UniverseInfoPage(): JSX.Element {
                                     <p className="font-bold">{universeEntity.name}</p>
                                 </div>
                                 {universeType.allowDetail && universeType.detailPath && (
-                                    <button className="font-bold">Ver detalles</button>
+                                    <button
+                                        className="font-bold"
+                                        onClick={() =>
+                                            navigate(
+                                                universeType.detailPath!.replace(':id', universeEntity.id.toString()),
+                                            )
+                                        }
+                                    >
+                                        Ver detalles
+                                    </button>
                                 )}
                             </div>
                         </div>

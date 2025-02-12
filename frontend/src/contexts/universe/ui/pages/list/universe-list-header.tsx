@@ -4,7 +4,7 @@ import { RoutesConstants } from '../../../../shared/domain/constants/routes.cons
 
 import { useUniverse } from '../../../../../config/universe/use-universe.hook.ts';
 
-export default function UniverseListPage(): JSX.Element {
+export default function UniverseListHeader(): JSX.Element {
     const { universeType, toggleUniverse } = useUniverse();
     const navigate = useNavigate();
 

@@ -1,7 +1,5 @@
 import Routes from './routes.tsx';
 import { Outlet } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { getCurrentUniverseApplication } from './app.providers.ts';
 import { UniverseProvider } from './universe/universe-context.tsx';
 
 /**
@@ -9,17 +7,6 @@ import { UniverseProvider } from './universe/universe-context.tsx';
  * @constructor
  */
 function App() {
-    const [isCurrentUniverseLoaded, setIsCurrentUniverseLoaded] = useState<boolean>(false);
-
-    /**
-     * Load the current universe when the application starts.
-     */
-    useEffect(() => {
-        if (!isCurrentUniverseLoaded) {
-            getCurrentUniverseApplication.exec().then(() => setIsCurrentUniverseLoaded(true));
-        }
-    }, [isCurrentUniverseLoaded]);
-
     return (
         <>
             <UniverseProvider>
