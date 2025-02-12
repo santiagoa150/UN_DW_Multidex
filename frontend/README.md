@@ -48,3 +48,12 @@ export default tseslint.config({
   },
 })
 ```
+## Setup local dev
+
+### Requirements
+- Nodejs
+
+### Install dependencies
+- npm install
+- cp .env.example .env 
+- npm run dev

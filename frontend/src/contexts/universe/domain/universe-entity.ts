@@ -9,11 +9,12 @@ export type UniverseEntity = {
     universeType: UniverseTypeNameConstants;
     entityTypes: string[];
     frontImageUrl: string;
-    description: string;
+    description?: string;
     height?: number;
     weight?: number;
     status?: string;
     gender?: string;
     location?: string;
     origin?: string;
+    creator?: string;
 };
