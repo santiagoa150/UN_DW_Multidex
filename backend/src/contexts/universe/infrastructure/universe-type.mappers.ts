@@ -6,18 +6,13 @@ import { UniverseTypeNameConstants } from '../domain/constants/universe-type-nam
  * Utility class to map universe types.
  */
 export abstract class UniverseTypeMappers {
-
     /**
      * Maps a `UniverseType` domain object to a `UniverseTypeDto` object.
      * @param dto - The `UniverseTypeDto` object to map.
      * @returns A new `UniverseType` object.
      */
     static DTO2UniverseType(dto: UniverseTypeDto): UniverseType {
-        return new UniverseType(
-            dto.name as UniverseTypeNameConstants,
-            dto.priority,
-            dto.taskWasExecuted,
-        );
+        return new UniverseType(dto.name as UniverseTypeNameConstants, dto.priority, dto.taskWasExecuted);
     }
 
     /**

@@ -16,7 +16,7 @@ export const UniverseTypeNameToPropertiesConstants: Record<UniverseTypeNameConst
 
         editColor: '#FEEAEA',
         boxEditColor: '#FDC3C3B2',
-        indexEdit: "#F6D1E6" 
+        indexEdit: '#F6D1E6',
     },
     [UniverseTypeNameConstants.RICK_AND_MORTY]: {
         name: UniverseTypeNameConstants.RICK_AND_MORTY,
@@ -26,8 +26,7 @@ export const UniverseTypeNameToPropertiesConstants: Record<UniverseTypeNameConst
         allowDetail: false,
 
         editColor: '#65A954',
-        boxEditColor: "#C9FF8C",
-        indexEdit: "#63A419"
-    
+        boxEditColor: '#C9FF8C',
+        indexEdit: '#63A419',
     },
 };

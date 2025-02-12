@@ -1,25 +1,25 @@
-import Stats from "./Stats.png"
-import Info from "./Info.png"
-import Creator from "./Creator.png"
-import Moves from "./Moves.png"
-import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { UniverseType } from "../../../../universe/domain/universe-type";
-import { UniverseEntity } from "../../../../universe/domain/universe-entity";
-import { getCurrentUniverseApplication, getUniverseEntityByIdAndTypeApplication } from "../../../../../config/app.providers";
-import { RoutesConstants } from "../../../../shared/domain/constants/routes.constants";
-
+import Stats from './Stats.png';
+import Info from './Info.png';
+import Creator from './Creator.png';
+import Moves from './Moves.png';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { UniverseType } from '../../../../universe/domain/universe-type';
+import { UniverseEntity } from '../../../../universe/domain/universe-entity';
+import {
+    getCurrentUniverseApplication,
+    getUniverseEntityByIdAndTypeApplication,
+} from '../../../../../config/app.providers';
+import { RoutesConstants } from '../../../../shared/domain/constants/routes.constants';
 
 export function Data() {
-
-   
     const { id } = useParams();
-    
+
     const [universeType, setUniverseType] = useState<UniverseType | undefined>();
     const [universeEntityLoaded, setUniverseEntityLoaded] = useState<boolean>(false);
     const [universeEntity, setUniverseEntity] = useState<UniverseEntity | undefined>();
-    const navigate = useNavigate()
-        
+    const navigate = useNavigate();
+
     useEffect(() => {
         if (!universeType) {
             getCurrentUniverseApplication.exec().then((res) => setUniverseType(res));
@@ -38,8 +38,7 @@ export function Data() {
         }
     }, [navigate, universeEntityLoaded, id, universeType]);
 
-
-    if(universeEntity && universeType){
+    if (universeEntity && universeType) {
         return (
             <section className="w-full mt-4 p-4">
                 <p className="w-full mt-4 p-4 text-lg text-center">{universeEntity?.description}</p>
@@ -79,7 +78,7 @@ export function Data() {
                 </div>
             </section>
         );
-    }  else if (!universeEntity && !universeEntityLoaded) {
+    } else if (!universeEntity && !universeEntityLoaded) {
         /* TODO: Add Loader. */
         return <div>Loader Here</div>;
     } else {

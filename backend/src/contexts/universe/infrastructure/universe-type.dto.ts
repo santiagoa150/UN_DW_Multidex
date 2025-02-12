@@ -5,4 +5,4 @@ export type UniverseTypeDto = {
     priority: number;
     name: string;
     taskWasExecuted: boolean;
-}
+};

@@ -8,7 +8,6 @@ import { GetAllUniverseTypesApplication } from './get-all-universe-types.applica
  */
 @QueryHandler(GetAllUniverseTypesQuery)
 export class GetAllUniverseTypesQueryHandler implements IQueryHandler<GetAllUniverseTypesQuery, UniverseType[]> {
-
     /**
      * @param _app - The application to handle the query.
      */

@@ -10,7 +10,6 @@ export class LoadPokemonApplication {
     ) {}
 
     async exec(universeType: UniverseType): Promise<void> {
-
         if (universeType.name !== UniverseTypeNameConstants.POKEMON) {
             return;
         }
