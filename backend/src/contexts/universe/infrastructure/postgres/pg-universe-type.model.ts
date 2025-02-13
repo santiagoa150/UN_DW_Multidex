@@ -19,4 +19,12 @@ export class PgUniverseTypeModel extends Model<UniverseTypeDto> implements Unive
     @AllowNull(false)
     @Column
     taskWasExecuted: boolean;
+
+    @AllowNull(false)
+    @Column({ type: DataType.INTEGER })
+    elementsPerPage: number;
+
+    @AllowNull(true)
+    @Column
+    metadata?: string;
 }

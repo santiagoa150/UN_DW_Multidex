@@ -3,7 +3,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { PgUserModel } from './pg-user.model';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from '../../domain/user';
-import { UserMappers } from '../user.mappers';
+import { UserMappers } from '../mappers/user.mappers';
 
 /**
  * The user repository for Postgres.

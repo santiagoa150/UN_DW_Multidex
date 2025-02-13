@@ -1,12 +1,12 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { LoadUniverseEntitiesCommand } from '../../../universe/applications/load/load-universe-entities.command';
+import { LoadPokemonCommand } from './load-pokemon.command';
 import { LoadPokemonApplication } from './load-pokemon.application';
 
 /**
- * `LoadPokemonCommandHandler` is responsible for handling the `LoadUniverseEntitiesCommand` event.
+ * `LoadPokemonCommandHandler` is responsible for handling the `LoadPokemonCommand` event.
  */
-@CommandHandler(LoadUniverseEntitiesCommand)
-export class LoadPokemonCommandHandler implements ICommandHandler<LoadUniverseEntitiesCommand, void> {
+@CommandHandler(LoadPokemonCommand)
+export class LoadPokemonCommandHandler implements ICommandHandler<LoadPokemonCommand, void> {
     /**
      * @param _app - The application to handle the event.
      */
@@ -16,7 +16,7 @@ export class LoadPokemonCommandHandler implements ICommandHandler<LoadUniverseEn
      * Executes the event.
      * @param command - The event to execute.
      */
-    execute(command: LoadUniverseEntitiesCommand): Promise<void> {
-        return this._app.exec(command._universeType);
+    execute(command: LoadPokemonCommand): Promise<void> {
+        return this._app.exec(command.universeType);
     }
 }

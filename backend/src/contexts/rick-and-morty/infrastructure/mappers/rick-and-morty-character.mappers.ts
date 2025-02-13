@@ -1,7 +1,7 @@
-import { UniverseEntityMappers } from '../../universe/infrastructure/universe-entity.mappers';
-import { RickAndMortyCharacterDto } from './rick-and-morty-character.dto';
-import { RickAndMortyCharacter } from '../domain/rick-and-morty-character';
-import { UniverseTypeNameConstants } from '../../universe/domain/constants/universe-type-name.constants';
+import { UniverseEntityMappers } from '../../../universe/infrastructure/mappers/universe-entity.mappers';
+import { RickAndMortyCharacterDto } from '../rick-and-morty-character.dto';
+import { RickAndMortyCharacter } from '../../domain/rick-and-morty-character';
+import { UniverseTypeNameConstants } from '../../../universe/domain/constants/universe-type-name.constants';
 
 /**
  * Utility class to map DTOs to Rick and Morty character entities.

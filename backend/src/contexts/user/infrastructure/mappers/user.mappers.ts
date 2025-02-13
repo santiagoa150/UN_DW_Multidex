@@ -1,5 +1,5 @@
-import { UserDto } from './user.dto';
-import { User } from '../domain/user';
+import { UserDto } from '../user.dto';
+import { User } from '../../domain/user';
 
 /**
  * Utility class for mapping user data.

@@ -3,7 +3,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { RickAndMortyCharacter } from '../../domain/rick-and-morty-character';
 import { InjectModel } from '@nestjs/sequelize';
 import { PgRickAndMortyCharacterModel } from './pg-rick-and-morty-character.model';
-import { RickAndMortyCharacterMappers } from '../rick-and-morty-character.mappers';
+import { RickAndMortyCharacterMappers } from '../mappers/rick-and-morty-character.mappers';
 import { PgUserModel } from '../../../user/infrastructure/postgres/pg-user.model';
 
 /**

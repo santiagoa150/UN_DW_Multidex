@@ -4,7 +4,7 @@ import { HttpStatus, Logger } from '@nestjs/common';
 import { UniverseTypeNotSupportedException } from '../../../../domain/exceptions/universe-type-not-supported.exception';
 import { QueryBus } from '@nestjs/cqrs';
 import { UniverseEntityNotFoundException } from '../../../../domain/exceptions/universe-entity-not-found.exception';
-import { GetPokemonByIdQuery } from '../../../../../pokemon/applications/get/by-id/get-pokemon-by-id.query';
+import { GetPokemonByIdQuery } from '../../../../../pokemon/applications/get/pokemon/by-id/get-pokemon-by-id.query';
 import { GetRickAndMortyCharacterByIdQuery } from '../../../../../rick-and-morty/applications/get/character-by-id/get-rick-and-morty-character-by-id.query';
 
 /**

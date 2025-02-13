@@ -1,5 +1,5 @@
-import { UniverseEntity } from '../domain/universe-entity';
-import { UniverseEntityDto } from './universe-entity.dto';
+import { UniverseEntity } from '../../domain/universe-entity';
+import { UniverseEntityDto } from '../universe-entity.dto';
 
 /**
  * Utility class to map universe entities.

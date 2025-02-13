@@ -1,7 +1,7 @@
 import { Logger } from '@nestjs/common';
-import { PokemonRepository } from '../../../domain/interfaces/pokemon.repository';
-import { Pokemon } from '../../../domain/pokemon';
-import { PokemonNotFoundException } from '../../../domain/exceptions/pokemon-not-found.exception';
+import { PokemonRepository } from '../../../../domain/interfaces/pokemon.repository';
+import { Pokemon } from '../../../../domain/pokemon';
+import { PokemonNotFoundException } from '../../../../domain/exceptions/pokemon-not-found.exception';
 
 /**
  * Application service to get a Pokémon by its id.

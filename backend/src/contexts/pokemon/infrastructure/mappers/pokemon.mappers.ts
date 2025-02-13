@@ -1,7 +1,7 @@
-import { UniverseEntityMappers } from '../../universe/infrastructure/universe-entity.mappers';
-import { PokemonDto } from './pokemon.dto';
-import { Pokemon } from '../domain/pokemon';
-import { UniverseTypeNameConstants } from '../../universe/domain/constants/universe-type-name.constants';
+import { UniverseEntityMappers } from '../../../universe/infrastructure/mappers/universe-entity.mappers';
+import { PokemonDto } from '../pokemon.dto';
+import { Pokemon } from '../../domain/pokemon';
+import { UniverseTypeNameConstants } from '../../../universe/domain/constants/universe-type-name.constants';
 
 /**
  * Utility class to map DTOs to Pokémon entities.
@@ -22,6 +22,12 @@ export abstract class PokemonMappers extends UniverseEntityMappers {
             dto.description,
             dto.height,
             dto.weight,
+            dto.hp,
+            dto.attack,
+            dto.defense,
+            dto.specialAttack,
+            dto.specialDefense,
+            dto.speed,
             dto.creatorId,
             dto.creatorName,
         );

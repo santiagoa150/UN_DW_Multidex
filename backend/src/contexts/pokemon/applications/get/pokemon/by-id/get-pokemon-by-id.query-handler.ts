@@ -1,6 +1,6 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { GetPokemonByIdQuery } from './get-pokemon-by-id.query';
-import { Pokemon } from '../../../domain/pokemon';
+import { Pokemon } from '../../../../domain/pokemon';
 import { GetPokemonByIdApplication } from './get-pokemon-by-id.application';
 
 /**

@@ -3,7 +3,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { PgUniverseTypeModel } from './pg-universe-type.model';
 import { UniverseType } from '../../domain/universe-type';
-import { UniverseTypeMappers } from '../universe-type.mappers';
+import { UniverseTypeMappers } from '../mappers/universe-type.mappers';
 
 /**
  * The Universe Type repository for Postgres.
@@ -27,5 +27,17 @@ export class PgUniverseTypeRepository implements UniverseTypeRepository {
         const mapped: UniverseType[] = UniverseTypeMappers.DTOs2UniverseTypes(found);
         this._logger.log(`[${this.getAll.name}] FINISH ::`);
         return mapped;
+    }
+
+    /**
+     * Update a universe type.
+     * @param universeType - The universe type to update.
+     */
+    async update(universeType: UniverseType): Promise<void> {
+        this._logger.log(`[${this.update.name}] INIT :: universeType: ${universeType.name}`);
+        await this._model.update(UniverseTypeMappers.universeType2DTO(universeType), {
+            where: { name: universeType.name },
+        });
+        this._logger.log(`[${this.update.name}] FINISH ::`);
     }
 }

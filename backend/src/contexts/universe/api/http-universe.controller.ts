@@ -7,7 +7,7 @@ import { GetUniverseEntityByIdAndTypeResponse } from './responses/get-universe-e
 import { GetUniverseEntityByIdAndTypeQuery } from '../applications/get/universe-entity/by-id-and-type/get-universe-entity-by-id-and-type.query';
 import { UniverseEntity } from '../domain/universe-entity';
 import { UniverseTypeNameConstants } from '../domain/constants/universe-type-name.constants';
-import { UniverseEntityMappers } from '../infrastructure/universe-entity.mappers';
+import { UniverseEntityMappers } from '../infrastructure/mappers/universe-entity.mappers';
 import { UniverseEntityDto } from '../infrastructure/universe-entity.dto';
 
 /**

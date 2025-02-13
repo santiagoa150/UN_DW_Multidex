@@ -6,6 +6,7 @@ import { CqrsModule } from '@nestjs/cqrs';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtTokenRepository } from '../../contexts/shared/infrastructure/jwt/jwt-token.repository';
 import * as process from 'node:process';
+import { HttpModule } from '@nestjs/axios';
 
 /**
  *  `PROVIDERS` is an array of NestJS providers related to shared module.
@@ -18,6 +19,7 @@ const PROVIDERS: Provider[] = [Logger, JwtTokenRepository];
 @Global()
 @Module({
     imports: [
+        HttpModule,
         CqrsModule.forRoot(),
         JwtModule.register({}),
         ConfigModule.forRoot({
@@ -43,6 +45,6 @@ const PROVIDERS: Provider[] = [Logger, JwtTokenRepository];
         }),
     ],
     providers: [...PROVIDERS],
-    exports: [...PROVIDERS],
+    exports: [HttpModule, ...PROVIDERS],
 })
 export class SharedModule {}

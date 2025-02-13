@@ -5,6 +5,7 @@ import {
     Column,
     DataType,
     ForeignKey,
+    HasMany,
     Model,
     PrimaryKey,
     Table,
@@ -15,6 +16,7 @@ import { UniverseTypeNameConstants } from '../../../universe/domain/constants/un
 import { PgPokemonTypeRelationModel } from './pg-pokemon-type-relation.model';
 import { PgPokemonTypeModel } from './pg-pokemon-type.model';
 import { PgUserModel } from '../../../user/infrastructure/postgres/pg-user.model';
+import { PgPokemonMovementModel } from './pg-pokemon-movement.model';
 
 /**
  * The Pokémon model for PostgresSQL.
@@ -51,6 +53,30 @@ export class PgPokemonModel extends Model<PokemonDto> implements PokemonDto {
     @Column({ type: DataType.UUID })
     creatorId?: string;
 
+    @AllowNull(false)
+    @Column({ type: DataType.INTEGER })
+    hp: number;
+
+    @AllowNull(false)
+    @Column({ type: DataType.INTEGER })
+    attack: number;
+
+    @AllowNull(false)
+    @Column({ type: DataType.INTEGER })
+    defense: number;
+
+    @AllowNull(false)
+    @Column({ type: DataType.INTEGER })
+    specialAttack: number;
+
+    @AllowNull(false)
+    @Column({ type: DataType.INTEGER })
+    specialDefense: number;
+
+    @AllowNull(false)
+    @Column({ type: DataType.INTEGER })
+    speed: number;
+
     get creatorName(): string | undefined {
         return this.creator?.username;
     }
@@ -68,4 +94,7 @@ export class PgPokemonModel extends Model<PokemonDto> implements PokemonDto {
 
     @BelongsTo(() => PgUserModel)
     creator?: PgUserModel;
+
+    @HasMany(() => PgPokemonMovementModel)
+    pokemonMovements?: PgPokemonMovementModel[];
 }

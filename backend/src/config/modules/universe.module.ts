@@ -9,6 +9,9 @@ import { PgUniverseTypeModel } from '../../contexts/universe/infrastructure/post
 import { PgUniverseTypeRepository } from '../../contexts/universe/infrastructure/postgres/pg-universe-type.repository';
 import { GetAllUniverseTypesQueryHandler } from '../../contexts/universe/applications/get/universe-type/all/get-all-universe-types.query-handler';
 import { GetAllUniverseTypesApplication } from '../../contexts/universe/applications/get/universe-type/all/get-all-universe-types.application';
+import { UpdateUniverseTypeCommandHandler } from '../../contexts/universe/applications/update/update-universe-type.command-handler';
+import { UniverseTypeRepository } from '../../contexts/universe/domain/interfaces/universe-type.repository';
+import { UpdateUniverseTypeApplication } from '../../contexts/universe/applications/update/update-universe-type.application';
 
 /**
  * `PROVIDERS` is an array of providers related to universe module.
@@ -33,6 +36,13 @@ const APPLICATIONS: Provider[] = [
             return new GetAllUniverseTypesApplication(pgUniverseTypeRepository);
         },
     },
+    {
+        inject: [PgUniverseTypeRepository],
+        provide: UpdateUniverseTypeApplication,
+        useFactory: (repository: UniverseTypeRepository): UpdateUniverseTypeApplication => {
+            return new UpdateUniverseTypeApplication(repository);
+        },
+    },
 ];
 
 /**
@@ -41,11 +51,16 @@ const APPLICATIONS: Provider[] = [
 const QUERIES: Provider[] = [GetUniverseEntityByIdAndTypeQueryHandler, GetAllUniverseTypesQueryHandler];
 
 /**
+ * `COMMANDS` is an array of command handlers related to universe module.
+ */
+const COMMANDS: Provider[] = [UpdateUniverseTypeCommandHandler];
+
+/**
  * `UniverseModule` is a module that groups all universe-related features.
  */
 @Module({
     imports: [SequelizeModule.forFeature([PgUniverseTypeModel])],
     controllers: [HttpUniverseController, NestjsUniverseTask],
-    providers: [...PROVIDERS, ...APPLICATIONS, ...QUERIES],
+    providers: [...PROVIDERS, ...APPLICATIONS, ...QUERIES, ...COMMANDS],
 })
 export class UniverseModule {}
