@@ -2,6 +2,7 @@ import { Pokemon } from '../pokemon';
 import { PokemonType } from '../pokemon-type';
 import { PokemonMovement } from '../pokemon-movement';
 import { PokemonEvolutionChain } from '../pokemon-evolution-chain';
+import { PokemonDetails } from '../pokemon-details';
 
 /**
  * Interface for Pokémon repository.
@@ -60,4 +61,5 @@ export interface PokemonRepository {
      * @returns The Pokémon if found, otherwise undefined.
      */
     getById(id: number): Promise<Pokemon | undefined>;
+    getDetailsById(id: number): Promise<PokemonDetails | undefined>;
 }

@@ -15,6 +15,7 @@ import { PokemonMovementMappers } from '../mappers/pokemon-movement.mappers';
 import { PokemonEvolutionChain } from '../../domain/pokemon-evolution-chain';
 import { PokemonEvolutionChainMapper } from '../mappers/pokemon-evolution-chain.mappers';
 import { PgPokemonEvolutionChainModel } from './pg-pokemon-evolution-chain.model';
+import { PokemonDetails } from '../../domain/pokemon-details';
 
 /**
  * The Pokémon repository for Postgres.
@@ -144,4 +145,35 @@ export class PgPokemonRepository implements PokemonRepository {
         this._logger.log(`[${this.getById.name}] FINISH ::`);
         return mapped;
     }
+
+        async getDetailsById(id: number): Promise<PokemonDetails | undefined>{
+            const pokemon = await this.getById(id)
+            if (!pokemon){
+                return undefined;
+            }
+            const movements = await this._pgPokemonMovementModel.findAll({
+                where: {pokemonId:id}
+            })
+            const pokemonChain = await this._pgPokemonEvolutionChainModel.findOne({
+                where: {pokemonId:id}
+            })
+        
+            const evolutionChain = await this._pgPokemonEvolutionChainModel.findAll({
+                where: {chainId:pokemonChain.chainId},
+                include: [
+                    {
+                        model: PgPokemonModel, 
+                        as: "pokemon"
+                    }
+                ]
+            })
+
+            const pokemonDetails = new PokemonDetails(
+                pokemon, 
+                PokemonMovementMappers.DTOS2pokemonMovements(movements),
+                evolutionChain.map((e) => PokemonMappers.DTO2Pokemon(e.pokemon))
+            )
+            return pokemonDetails;
+        }
+
 }

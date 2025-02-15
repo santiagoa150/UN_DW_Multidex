@@ -15,6 +15,9 @@ import { GetAllPokemonTypesQueryHandler } from '../../contexts/pokemon/applicati
 import { GetAllPokemonTypesApplication } from '../../contexts/pokemon/applications/get/pokemon-types/all/get-all-pokemon-types.application';
 import { PgPokemonMovementModel } from '../../contexts/pokemon/infrastructure/postgres/pg-pokemon-movement.model';
 import { PgPokemonEvolutionChainModel } from '../../contexts/pokemon/infrastructure/postgres/pg-pokemon-evolution-chain.model';
+import { GetPokemonDetailsByIdQueryHandler } from 'src/contexts/pokemon/applications/get/pokemon/details-by-id/get-pokemon-details-by-id.query-handler';
+import { GetPokemonDetailsByIdApplication } from 'src/contexts/pokemon/applications/get/pokemon/details-by-id/get-pokemon-details-by-id.application';
+import { HttpPokemonController } from 'src/contexts/pokemon/api/http-pokemon.controller';
 
 /**
  * `PROVIDERS` is an array of NestJS providers related to pokémon module.
@@ -51,19 +54,28 @@ const APPLICATIONS: Provider[] = [
             return new GetAllPokemonTypesApplication(repository);
         },
     },
+    {
+        inject: [PgPokemonRepository],
+        provide: GetPokemonDetailsByIdApplication,
+        useFactory: (repository: PokemonRepository) => {
+            return new GetPokemonDetailsByIdApplication(repository);
+        }
+    }
 ];
 
 /**
  * `QUERIES` is an array of query handlers related to pokémon module.
  */
-const QUERIES: Provider[] = [GetPokemonByIdQueryHandler, GetAllPokemonTypesQueryHandler];
+const QUERIES: Provider[] = [GetPokemonByIdQueryHandler, GetAllPokemonTypesQueryHandler, GetPokemonDetailsByIdQueryHandler];
 
 /**
  * `COMMANDS` is an array of command handlers related to pokémon module.
  */
 const COMMANDS: Provider[] = [LoadPokemonCommandHandler];
 
+
 @Module({
+    controllers: [HttpPokemonController],
     imports: [
         SequelizeModule.forFeature([
             PgPokemonModel,

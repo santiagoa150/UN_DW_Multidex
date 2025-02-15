@@ -26,4 +26,12 @@ export class PokemonMovementMappers {
     static pokemonMovements2DTOs(pokemonMovements: PokemonMovement[]): PokemonMovementDto[] {
         return pokemonMovements.map((pokemonMovement) => this.pokemonMovement2DTO(pokemonMovement));
     }
+
+    static DTO2pokemonMovement(dto: PokemonMovementDto){
+        return new PokemonMovement(dto.pokemonId, dto.name, dto.levelLearnedAt);
+    }
+    
+    static DTOS2pokemonMovements(DTOs: PokemonMovementDto[]){
+        return DTOs.map((dto) => this.DTO2pokemonMovement(dto)) 
+    }
 }

@@ -32,4 +32,33 @@ export abstract class PokemonMappers extends UniverseEntityMappers {
             dto.creatorName,
         );
     }
+
+    static DTOs2Pokemon(DTOs: PokemonDto[]){
+        return DTOs.map((dto) => this.DTO2Pokemon(dto)) 
+    }
+
+    static Pokemon2DTO(pokemon: Pokemon):PokemonDto{
+        return {
+            attack: pokemon.attack,
+            defense: pokemon.defense,
+            description: pokemon.description,
+            height: pokemon.height,
+            specialAttack: pokemon.specialAttack,
+            specialDefense: pokemon.specialDefense,
+            entityTypes: Array.from(pokemon.entityTypes),
+            hp: pokemon.hp,
+            frontImageUrl: pokemon.frontImageUrl,
+            id: pokemon.id,
+            name: pokemon.name,
+            speed: pokemon.speed,
+            universeType: pokemon.universeType,
+            weight: pokemon.weight,
+            creatorId: pokemon.creatorId,
+            creatorName: pokemon.creatorName
+        }
+    }
+
+    static Pokemon2DTOs(pokemon: Pokemon[]):PokemonDto[]{
+        return pokemon.map((p) => this.Pokemon2DTO(p))
+    }
 }
