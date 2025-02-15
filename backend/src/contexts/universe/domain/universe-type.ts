@@ -14,7 +14,7 @@ export class UniverseType {
     constructor(
         private readonly _name: UniverseTypeNameConstants,
         private readonly _priority: number,
-        private readonly _taskWasExecuted: boolean,
+        private _taskWasExecuted: boolean,
         private readonly _elementsPerPage: number,
         private _metadata?: string,
     ) {}
@@ -29,6 +29,10 @@ export class UniverseType {
 
     get taskWasExecuted(): boolean {
         return this._taskWasExecuted;
+    }
+
+    set taskWasExecuted(value: boolean) {
+        this._taskWasExecuted = value;
     }
 
     get elementsPerPage(): number {

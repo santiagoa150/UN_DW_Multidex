@@ -12,6 +12,9 @@ import { PokemonMovement } from '../../domain/pokemon-movement';
 import { PgPokemonTypeRelationModel } from './pg-pokemon-type-relation.model';
 import { PgPokemonMovementModel } from './pg-pokemon-movement.model';
 import { PokemonMovementMappers } from '../mappers/pokemon-movement.mappers';
+import { PokemonEvolutionChain } from '../../domain/pokemon-evolution-chain';
+import { PokemonEvolutionChainMapper } from '../mappers/pokemon-evolution-chain.mappers';
+import { PgPokemonEvolutionChainModel } from './pg-pokemon-evolution-chain.model';
 
 /**
  * The Pokémon repository for Postgres.
@@ -32,6 +35,8 @@ export class PgPokemonRepository implements PokemonRepository {
         @InjectModel(PgPokemonTypeRelationModel)
         private readonly _pgPokemonTypeRelationModel: typeof PgPokemonTypeRelationModel,
         @InjectModel(PgPokemonMovementModel) private readonly _pgPokemonMovementModel: typeof PgPokemonMovementModel,
+        @InjectModel(PgPokemonEvolutionChainModel)
+        private readonly _pgPokemonEvolutionChainModel: typeof PgPokemonEvolutionChainModel,
     ) {}
 
     /**
@@ -92,6 +97,16 @@ export class PgPokemonRepository implements PokemonRepository {
         );
         await this._pgPokemonMovementModel.bulkCreate(PokemonMovementMappers.pokemonMovements2DTOs(movements));
         this._logger.log(`[${this.create.name}] FINISH ::`);
+    }
+
+    /**
+     * Create a new Pokémon movement.
+     * @param chain - The Pokémon movements to create.
+     */
+    async createEvolutionChain(chain: PokemonEvolutionChain[]): Promise<void> {
+        this._logger.log(`[${this.createEvolutionChain.name}] INIT ::`);
+        await this._pgPokemonEvolutionChainModel.bulkCreate(PokemonEvolutionChainMapper.evolutionChains2DTOs(chain));
+        this._logger.log(`[${this.createEvolutionChain.name}] FINISH ::`);
     }
 
     /**

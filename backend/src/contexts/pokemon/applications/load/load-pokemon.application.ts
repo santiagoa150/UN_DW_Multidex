@@ -8,6 +8,8 @@ import { GetAllPokemonTypesQuery } from '../get/pokemon-types/all/get-all-pokemo
 import { PokemonType } from '../../domain/pokemon-type';
 import { PokemonMovement } from '../../domain/pokemon-movement';
 import { UpdateUniverseTypeCommand } from '../../../universe/applications/update/update-universe-type.command';
+import { PokemonEvolutionChain } from '../../domain/pokemon-evolution-chain';
+import { v4 as uuidV4 } from 'uuid';
 
 type PokeApiPokemonResponse = {
     height: number;
@@ -38,6 +40,18 @@ type PokeApiPokemonResponse = {
 
 type PokeApiPokemonSpeciesResponse = {
     flavor_text_entries: Array<{ flavor_text: string; language: { name: string } }>;
+};
+
+type PokeApiEvolvesToResponse = Array<{
+    evolves_to: PokeApiEvolvesToResponse;
+    species: { name: string; url: string };
+}>;
+
+type PokeApiEvolutionChainResponse = {
+    chain: {
+        evolves_to: PokeApiEvolvesToResponse;
+        species: { name: string; url: string };
+    };
 };
 
 /**
@@ -77,7 +91,9 @@ export class LoadPokemonApplication {
                   lineEvolutionsLoaded: false,
               };
         if (!metadata.pokemonLoaded) await this.loadPokemon(universeType, metadata);
-        if (!metadata.lineEvolutionsLoaded) await this.loadLineEvolutions(universeType);
+        if (!metadata.lineEvolutionsLoaded) await this.loadEvolutionChains(universeType, metadata);
+        universeType.taskWasExecuted = true;
+        await this._commandBus.execute(new UpdateUniverseTypeCommand(universeType));
         this._logger.log(`[${this.exec.name}] FINISH ::`);
     }
 
@@ -115,7 +131,7 @@ export class LoadPokemonApplication {
                 for (const pokemonPaged of results) {
                     const pokemonNumber = Number(pokemonPaged.url.slice(0, -1).split('/').pop());
                     if (pokemonNumber > 1500) {
-                        currentPage = totalElements;
+                        currentPage = Math.ceil(totalElements / universeType.elementsPerPage);
                         break;
                     }
 
@@ -174,12 +190,86 @@ export class LoadPokemonApplication {
                 universeType.metadata = JSON.stringify(metadata);
                 await this._commandBus.execute(new UpdateUniverseTypeCommand(universeType));
             }
-        } while (currentPage < totalElements);
+        } while (currentPage * universeType.elementsPerPage < totalElements);
         this._logger.log(`[${this.loadPokemon.name}] FINISH ::`);
     }
 
-    async loadLineEvolutions(universeType: UniverseType): Promise<void> {
-        console.log('loadLineEvolutions', universeType);
+    /**
+     * Load the chain evolutions.
+     * @param universeType - The universe type to load entities for.
+     * @param metadata - The metadata of the universe type.
+     * @returns A promise that resolves when the chain evolutions are loaded.
+     */
+    async loadEvolutionChains(
+        universeType: UniverseType,
+        metadata: {
+            lineEvolutionsPage: number;
+            lineEvolutionsLoaded: boolean;
+        },
+    ): Promise<void> {
+        this._logger.log(`[${this.loadEvolutionChains.name}] INIT ::`);
+        let currentPage: number = metadata.lineEvolutionsPage;
+        let totalElements: number = 1;
+        do {
+            this._logger.warn(
+                `https://pokeapi.co/api/v2/evolution-chain?limit=${universeType.elementsPerPage}&offset=${currentPage * universeType.elementsPerPage}`,
+            );
+            const { count, results } = await this._httpService.axiosRef
+                .get<{
+                    count: number;
+                    results: { url: string }[];
+                }>(
+                    `https://pokeapi.co/api/v2/evolution-chain?limit=${universeType.elementsPerPage}&offset=${currentPage * universeType.elementsPerPage}`,
+                )
+                .then((res) => res.data);
+            totalElements = count;
+            try {
+                for (const evolutionChainPaged of results) {
+                    this._logger.warn(evolutionChainPaged.url);
+                    const evolutionChain = await this._httpService.axiosRef
+                        .get<PokeApiEvolutionChainResponse>(evolutionChainPaged.url)
+                        .then((res) => res.data);
+
+                    const chainId: string = uuidV4();
+
+                    /**
+                     * Extract the evolution chain.
+                     * @param chain - The evolution chain.
+                     * @param pokemon - The pokémon.
+                     * @param evolvesFrom - The pokémon evolves from.
+                     */
+                    function extractEvolutionChain(
+                        chain: { evolves_to: PokeApiEvolvesToResponse; species: { name: string; url: string } },
+                        pokemon: PokemonEvolutionChain[] = [],
+                        evolvesFrom: number = undefined,
+                    ): PokemonEvolutionChain[] {
+                        const pokemonId = Number(chain.species.url.slice(0, -1).split('/').pop());
+                        pokemon.push(new PokemonEvolutionChain(chainId, pokemonId, evolvesFrom));
+
+                        if (Array.isArray(chain.evolves_to) && chain.evolves_to.length > 0) {
+                            chain.evolves_to.forEach((evolvesTo) => {
+                                extractEvolutionChain(evolvesTo, pokemon, pokemonId);
+                            });
+                        }
+                        return pokemon;
+                    }
+
+                    const chain = extractEvolutionChain(evolutionChain.chain);
+                    await this._repository.createEvolutionChain(chain);
+                }
+                currentPage++;
+            } finally {
+                if (currentPage * universeType.elementsPerPage >= totalElements) {
+                    metadata.lineEvolutionsPage = currentPage;
+                    metadata.lineEvolutionsLoaded = true;
+                } else {
+                    metadata.lineEvolutionsPage = currentPage + 1;
+                }
+                universeType.metadata = JSON.stringify(metadata);
+                await this._commandBus.execute(new UpdateUniverseTypeCommand(universeType));
+            }
+        } while (currentPage * universeType.elementsPerPage < totalElements);
+        this._logger.log(`[${this.loadEvolutionChains.name}] FINISH ::`);
     }
 
     /**

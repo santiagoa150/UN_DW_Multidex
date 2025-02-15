@@ -14,6 +14,7 @@ import { HttpService } from '@nestjs/axios';
 import { GetAllPokemonTypesQueryHandler } from '../../contexts/pokemon/applications/get/pokemon-types/all/get-all-pokemon-types.query-handler';
 import { GetAllPokemonTypesApplication } from '../../contexts/pokemon/applications/get/pokemon-types/all/get-all-pokemon-types.application';
 import { PgPokemonMovementModel } from '../../contexts/pokemon/infrastructure/postgres/pg-pokemon-movement.model';
+import { PgPokemonEvolutionChainModel } from '../../contexts/pokemon/infrastructure/postgres/pg-pokemon-evolution-chain.model';
 
 /**
  * `PROVIDERS` is an array of NestJS providers related to pokémon module.
@@ -69,6 +70,7 @@ const COMMANDS: Provider[] = [LoadPokemonCommandHandler];
             PgPokemonTypeModel,
             PgPokemonTypeRelationModel,
             PgPokemonMovementModel,
+            PgPokemonEvolutionChainModel,
         ]),
     ],
     providers: [...PROVIDERS, ...APPLICATIONS, ...QUERIES, ...COMMANDS],

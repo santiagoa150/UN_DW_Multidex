@@ -51,6 +51,7 @@ export class NestjsUniverseTask implements OnModuleInit {
                             break;
                     }
                 } catch (error) {
+                    console.log(error);
                     this._logger.error(`[${this.onModuleInit.name}] Error: ${error?.message ?? JSON.stringify(error)}`);
                 }
             }

@@ -1,6 +1,7 @@
 import { Pokemon } from '../pokemon';
 import { PokemonType } from '../pokemon-type';
 import { PokemonMovement } from '../pokemon-movement';
+import { PokemonEvolutionChain } from '../pokemon-evolution-chain';
 
 /**
  * Interface for Pokémon repository.
@@ -40,6 +41,12 @@ export interface PokemonRepository {
         speed: number,
         movements: PokemonMovement[],
     ): Promise<void>;
+
+    /**
+     * Create a new Pokémon movement.
+     * @param chain - The Pokémon movements to create.
+     */
+    createEvolutionChain(chain: PokemonEvolutionChain[]): Promise<void>;
 
     /**
      * Get all Pokémon types.

@@ -17,6 +17,7 @@ import { PgPokemonTypeRelationModel } from './pg-pokemon-type-relation.model';
 import { PgPokemonTypeModel } from './pg-pokemon-type.model';
 import { PgUserModel } from '../../../user/infrastructure/postgres/pg-user.model';
 import { PgPokemonMovementModel } from './pg-pokemon-movement.model';
+import { PgPokemonEvolutionChainModel } from './pg-pokemon-evolution-chain.model';
 
 /**
  * The Pokémon model for PostgresSQL.
@@ -97,4 +98,10 @@ export class PgPokemonModel extends Model<PokemonDto> implements PokemonDto {
 
     @HasMany(() => PgPokemonMovementModel)
     pokemonMovements?: PgPokemonMovementModel[];
+
+    @HasMany(() => PgPokemonEvolutionChainModel, 'evolvesFrom')
+    evolutionFrom?: PgPokemonEvolutionChainModel[];
+
+    @HasMany(() => PgPokemonEvolutionChainModel, 'pokemonId')
+    evolutionTo?: PgPokemonEvolutionChainModel[];
 }
