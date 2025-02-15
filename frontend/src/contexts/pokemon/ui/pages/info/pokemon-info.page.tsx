@@ -4,17 +4,17 @@ import { PokemonInfoData } from './pokemon-info-data.tsx';
 import { UniverseTypeNameToPropertiesConstants } from '../../../../universe/domain/constants/universe-type-name-to-properties.constants';
 import { PokemonInfoEvolution } from './pokemon-info-evolution.tsx';
 import { useNavigate, useParams } from 'react-router-dom';
-import { UniverseEntity } from '../../../../universe/domain/universe-entity.ts';
-import { getUniverseEntityByIdAndTypeApplication } from '../../../../../config/app.providers.ts';
 import { RoutesConstants } from '../../../../shared/domain/constants/routes.constants.ts';
 import { useUniverse } from '../../../../../config/universe/use-universe.hook.ts';
+import { PokemonDetails } from '../../../domain/pokemon-details.ts';
+import { getPokemonDetailsByIdApplication } from '../../../../../config/app.providers.ts';
 
 export default function PokemonInfoPage(): JSX.Element {
     const { id } = useParams();
 
     const { universeType } = useUniverse();
-    const [universeEntityLoaded, setUniverseEntityLoaded] = useState<boolean>(false);
-    const [universeEntity, setUniverseEntity] = useState<UniverseEntity | undefined>();
+    const [pokemonLoaded, setPokemonLoaded] = useState<boolean>(false);
+    const [pokemon, setPokemon] = useState<PokemonDetails | undefined>();
     const navigate = useNavigate();
 
     /**
@@ -22,29 +22,29 @@ export default function PokemonInfoPage(): JSX.Element {
      * TODO: Change to pokemon entity.
      */
     useEffect(() => {
-        if (!universeEntityLoaded && universeType) {
-            getUniverseEntityByIdAndTypeApplication
-                .exec(Number(id), universeType.name)
+        if (!pokemonLoaded && universeType) {
+            getPokemonDetailsByIdApplication
+                .exec(Number(id))
                 .then((res) => {
-                    setUniverseEntityLoaded(true);
-                    setUniverseEntity(res);
+                    setPokemonLoaded(true);
+                    setPokemon(res);
                 })
                 .catch(() => navigate(RoutesConstants.HOME));
         }
-    }, [navigate, universeEntityLoaded, id, universeType]);
-    if (universeType && universeEntity) {
+    }, [navigate, pokemonLoaded, id, universeType]);
+    if (universeType && pokemon) {
         return (
             <main
                 className="w-full min-h-screen "
                 style={{ backgroundColor: UniverseTypeNameToPropertiesConstants.POKEMON.tertiaryColor }}
             >
-                <PokemonInfoTitle pokemon={universeEntity} />
+                <PokemonInfoTitle pokemon={pokemon.pokemon} />
                 <div className="h-4"></div>
-                <PokemonInfoData pokemon={universeEntity} />
+                <PokemonInfoData pokemon={pokemon.pokemon} />
                 <PokemonInfoEvolution />
             </main>
         );
-    } else if (!universeEntity && !universeEntityLoaded) {
+    } else if (!pokemon && !pokemonLoaded) {
         /* TODO: Add Loader. */
         return <div>Loader Here</div>;
     } else {
