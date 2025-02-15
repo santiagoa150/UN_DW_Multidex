@@ -8,7 +8,7 @@ import { PgUserModel } from '../../../user/infrastructure/postgres/pg-user.model
  * The Rick and Morty character model for PostgresSQL.
  */
 @Table({ tableName: PgRickAndMortyConstants.CHARACTERS_TABLE_NAME, timestamps: false })
-export class PgRickAndMortyCharacterModel extends Model<RickAndMortyCharacterDto> implements RickAndMortyCharacterDto {
+export class PgRickAndMortyCharacterModel extends Model implements RickAndMortyCharacterDto {
     @PrimaryKey
     @AllowNull(false)
     @Column({ type: DataType.INTEGER })

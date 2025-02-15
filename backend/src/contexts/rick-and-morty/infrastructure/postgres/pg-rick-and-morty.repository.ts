@@ -22,6 +22,44 @@ export class PgRickAndMortyRepository implements RickAndMortyRepository {
     ) {}
 
     /**
+     * Create a Rick and Morty character.
+     * @param id - The ID of the character.
+     * @param name - The name of the character.
+     * @param type - The type of the character.
+     * @param frontImageUrl - The URL of the character's front image.
+     * @param description - The description of the character.
+     * @param status - The status of the character.
+     * @param gender - The gender of the character.
+     * @param location - The location of the character.
+     * @param origin - The origin of the character.
+     */
+    async createCharacter(
+        id: number,
+        name: string,
+        type: string,
+        frontImageUrl: string,
+        description: string,
+        status: string,
+        gender: string,
+        location: string,
+        origin: string,
+    ): Promise<void> {
+        this._logger.log(`[${this.createCharacter.name}] INIT :: id: ${id}`);
+        await this._pgCharacterModel.create({
+            id,
+            name,
+            status,
+            gender,
+            location,
+            origin,
+            frontImageUrl,
+            description,
+            entityType: type,
+        });
+        this._logger.log(`[${this.createCharacter.name}] FINISH ::`);
+    }
+
+    /**
      * Retrieves a Rick and Morty character by its ID.
      * @param id - The ID of the character to retrieve.
      * @returns The character with the specified ID, or `undefined` if no character was found.

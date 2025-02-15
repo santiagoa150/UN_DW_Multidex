@@ -10,6 +10,7 @@ import { PokemonMovement } from '../../domain/pokemon-movement';
 import { UpdateUniverseTypeCommand } from '../../../universe/applications/update/update-universe-type.command';
 import { PokemonEvolutionChain } from '../../domain/pokemon-evolution-chain';
 import { v4 as uuidV4 } from 'uuid';
+import { PokemonMetadata } from '../../domain/pokemon-metadata';
 
 type PokeApiPokemonResponse = {
     height: number;
@@ -82,7 +83,7 @@ export class LoadPokemonApplication {
             return;
         }
         this._logger.log(`[${this.exec.name}] INIT :: universeType: ${universeType.name}`);
-        const metadata = universeType.metadata
+        const metadata: PokemonMetadata = universeType.metadata
             ? JSON.parse(universeType.metadata)
             : {
                   pokemonPage: 0,
@@ -103,13 +104,7 @@ export class LoadPokemonApplication {
      * @param metadata - The metadata of the universe type.
      * @returns A promise that resolves when the entities are loaded.
      */
-    async loadPokemon(
-        universeType: UniverseType,
-        metadata: {
-            pokemonPage: number;
-            pokemonLoaded: boolean;
-        },
-    ): Promise<void> {
+    async loadPokemon(universeType: UniverseType, metadata: PokemonMetadata): Promise<void> {
         this._logger.log(`[${this.loadPokemon.name}] INIT :: universeType: ${universeType.name}`);
         const pokemonTypes: Map<string, number> = await this.getPokemonTypesMap();
         let currentPage: number = metadata.pokemonPage;
@@ -200,13 +195,7 @@ export class LoadPokemonApplication {
      * @param metadata - The metadata of the universe type.
      * @returns A promise that resolves when the chain evolutions are loaded.
      */
-    async loadEvolutionChains(
-        universeType: UniverseType,
-        metadata: {
-            lineEvolutionsPage: number;
-            lineEvolutionsLoaded: boolean;
-        },
-    ): Promise<void> {
+    async loadEvolutionChains(universeType: UniverseType, metadata: PokemonMetadata): Promise<void> {
         this._logger.log(`[${this.loadEvolutionChains.name}] INIT ::`);
         let currentPage: number = metadata.lineEvolutionsPage;
         let totalElements: number = 1;

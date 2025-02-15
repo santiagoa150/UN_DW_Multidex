@@ -6,6 +6,8 @@ import { GetRickAndMortyCharacterByIdQueryHandler } from '../../contexts/rick-an
 import { GetRickAndMortyCharacterByIdApplication } from '../../contexts/rick-and-morty/applications/get/character-by-id/get-rick-and-morty-character-by-id.application';
 import { LoadRickAndMortyCharactersCommandHandler } from '../../contexts/rick-and-morty/applications/load/load-rick-and-morty-characters.command-handler';
 import { LoadRickAndMortyCharactersApplication } from '../../contexts/rick-and-morty/applications/load/load-rick-and-morty-characters.application';
+import { CommandBus } from '@nestjs/cqrs';
+import { HttpService } from '@nestjs/axios';
 
 /**
  * `PROVIDERS` is an array of NestJS providers related to Rick and Morty module.
@@ -24,10 +26,10 @@ const APPLICATIONS: Provider[] = [
         },
     },
     {
-        inject: [PgRickAndMortyRepository],
+        inject: [CommandBus, HttpService, PgRickAndMortyRepository],
         provide: LoadRickAndMortyCharactersApplication,
-        useFactory: (repository: PgRickAndMortyRepository) => {
-            return new LoadRickAndMortyCharactersApplication(repository);
+        useFactory: (commandBus: CommandBus, httpService: HttpService, repository: PgRickAndMortyRepository) => {
+            return new LoadRickAndMortyCharactersApplication(commandBus, repository, httpService);
         },
     },
 ];
