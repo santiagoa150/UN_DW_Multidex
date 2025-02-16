@@ -58,7 +58,7 @@ export function Data() {
                         </span>
 
                         <span className="mb-4">
-                            <span className="block text-end text-[24px] font-bold">Hábitat</span>
+                            <span className="block text-end text-[24px] font-bold">Origen</span>
                             <p
                                 style={{ backgroundColor: universeType?.boxEditColor }}
                                 className="text-lg rounded-[2vw] flex font-semibold p-2 border-2 border-black w-full max-w-full h-[50px]"
@@ -81,8 +81,10 @@ export function Data() {
                             <span className="block text-end text-[24px] font-bold">Modificar imagen</span>
                             <p
                                 style={{ backgroundColor: universeType?.boxEditColor }}
-                                className="text-lg rounded-[2vw] flex border-2 h-[50px] font-semibold w-full max-w-full border-black"
-                            ></p>
+                                className="text-lg rounded-[2vw] p-2 border-2 font-semibold border-black w-full max-w-full h-auto min-h-[50px] break-words "
+                            >
+                                {universeEntity.frontImageUrl}
+                            </p>
                         </span>
                     </div>
                 </div>
