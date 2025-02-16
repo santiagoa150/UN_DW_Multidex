@@ -8,7 +8,7 @@ import { Type } from 'class-transformer';
 /**
  * Represents a universe entity in the HTTP layer.
  */
-export class HttpUniverseEntity implements UniverseEntityDto {
+export class HttpUniverseEntityModel implements UniverseEntityDto {
     @ApiProperty({ description: 'The entity id.' })
     @IsInt({ message: UniverseExceptionMessagesConstants.UNIVERSE_ENTITY_ID_MUST_BE_A_NUMBER })
     @Type(() => Number)

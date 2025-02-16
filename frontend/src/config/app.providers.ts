@@ -4,7 +4,7 @@ import { LocalStorageRepository } from '../contexts/shared/infrastructure/local-
 import { SetCurrentUniverseTypeApplication } from '../contexts/universe/applications/set/current-universe-type/set-current-universe-type.application.ts';
 import { GetCurrentUniverseTypeApplication } from '../contexts/universe/applications/get/current-universe-type/get-current-universe-type.application.ts';
 import { BackendPokemonRepository } from '../contexts/pokemon/infrastructure/backend/backend-pokemon.repository.ts';
-import { GetPokemonDetailsByIdApplication } from '../contexts/pokemon/applications/get/details-by-id/get-pokemon-details-by-id.application.ts';
+import { GetPokemonDetailByIdApplication } from '../contexts/pokemon/applications/get/detail-by-id/get-pokemon-detail-by-id.application.ts';
 
 /**
  * This file is used to define the providers of the application.
@@ -28,6 +28,4 @@ export const getCurrentUniverseApplication = new GetCurrentUniverseTypeApplicati
     localStorageRepository,
     setCurrentUniverseApplication,
 );
-export const getPokemonDetailsByIdApplication = new GetPokemonDetailsByIdApplication(
-    backendPokemonRepository
-)
+export const getPokemonDetailByIdApplication = new GetPokemonDetailByIdApplication(backendPokemonRepository);

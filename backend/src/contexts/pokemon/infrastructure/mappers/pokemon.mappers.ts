@@ -33,11 +33,21 @@ export abstract class PokemonMappers extends UniverseEntityMappers {
         );
     }
 
-    static DTOs2Pokemon(DTOs: PokemonDto[]){
-        return DTOs.map((dto) => this.DTO2Pokemon(dto)) 
+    /**
+     * Maps a list of Pokémon DTOs to a list of Pokémon entities.
+     * @param DTOs - The list of Pokémon DTOs to map.
+     * @returns A new list of Pokémon entities.
+     */
+    static DTOs2Pokemon(DTOs: PokemonDto[]) {
+        return DTOs.map((dto) => this.DTO2Pokemon(dto));
     }
 
-    static Pokemon2DTO(pokemon: Pokemon):PokemonDto{
+    /**
+     * Maps a Pokémon entity to a Pokémon DTO.
+     * @param pokemon - The Pokémon entity to map.
+     * @returns A new Pokémon DTO.
+     */
+    static pokemon2DTO(pokemon: Pokemon): PokemonDto {
         return {
             attack: pokemon.attack,
             defense: pokemon.defense,
@@ -54,11 +64,16 @@ export abstract class PokemonMappers extends UniverseEntityMappers {
             universeType: pokemon.universeType,
             weight: pokemon.weight,
             creatorId: pokemon.creatorId,
-            creatorName: pokemon.creatorName
-        }
+            creatorName: pokemon.creatorName,
+        };
     }
 
-    static Pokemon2DTOs(pokemon: Pokemon[]):PokemonDto[]{
-        return pokemon.map((p) => this.Pokemon2DTO(p))
+    /**
+     * Maps a list of Pokémon entities to a list of Pokémon DTOs.
+     * @param pokemon - The list of Pokémon entities to map.
+     * @returns A new list of Pokémon DTOs.
+     */
+    static pokemon2DTOs(pokemon: Pokemon[]): PokemonDto[] {
+        return pokemon.map((p) => this.pokemon2DTO(p));
     }
 }

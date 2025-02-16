@@ -15,8 +15,8 @@ import { GetAllPokemonTypesQueryHandler } from '../../contexts/pokemon/applicati
 import { GetAllPokemonTypesApplication } from '../../contexts/pokemon/applications/get/pokemon-types/all/get-all-pokemon-types.application';
 import { PgPokemonMovementModel } from '../../contexts/pokemon/infrastructure/postgres/pg-pokemon-movement.model';
 import { PgPokemonEvolutionChainModel } from '../../contexts/pokemon/infrastructure/postgres/pg-pokemon-evolution-chain.model';
-import { GetPokemonDetailsByIdQueryHandler } from 'src/contexts/pokemon/applications/get/pokemon/details-by-id/get-pokemon-details-by-id.query-handler';
-import { GetPokemonDetailsByIdApplication } from 'src/contexts/pokemon/applications/get/pokemon/details-by-id/get-pokemon-details-by-id.application';
+import { GetPokemonDetailByIdQueryHandler } from 'src/contexts/pokemon/applications/get/pokemon/detail-by-id/get-pokemon-detail-by-id.query-handler';
+import { GetPokemonDetailByIdApplication } from 'src/contexts/pokemon/applications/get/pokemon/detail-by-id/get-pokemon-detail-by-id.application';
 import { HttpPokemonController } from 'src/contexts/pokemon/api/http-pokemon.controller';
 
 /**
@@ -56,23 +56,26 @@ const APPLICATIONS: Provider[] = [
     },
     {
         inject: [PgPokemonRepository],
-        provide: GetPokemonDetailsByIdApplication,
+        provide: GetPokemonDetailByIdApplication,
         useFactory: (repository: PokemonRepository) => {
-            return new GetPokemonDetailsByIdApplication(repository);
-        }
-    }
+            return new GetPokemonDetailByIdApplication(repository);
+        },
+    },
 ];
 
 /**
  * `QUERIES` is an array of query handlers related to pokémon module.
  */
-const QUERIES: Provider[] = [GetPokemonByIdQueryHandler, GetAllPokemonTypesQueryHandler, GetPokemonDetailsByIdQueryHandler];
+const QUERIES: Provider[] = [
+    GetPokemonByIdQueryHandler,
+    GetAllPokemonTypesQueryHandler,
+    GetPokemonDetailByIdQueryHandler,
+];
 
 /**
  * `COMMANDS` is an array of command handlers related to pokémon module.
  */
 const COMMANDS: Provider[] = [LoadPokemonCommandHandler];
-
 
 @Module({
     controllers: [HttpPokemonController],

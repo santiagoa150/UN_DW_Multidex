@@ -25,23 +25,19 @@ export default function HomePage(): JSX.Element {
                 </div>
             </div>
             <div className="font-[Mansalva] text-[64px] font-bold text-center my-[4%] mb-[5%]">
-                <h1>
-                    Bienvenido a los Multiversos
-                </h1>
-                <h1>
-                    Rick and Morty x Pokémon
-                </h1>
+                <h1>Bienvenido a los Multiversos</h1>
+                <h1>Rick and Morty x Pokémon</h1>
             </div>
             <p className="font-[Mallanna] text-[28px] px-[10%]">
-                Explora dos mundos fascinantes en un solo lugar. Viaja a través de portales interdimensionaels al caótico
-                y divertido universo de Rick and Morty, o sumérgete en aventuras llenas de criaturas increíbles en el
-                maravilloso mundo Pokémon. ¡Elige tu lado y vive la experiencia definitiva!
+                Explora dos mundos fascinantes en un solo lugar. Viaja a través de portales interdimensionaels al
+                caótico y divertido universo de Rick and Morty, o sumérgete en aventuras llenas de criaturas increíbles
+                en el maravilloso mundo Pokémon. ¡Elige tu lado y vive la experiencia definitiva!
             </p>
             <div className="flex justify-center my-[3%]">
                 <button
-                        className="font-[Karla] text-[24px] font-semibold rounded-[15px] w-[240px] bg-[#FEEAEA] border-2 border-black"
-                        onClick={() => navigate(RoutesConstants.UNIVERSE_LIST)}
-                    >
+                    className="font-[Karla] text-[24px] font-semibold rounded-[15px] w-[240px] bg-[#FEEAEA] border-2 border-black"
+                    onClick={() => navigate(RoutesConstants.UNIVERSE_LIST)}
+                >
                     ¡Vamos a explorar!
                 </button>
             </div>

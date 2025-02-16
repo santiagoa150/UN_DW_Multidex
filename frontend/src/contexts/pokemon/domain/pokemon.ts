@@ -1,5 +1,8 @@
-import { UniverseTypeNameConstants } from "../../universe/domain/constants/universe-type-name.constants";
+import { UniverseTypeNameConstants } from '../../universe/domain/constants/universe-type-name.constants';
 
+/**
+ * The definition of a Pokémon.
+ */
 export type Pokemon = {
     id: number;
     name: string;
@@ -17,4 +20,4 @@ export type Pokemon = {
     specialAttack: number;
     specialDefense: number;
     speed: number;
-}
+};

@@ -27,11 +27,21 @@ export class PokemonMovementMappers {
         return pokemonMovements.map((pokemonMovement) => this.pokemonMovement2DTO(pokemonMovement));
     }
 
-    static DTO2pokemonMovement(dto: PokemonMovementDto){
+    /**
+     * Maps a `PokemonMovementDto` object to a `PokemonMovement` domain object.
+     * @param dto - The `PokemonMovementDto` object to map.
+     * @returns A new `PokemonMovement` domain object.
+     */
+    static DTO2PokemonMovement(dto: PokemonMovementDto) {
         return new PokemonMovement(dto.pokemonId, dto.name, dto.levelLearnedAt);
     }
-    
-    static DTOS2pokemonMovements(DTOs: PokemonMovementDto[]){
-        return DTOs.map((dto) => this.DTO2pokemonMovement(dto)) 
+
+    /**
+     * Maps a list of `PokemonMovementDto` objects to a list of `PokemonMovement` domain objects.
+     * @param DTOs - The list of `PokemonMovementDto` objects to map.
+     * @returns A new list of `PokemonMovement` domain objects.
+     */
+    static DTOS2PokemonMovements(DTOs: PokemonMovementDto[]) {
+        return DTOs.map((dto) => this.DTO2PokemonMovement(dto));
     }
 }

@@ -2,32 +2,39 @@ import { Controller, Get, Query } from '@nestjs/common';
 import { ApiAcceptedResponse, ApiTags } from '@nestjs/swagger';
 import { HttpPokemonConstants } from './http-pokemon.constants';
 import { QueryBus } from '@nestjs/cqrs';
-import { GetPokemonDetailsResponse } from './responses/get-pokemon-details.response';
-import { GetPokemonDetailsRequest } from './requests/get-pokemon-details.request';
-import { GetPokemonDetailsByIdQuery } from '../applications/get/pokemon/details-by-id/get-pokemon-details-by-id.query';
-import { PokemonDetails } from '../domain/pokemon-details';
+import { GetPokemonDetailByIdResponse } from './responses/get-pokemon-detail-by-id.response';
+import { GetPokemonDetailByIdRequest } from './requests/get-pokemon-detail-by-id.request';
+import { GetPokemonDetailByIdQuery } from '../applications/get/pokemon/detail-by-id/get-pokemon-detail-by-id.query';
+import { PokemonDetail } from '../domain/pokemon-detail';
 import { PokemonMappers } from '../infrastructure/mappers/pokemon.mappers';
 import { PokemonMovementMappers } from '../infrastructure/mappers/pokemon-movement.mappers';
 
+/**
+ * Controller for the HTTP Pokémon API.
+ */
 @Controller(HttpPokemonConstants.PREFIX)
 @ApiTags(HttpPokemonConstants.API_TAG)
 export class HttpPokemonController {
-
-    
+    /**
+     * param _queryBus - The query bus.
+     */
     constructor(private readonly _queryBus: QueryBus) {}
 
-    @Get(HttpPokemonConstants.GET_POKEMON_BY_ID)
-    @ApiAcceptedResponse({
-        type: GetPokemonDetailsResponse
-    })
-    async getPokemonById(@Query() query:GetPokemonDetailsRequest): Promise<GetPokemonDetailsResponse>{
-        const response = new GetPokemonDetailsResponse();
-        const queryResponse = await this._queryBus.execute<GetPokemonDetailsByIdQuery,PokemonDetails>(new GetPokemonDetailsByIdQuery(query.id))
-        response.pokemon = PokemonMappers.Pokemon2DTO(queryResponse.pokemon)
-        response.evolutionChain = PokemonMappers.Pokemon2DTOs(queryResponse.evolutionChain)
-        response.movements = PokemonMovementMappers.pokemonMovements2DTOs(queryResponse.movements)
-
-        return response
+    /**
+     * Retrieves a Pokémon by its ID.
+     * @param query - The query parameters.
+     * @returns The Pokémon.
+     */
+    @Get(HttpPokemonConstants.GET_POKEMON_DETAIL_BY_ID)
+    @ApiAcceptedResponse({ type: GetPokemonDetailByIdResponse })
+    async getPokemonById(@Query() query: GetPokemonDetailByIdRequest): Promise<GetPokemonDetailByIdResponse> {
+        const response = new GetPokemonDetailByIdResponse();
+        const queryResponse = await this._queryBus.execute<GetPokemonDetailByIdQuery, PokemonDetail>(
+            new GetPokemonDetailByIdQuery(query.id),
+        );
+        response.pokemon = PokemonMappers.pokemon2DTO(queryResponse.pokemon);
+        response.evolutionChain = PokemonMappers.pokemon2DTOs(queryResponse.evolutionChain);
+        response.movements = PokemonMovementMappers.pokemonMovements2DTOs(queryResponse.movements);
+        return response;
     }
-    
 }

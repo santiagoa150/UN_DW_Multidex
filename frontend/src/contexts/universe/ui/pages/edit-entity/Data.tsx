@@ -25,7 +25,7 @@ export function Data() {
     useEffect(() => {
         if (!universeEntityLoaded && universeType) {
             getUniverseEntityByIdAndTypeApplication
-                .exec(Number (id), universeType.name)
+                .exec(Number(id), universeType.name)
                 .then((res) => {
                     setUniverseEntityLoaded(true);
                     setUniverseEntity(res);

@@ -3,14 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { RoutesConstants } from '../../../domain/constants/routes.constants.ts';
 import Background from '../../images/pokeR&MBackground.png';
 
-
 export default function SignupPage(): JSX.Element {
     const navigate = useNavigate();
     const backgroundStyle = {
         background: `url(${Background}) no-repeat center`,
         backgroundPosition: '50% 50%',
-        backgroundSize: 'auto'
-    }
+        backgroundSize: 'auto',
+    };
     const nombreMessage = 'Nombre';
     const apellidoMessage = 'Apellido';
     const usuarioMessage = 'Nombre de usuario';
@@ -25,29 +24,53 @@ export default function SignupPage(): JSX.Element {
                     <div className="flex flex-col w-[50%] justify-center items-center py-[8%] pb-[2%]">
                         <div className="mx-[5%] flex flex-row items-center mb-[10%]">
                             <i className="fa fa-id-card-o text-[40px] mr-[3%]"></i>
-                            <input className="w-full rounded-[20px] text-[24px] pl-[10%] bg-[#FFF4CE] border border-black" name="signup-input" defaultValue={nombreMessage} />
+                            <input
+                                className="w-full rounded-[20px] text-[24px] pl-[10%] bg-[#FFF4CE] border border-black"
+                                name="signup-input"
+                                defaultValue={nombreMessage}
+                            />
                         </div>
                         <div className="mx-[5%] flex flex-row items-center mb-[10%]">
                             <i className="fa fa-user text-[40px] mr-[6%]"></i>
-                            <input className="w-full rounded-[20px] text-[24px] pl-[10%] bg-[#FFF4CE] border border-black" name="signup-input" defaultValue={usuarioMessage} />
+                            <input
+                                className="w-full rounded-[20px] text-[24px] pl-[10%] bg-[#FFF4CE] border border-black"
+                                name="signup-input"
+                                defaultValue={usuarioMessage}
+                            />
                         </div>
                         <div className="mx-[5%] flex flex-row items-center mb-[10%]">
                             <i className="fa fa-lock text-[40px] mr-[7%]"></i>
-                            <input className="w-full rounded-[20px] text-[24px] pl-[10%] bg-[#FFF4CE] border border-black" name="signup-input" defaultValue={passMessage} />
+                            <input
+                                className="w-full rounded-[20px] text-[24px] pl-[10%] bg-[#FFF4CE] border border-black"
+                                name="signup-input"
+                                defaultValue={passMessage}
+                            />
                         </div>
                     </div>
                     <div className="flex flex-col w-[50%] justify-center items-center py-[8%] pb-[2%]">
                         <div className="mx-[5%] flex flex-row items-center mb-[10%]">
                             <i className="fa fa-id-card-o text-[40px] mr-[3%]"></i>
-                            <input className="w-full rounded-[20px] text-[24px] pl-[10%] bg-[#FFF4CE] border border-black" name="signup-input" defaultValue={apellidoMessage} />
+                            <input
+                                className="w-full rounded-[20px] text-[24px] pl-[10%] bg-[#FFF4CE] border border-black"
+                                name="signup-input"
+                                defaultValue={apellidoMessage}
+                            />
                         </div>
                         <div className="mx-[5%] flex flex-row items-center mb-[10%]">
                             <i className="fa fa-envelope text-[40px] mr-[5%]"></i>
-                            <input className="w-full rounded-[20px] text-[24px] pl-[10%] bg-[#FFF4CE] border border-black" name="signup-input" defaultValue={emailMessage} />
+                            <input
+                                className="w-full rounded-[20px] text-[24px] pl-[10%] bg-[#FFF4CE] border border-black"
+                                name="signup-input"
+                                defaultValue={emailMessage}
+                            />
                         </div>
                         <div className="mx-[5%] flex flex-row items-center mb-[10%]">
                             <i className="fa fa-lock text-[40px] mr-[7%]"></i>
-                            <input className="w-full rounded-[20px] text-[24px] pl-[10%] bg-[#FFF4CE] border border-black" name="signup-input" defaultValue={passConMessage} />
+                            <input
+                                className="w-full rounded-[20px] text-[24px] pl-[10%] bg-[#FFF4CE] border border-black"
+                                name="signup-input"
+                                defaultValue={passConMessage}
+                            />
                         </div>
                     </div>
                 </div>
@@ -66,4 +89,3 @@ export default function SignupPage(): JSX.Element {
         </div>
     );
 }
-

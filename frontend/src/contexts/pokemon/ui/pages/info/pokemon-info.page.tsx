@@ -6,24 +6,23 @@ import { PokemonInfoEvolution } from './pokemon-info-evolution.tsx';
 import { useNavigate, useParams } from 'react-router-dom';
 import { RoutesConstants } from '../../../../shared/domain/constants/routes.constants.ts';
 import { useUniverse } from '../../../../../config/universe/use-universe.hook.ts';
-import { PokemonDetails } from '../../../domain/pokemon-details.ts';
-import { getPokemonDetailsByIdApplication } from '../../../../../config/app.providers.ts';
+import { PokemonDetail } from '../../../domain/pokemon-detail.ts';
+import { getPokemonDetailByIdApplication } from '../../../../../config/app.providers.ts';
 
 export default function PokemonInfoPage(): JSX.Element {
     const { id } = useParams();
 
     const { universeType } = useUniverse();
     const [pokemonLoaded, setPokemonLoaded] = useState<boolean>(false);
-    const [pokemon, setPokemon] = useState<PokemonDetails | undefined>();
+    const [pokemon, setPokemon] = useState<PokemonDetail | undefined>();
     const navigate = useNavigate();
 
     /**
      * Get the universe entity by id and type.
-     * TODO: Change to pokemon entity.
      */
     useEffect(() => {
         if (!pokemonLoaded && universeType) {
-            getPokemonDetailsByIdApplication
+            getPokemonDetailByIdApplication
                 .exec(Number(id))
                 .then((res) => {
                     setPokemonLoaded(true);
