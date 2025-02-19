@@ -1,8 +1,8 @@
 import { CgArrowLeft } from 'react-icons/cg';
-import { UniverseEntity } from '../../../../universe/domain/universe-entity.ts';
 import { useNavigate } from 'react-router-dom';
+import { Pokemon } from '../../../domain/pokemon.ts';
 
-export function PokemonInfoTitle({ pokemon }: { pokemon: UniverseEntity }) {
+export function PokemonInfoTitle({ pokemon }: { pokemon: Pokemon }) {
     const navigate = useNavigate();
 
     return (
@@ -10,7 +10,7 @@ export function PokemonInfoTitle({ pokemon }: { pokemon: UniverseEntity }) {
             <section className="w-full grid grid-cols-3 md:grid-cols-3 items-center p-4 gap-4">
                 <CgArrowLeft size="4rem" className="cursor-pointer" onClick={() => navigate(-1)} />
 
-                <p className="text-lg font-semibold text-center">{pokemon.name} pok</p>
+                <p className="text-lg font-semibold text-center">{pokemon.name[0].toUpperCase() + pokemon.name.substring(1)}</p>
 
                 <p className="text-lg bg-[#ef6bf9] w-32 h-12 flex items-center justify-center font-bold text-white rounded-md justify-self-end m-4">
                     {pokemon.id}

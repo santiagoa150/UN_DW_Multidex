@@ -39,8 +39,8 @@ export default function PokemonInfoPage(): JSX.Element {
             >
                 <PokemonInfoTitle pokemon={pokemon.pokemon} />
                 <div className="h-4"></div>
-                <PokemonInfoData pokemon={pokemon.pokemon} />
-                <PokemonInfoEvolution />
+                <PokemonInfoData pokemon={pokemon.pokemon} pokemonMovement={pokemon.movements} />
+                <PokemonInfoEvolution pokemon={pokemon.evolutionChain}/>
             </main>
         );
     } else if (!pokemon && !pokemonLoaded) {
