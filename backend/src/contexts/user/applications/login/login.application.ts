@@ -1,9 +1,9 @@
 import { Logger } from '@nestjs/common';
 import { UserAuthData } from '../../domain/user-auth-data';
-import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { QueryBus } from '@nestjs/cqrs';
 import { User } from '../../domain/user';
 import { GetUserByEmailQuery } from '../get/by-email/get-user-by-email.query';
-import { CreateUserPasswordCommand } from '../create/password/create-user-password.command';
+import { UserPassword } from '../../domain/user-password';
 
 /**
  * The `LoginApplication` class is responsible for logging in a user.
@@ -13,12 +13,8 @@ export class LoginApplication {
 
     /**
      * @param _queryBus - The query bus used to dispatch queries.
-     * @param _commandBus - The command bus used to dispatch commands.
      */
-    constructor(
-        private readonly _queryBus: QueryBus,
-        private readonly _commandBus: CommandBus,
-    ) {}
+    constructor(private readonly _queryBus: QueryBus) {}
 
     /**
      * Application to log in a user
@@ -33,10 +29,7 @@ export class LoginApplication {
         );
         let authData: UserAuthData | undefined = undefined;
         if (user) {
-            const hashedPassword: string = await this._commandBus.execute<CreateUserPasswordCommand, string>(
-                new CreateUserPasswordCommand(user.userId, password),
-            );
-            if (hashedPassword === user.password) {
+            if (UserPassword.create(user.userId, password) === user.password) {
                 authData = { userId: user.userId };
             }
         }

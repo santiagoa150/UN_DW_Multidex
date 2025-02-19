@@ -2,7 +2,7 @@ import { Module, Provider } from '@nestjs/common';
 import { HttpUniverseController } from '../../contexts/universe/api/http-universe.controller';
 import { GetUniverseEntityByIdAndTypeQueryHandler } from '../../contexts/universe/applications/get/universe-entity/by-id-and-type/get-universe-entity-by-id-and-type.query-handler';
 import { GetUniverseEntityByIdAndTypeApplication } from '../../contexts/universe/applications/get/universe-entity/by-id-and-type/get-universe-entity-by-id-and-type.application';
-import { QueryBus } from '@nestjs/cqrs';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { NestjsUniverseTask } from '../../contexts/universe/task/nestjs-universe.task';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { PgUniverseTypeModel } from '../../contexts/universe/infrastructure/postgres/pg-universe-type.model';
@@ -12,6 +12,10 @@ import { GetAllUniverseTypesApplication } from '../../contexts/universe/applicat
 import { UpdateUniverseTypeCommandHandler } from '../../contexts/universe/applications/update/update-universe-type.command-handler';
 import { UniverseTypeRepository } from '../../contexts/universe/domain/interfaces/universe-type.repository';
 import { UpdateUniverseTypeApplication } from '../../contexts/universe/applications/update/update-universe-type.application';
+import { DeleteUniverseEntityByIdAndUserCommandHandler } from '../../contexts/universe/applications/delete/by-id-and-user/delete-universe-entity-by-id-and-user.command-handler';
+import { DeleteUniverseEntityByIdAndUserApplication } from '../../contexts/universe/applications/delete/by-id-and-user/delete-universe-entity-by-id-and-user.application';
+import { GetUniverseEntitiesByTypeQueryHandler } from '../../contexts/universe/applications/get/universe-entity/by-type/get-universe-entities-by-type.query-handler';
+import { GetUniverseEntitiesByTypeApplication } from '../../contexts/universe/applications/get/universe-entity/by-type/get-universe-entities-by-type.application';
 
 /**
  * `PROVIDERS` is an array of providers related to universe module.
@@ -43,17 +47,35 @@ const APPLICATIONS: Provider[] = [
             return new UpdateUniverseTypeApplication(repository);
         },
     },
+    {
+        inject: [CommandBus],
+        provide: DeleteUniverseEntityByIdAndUserApplication,
+        useFactory: (commandBus: CommandBus): DeleteUniverseEntityByIdAndUserApplication => {
+            return new DeleteUniverseEntityByIdAndUserApplication(commandBus);
+        },
+    },
+    {
+        inject: [QueryBus],
+        provide: GetUniverseEntitiesByTypeApplication,
+        useFactory: (queryBus: QueryBus): GetUniverseEntitiesByTypeApplication => {
+            return new GetUniverseEntitiesByTypeApplication(queryBus);
+        },
+    },
 ];
 
 /**
  * `QUERIES` is an array of query handlers related to universe module.
  */
-const QUERIES: Provider[] = [GetUniverseEntityByIdAndTypeQueryHandler, GetAllUniverseTypesQueryHandler];
+const QUERIES: Provider[] = [
+    GetUniverseEntityByIdAndTypeQueryHandler,
+    GetAllUniverseTypesQueryHandler,
+    GetUniverseEntitiesByTypeQueryHandler,
+];
 
 /**
  * `COMMANDS` is an array of command handlers related to universe module.
  */
-const COMMANDS: Provider[] = [UpdateUniverseTypeCommandHandler];
+const COMMANDS: Provider[] = [UpdateUniverseTypeCommandHandler, DeleteUniverseEntityByIdAndUserCommandHandler];
 
 /**
  * `UniverseModule` is a module that groups all universe-related features.

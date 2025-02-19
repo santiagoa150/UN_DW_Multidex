@@ -1,7 +1,7 @@
 import { Module, Provider, Type } from '@nestjs/common';
 import { HttpUserController } from '../../contexts/user/api/http-user.controller';
 import { LocalAuthStrategy } from '../../contexts/user/infrastructure/nestjs/guards/local/local-auth.strategy';
-import { CommandBus, ICommandHandler, IQueryHandler, QueryBus } from '@nestjs/cqrs';
+import { ICommandHandler, IQueryHandler, QueryBus } from '@nestjs/cqrs';
 import { LoginCommandHandler } from '../../contexts/user/applications/login/login.command-handler';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { PgUserModel } from '../../contexts/user/infrastructure/postgres/pg-user.model';
@@ -10,12 +10,12 @@ import { LoginApplication } from '../../contexts/user/applications/login/login.a
 import { GetUserByEmailQueryHandler } from '../../contexts/user/applications/get/by-email/get-user-by-email.query-handler';
 import { GetUserByEmailApplication } from '../../contexts/user/applications/get/by-email/get-user-by-email.application';
 import { UserRepository } from '../../contexts/user/domain/interfaces/user.repository';
-import { CreateUserPasswordApplication } from '../../contexts/user/applications/create/password/create-user-password.application';
-import { CreateUserPasswordCommandHandler } from '../../contexts/user/applications/create/password/create-user-password.command-handler';
-import { CreateUserAccessTokenCommandHandler } from '../../contexts/user/applications/create/access-token/create-user-access-token.command-handler';
+import { CreateUserAccessTokenCommandHandler } from '../../contexts/user/applications/access-token/create/create-user-access-token.command-handler';
 import { JwtTokenRepository } from '../../contexts/shared/infrastructure/jwt/jwt-token.repository';
-import { CreateUserAccessTokenApplication } from '../../contexts/user/applications/create/access-token/create-user-access-token.application';
+import { CreateUserAccessTokenApplication } from '../../contexts/user/applications/access-token/create/create-user-access-token.application';
 import { TokenRepository } from '../../contexts/shared/domain/interfaces/token.repository';
+import { ValidateUserAccessTokenApplication } from '../../contexts/user/applications/access-token/validate/validate-user-access-token.application';
+import { ValidateUserAccessTokenQueryHandler } from '../../contexts/user/applications/access-token/validate/validate-user-access-token.query-handler';
 
 /**
  * `PROVIDERS` is an array of NestJS providers related to user module.
@@ -34,14 +34,10 @@ const APPLICATIONS: Provider[] = [
         },
     },
     {
-        provide: CreateUserPasswordApplication,
-        useClass: CreateUserPasswordApplication,
-    },
-    {
-        inject: [QueryBus, CommandBus],
+        inject: [QueryBus],
         provide: LoginApplication,
-        useFactory: (queryBus: QueryBus, commandBus: CommandBus): LoginApplication => {
-            return new LoginApplication(queryBus, commandBus);
+        useFactory: (queryBus: QueryBus): LoginApplication => {
+            return new LoginApplication(queryBus);
         },
     },
     {
@@ -51,21 +47,24 @@ const APPLICATIONS: Provider[] = [
             return new CreateUserAccessTokenApplication(repository);
         },
     },
+    {
+        inject: [JwtTokenRepository],
+        provide: ValidateUserAccessTokenApplication,
+        useFactory: (repository: TokenRepository): ValidateUserAccessTokenApplication => {
+            return new ValidateUserAccessTokenApplication(repository);
+        },
+    },
 ];
 
 /**
  * `QUERIES` is an array of query handlers related to user module.
  */
-const QUERIES: Type<IQueryHandler>[] = [GetUserByEmailQueryHandler];
+const QUERIES: Type<IQueryHandler>[] = [GetUserByEmailQueryHandler, ValidateUserAccessTokenQueryHandler];
 
 /**
  * `COMMANDS` is an array of command handlers related to user module.
  */
-const COMMANDS: Type<ICommandHandler>[] = [
-    LoginCommandHandler,
-    CreateUserPasswordCommandHandler,
-    CreateUserAccessTokenCommandHandler,
-];
+const COMMANDS: Type<ICommandHandler>[] = [LoginCommandHandler, CreateUserAccessTokenCommandHandler];
 
 /**
  * Module for the User context.

@@ -10,7 +10,7 @@ export abstract class UniverseEntityMappers {
      * @param entity - The `UniverseEntity` object to map.
      * @returns A new `UniverseEntityDto` object.
      */
-    static UniverseEntity2DTO(entity: UniverseEntity): UniverseEntityDto {
+    static universeEntity2DTO(entity: UniverseEntity): UniverseEntityDto {
         return {
             creatorId: entity.creatorId,
             creatorName: entity.creatorName,
@@ -27,5 +27,14 @@ export abstract class UniverseEntityMappers {
             universeType: entity.universeType,
             weight: entity.weight,
         };
+    }
+
+    /**
+     * Maps a list of `UniverseEntity` domain objects to a list of `UniverseEntityDto` objects.
+     * @param entities - The list of `UniverseEntity` objects to map.
+     * @returns A new list of `UniverseEntityDto` objects.
+     */
+    static universeEntities2DTO(entities: UniverseEntity[]): UniverseEntityDto[] {
+        return entities.map(UniverseEntityMappers.universeEntity2DTO);
     }
 }

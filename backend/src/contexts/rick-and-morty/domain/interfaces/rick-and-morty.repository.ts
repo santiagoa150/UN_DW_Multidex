@@ -1,4 +1,5 @@
 import { RickAndMortyCharacter } from '../rick-and-morty-character';
+import { Pagination } from '../../../shared/domain/pagination';
 
 /**
  * Rick and Morty repository interface.
@@ -27,6 +28,22 @@ export interface RickAndMortyRepository {
         location: string,
         origin: string,
     ): Promise<void>;
+
+    /**
+     * Delete a Rick and Morty character by its ID.
+     * @param id - The ID of the character to delete.
+     * @param userId - The owner of the character.
+     */
+    delete(id: number, userId: string): Promise<boolean>;
+
+    /**
+     * Get all Rick and Morty characters.
+     * @param page - The page number.
+     * @param limit - The page size.
+     * @param [nameFilter] - The name filter.
+     * @returns The list of Rick and Morty characters.
+     */
+    getAllCharacters(page: number, limit: number, nameFilter?: string): Promise<Pagination<RickAndMortyCharacter>>;
 
     /**
      * Get a Rick and Morty character by its ID.

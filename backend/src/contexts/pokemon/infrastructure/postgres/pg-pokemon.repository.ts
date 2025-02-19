@@ -16,6 +16,8 @@ import { PokemonEvolutionChain } from '../../domain/pokemon-evolution-chain';
 import { PokemonEvolutionChainMapper } from '../mappers/pokemon-evolution-chain.mappers';
 import { PgPokemonEvolutionChainModel } from './pg-pokemon-evolution-chain.model';
 import { PokemonDetail } from '../../domain/pokemon-detail';
+import { Pagination } from '../../../shared/domain/pagination';
+import { Op } from 'sequelize';
 
 /**
  * The Pokémon repository for Postgres.
@@ -108,6 +110,52 @@ export class PgPokemonRepository implements PokemonRepository {
         this._logger.log(`[${this.createEvolutionChain.name}] INIT ::`);
         await this._pgPokemonEvolutionChainModel.bulkCreate(PokemonEvolutionChainMapper.evolutionChains2DTOs(chain));
         this._logger.log(`[${this.createEvolutionChain.name}] FINISH ::`);
+    }
+
+    /**
+     * Delete a Pokémon by its id.
+     * @param id - The id of the Pokémon to delete.
+     * @param userId - The owner of the Pokémon.
+     * @returns True if the Pokémon was deleted, otherwise false.
+     */
+    async delete(id: number, userId: string): Promise<boolean> {
+        this._logger.log(`[${this.delete.name}] INIT :: id: ${id}`);
+        const totalDeleted = await this._pgPokemonModel.destroy({ where: { id, creatorId: userId } });
+        this._logger.log(`[${this.delete.name}] FINISH ::`);
+        return totalDeleted > 0;
+    }
+
+    /**
+     * Get all Pokémon.
+     * @param page - The page number.
+     * @param limit - The page size.
+     * @param [nameFilter] - The name filter.
+     * @returns The list of Pokémon.
+     */
+    async getAll(page: number, limit: number, nameFilter?: string): Promise<Pagination<Pokemon>> {
+        this._logger.log(`[${this.getAll.name}] INIT :: page: ${page}, limit: ${limit}, nameFilter: ${nameFilter}`);
+        const { count, rows } = await this._pgPokemonModel.findAndCountAll({
+            include: [
+                {
+                    model: PgPokemonTypeModel,
+                    order: [['order', 'ASC']],
+                },
+                {
+                    model: PgUserModel,
+                },
+            ],
+            limit,
+            offset: (page - 1) * limit,
+            where: nameFilter ? { name: { [Op.startsWith]: nameFilter } } : undefined,
+        });
+        const pokemon: Pokemon[] = PokemonMappers.DTOs2Pokemon(rows);
+        const pagination: Pagination<Pokemon> = new Pagination<Pokemon>(pokemon, {
+            page,
+            totalPages: Math.ceil(count / limit),
+            total: count,
+        });
+        this._logger.log(`[${this.getAll.name}] FINISH ::`);
+        return pagination;
     }
 
     /**

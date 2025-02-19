@@ -3,6 +3,7 @@ import { PokemonType } from '../pokemon-type';
 import { PokemonMovement } from '../pokemon-movement';
 import { PokemonEvolutionChain } from '../pokemon-evolution-chain';
 import { PokemonDetail } from '../pokemon-detail';
+import { Pagination } from '../../../shared/domain/pagination';
 
 /**
  * Interface for Pokémon repository.
@@ -48,6 +49,23 @@ export interface PokemonRepository {
      * @param chain - The Pokémon movements to create.
      */
     createEvolutionChain(chain: PokemonEvolutionChain[]): Promise<void>;
+
+    /**
+     * Delete a Pokémon by its id.
+     * @param id - The id of the Pokémon to delete.
+     * @param userId - The owner of the Pokémon.
+     * @returns True if the Pokémon was deleted, otherwise false.
+     */
+    delete(id: number, userId: string): Promise<boolean>;
+
+    /**
+     * Get all Pokémon.
+     * @param page - The page number.
+     * @param limit - The page size.
+     * @param [nameFilter] - The name filter.
+     * @returns The list of Pokémon.
+     */
+    getAll(page: number, limit: number, nameFilter?: string): Promise<Pagination<Pokemon>>;
 
     /**
      * Get all Pokémon types.

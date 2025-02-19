@@ -7,7 +7,7 @@ import { GetUserAuthData } from '../infrastructure/nestjs/guards/get-user-auth-d
 import { UserAuthData } from '../domain/user-auth-data';
 import { CommandBus } from '@nestjs/cqrs';
 import { LoginResponse } from './responses/login.response';
-import { CreateUserAccessTokenCommand } from '../applications/create/access-token/create-user-access-token.command';
+import { CreateUserAccessTokenCommand } from '../applications/access-token/create/create-user-access-token.command';
 
 /**
  * Controller for the User HTTP API.

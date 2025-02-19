@@ -8,6 +8,10 @@ import { LoadRickAndMortyCharactersCommandHandler } from '../../contexts/rick-an
 import { LoadRickAndMortyCharactersApplication } from '../../contexts/rick-and-morty/applications/load/load-rick-and-morty-characters.application';
 import { CommandBus } from '@nestjs/cqrs';
 import { HttpService } from '@nestjs/axios';
+import { DeleteRickAndMortyCharacterByIdAndUserCommandHandler } from '../../contexts/rick-and-morty/applications/delete/delete-rick-and-morty-character-by-id-and-user.command-handler';
+import { DeleteRickAndMortyCharacterByIdAndUserApplication } from '../../contexts/rick-and-morty/applications/delete/delete-rick-and-morty-character-by-id-and-user.application';
+import { GetAllRickAndMortyCharactersQueryHandler } from '../../contexts/rick-and-morty/applications/get/all/get-all-rick-and-morty-characters.query-handler';
+import { GetAllRickAndMortyCharactersApplication } from '../../contexts/rick-and-morty/applications/get/all/get-all-rick-and-morty-characters.application';
 
 /**
  * `PROVIDERS` is an array of NestJS providers related to Rick and Morty module.
@@ -32,17 +36,34 @@ const APPLICATIONS: Provider[] = [
             return new LoadRickAndMortyCharactersApplication(commandBus, repository, httpService);
         },
     },
+    {
+        inject: [PgRickAndMortyRepository],
+        provide: DeleteRickAndMortyCharacterByIdAndUserApplication,
+        useFactory: (repository: PgRickAndMortyRepository) => {
+            return new DeleteRickAndMortyCharacterByIdAndUserApplication(repository);
+        },
+    },
+    {
+        inject: [PgRickAndMortyRepository],
+        provide: GetAllRickAndMortyCharactersApplication,
+        useFactory: (repository: PgRickAndMortyRepository) => {
+            return new GetAllRickAndMortyCharactersApplication(repository);
+        },
+    },
 ];
 
 /**
  * `QUERIES` is an array of query handlers related to Rick and Morty module.
  */
-const QUERIES: Provider[] = [GetRickAndMortyCharacterByIdQueryHandler];
+const QUERIES: Provider[] = [GetRickAndMortyCharacterByIdQueryHandler, GetAllRickAndMortyCharactersQueryHandler];
 
 /**
  * `COMMANDS` is an array of command handlers related to Rick and Morty module.
  */
-const COMMANDS: Provider[] = [LoadRickAndMortyCharactersCommandHandler];
+const COMMANDS: Provider[] = [
+    LoadRickAndMortyCharactersCommandHandler,
+    DeleteRickAndMortyCharacterByIdAndUserCommandHandler,
+];
 
 @Module({
     imports: [SequelizeModule.forFeature([PgRickAndMortyCharacterModel])],

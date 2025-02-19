@@ -28,4 +28,13 @@ export class RickAndMortyCharacterMappers extends UniverseEntityMappers {
             dto.creatorName,
         );
     }
+
+    /**
+     * Maps a list of Rick and Morty character DTOs to a list of Rick and Morty character entities.
+     * @param DTOs - The list of Rick and Morty character DTOs to map.
+     * @returns A new list of Rick and Morty character entities.
+     */
+    static DTOs2RickAndMortyCharacters(DTOs: RickAndMortyCharacterDto[]): RickAndMortyCharacter[] {
+        return DTOs.map(RickAndMortyCharacterMappers.DTO2RickAndMortyCharacter);
+    }
 }

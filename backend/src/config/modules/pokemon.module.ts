@@ -18,6 +18,10 @@ import { PgPokemonEvolutionChainModel } from '../../contexts/pokemon/infrastruct
 import { GetPokemonDetailByIdQueryHandler } from 'src/contexts/pokemon/applications/get/pokemon/detail-by-id/get-pokemon-detail-by-id.query-handler';
 import { GetPokemonDetailByIdApplication } from 'src/contexts/pokemon/applications/get/pokemon/detail-by-id/get-pokemon-detail-by-id.application';
 import { HttpPokemonController } from 'src/contexts/pokemon/api/http-pokemon.controller';
+import { DeletePokemonByIdAndUserCommandHandler } from '../../contexts/pokemon/applications/delete/delete-pokemon-by-id-and-user.command-handler';
+import { DeletePokemonByIdAndUserApplication } from '../../contexts/pokemon/applications/delete/delete-pokemon-by-id-and-user.application';
+import { GetAllPokemonQueryHandler } from '../../contexts/pokemon/applications/get/pokemon/all/get-all-pokemon.query-handler';
+import { GetAllPokemonApplication } from '../../contexts/pokemon/applications/get/pokemon/all/get-all-pokemon.application';
 
 /**
  * `PROVIDERS` is an array of NestJS providers related to pokémon module.
@@ -61,6 +65,20 @@ const APPLICATIONS: Provider[] = [
             return new GetPokemonDetailByIdApplication(repository);
         },
     },
+    {
+        inject: [PgPokemonRepository],
+        provide: DeletePokemonByIdAndUserApplication,
+        useFactory: (repository: PokemonRepository) => {
+            return new DeletePokemonByIdAndUserApplication(repository);
+        },
+    },
+    {
+        inject: [PgPokemonRepository],
+        provide: GetAllPokemonApplication,
+        useFactory: (repository: PokemonRepository) => {
+            return new GetAllPokemonApplication(repository);
+        },
+    },
 ];
 
 /**
@@ -70,12 +88,13 @@ const QUERIES: Provider[] = [
     GetPokemonByIdQueryHandler,
     GetAllPokemonTypesQueryHandler,
     GetPokemonDetailByIdQueryHandler,
+    GetAllPokemonQueryHandler,
 ];
 
 /**
  * `COMMANDS` is an array of command handlers related to pokémon module.
  */
-const COMMANDS: Provider[] = [LoadPokemonCommandHandler];
+const COMMANDS: Provider[] = [LoadPokemonCommandHandler, DeletePokemonByIdAndUserCommandHandler];
 
 @Module({
     controllers: [HttpPokemonController],
