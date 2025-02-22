@@ -19,6 +19,7 @@ import { Pagination } from '../../shared/domain/pagination';
 import { GetUniverseEntitiesByTypeQuery } from '../applications/get/universe-entity/by-type/get-universe-entities-by-type.query';
 
 /**
+ * Controller for the universe API.
  */
 @Controller(HttpUniverseConstants.PREFIX)
 @ApiTags(HttpUniverseConstants.API_TAG)

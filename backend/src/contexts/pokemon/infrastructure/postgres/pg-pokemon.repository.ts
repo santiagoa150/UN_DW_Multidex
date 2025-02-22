@@ -18,6 +18,8 @@ import { PgPokemonEvolutionChainModel } from './pg-pokemon-evolution-chain.model
 import { PokemonDetail } from '../../domain/pokemon-detail';
 import { Pagination } from '../../../shared/domain/pagination';
 import { Op } from 'sequelize';
+import { PgPokemonConstants } from './pg-pokemon.constants';
+import * as process from 'node:process';
 
 /**
  * The Pokémon repository for Postgres.
@@ -27,10 +29,11 @@ export class PgPokemonRepository implements PokemonRepository {
     private readonly _logger: Logger = new Logger(PgPokemonRepository.name);
 
     /**
-     * @param _pgPokemonModel - The Postgres Pokémon model.
-     * @param _pgPokemonTypeModel - The Postgres Pokémon type model.
-     * @param _pgPokemonTypeRelationModel - The Postgres Pokémon type relation model.
-     * @param _pgPokemonMovementModel - The Postgres Pokémon movement model.
+     * @param _pgPokemonModel - The Postgres Pokémon models.
+     * @param _pgPokemonTypeModel - The Postgres Pokémon type models.
+     * @param _pgPokemonTypeRelationModel - The Postgres Pokémon type relation models.
+     * @param _pgPokemonMovementModel - The Postgres Pokémon movement models.
+     * @param _pgPokemonEvolutionChainModel - The Postgres Pokémon evolution chain models.
      */
     constructor(
         @InjectModel(PgPokemonModel) private readonly _pgPokemonModel: typeof PgPokemonModel,
@@ -58,10 +61,10 @@ export class PgPokemonRepository implements PokemonRepository {
      * @param specialDefense The special defense of the Pokémon.
      * @param speed The speed of the Pokémon.
      * @param movements The movements of the Pokémon.
+     * @param creatorId The creator of the Pokémon.
      * @returns The created Pokémon.
      */
     async create(
-        id: number,
         name: string,
         pokemonTypes: number[],
         frontImageUrl: string,
@@ -75,9 +78,11 @@ export class PgPokemonRepository implements PokemonRepository {
         specialDefense: number,
         speed: number,
         movements: PokemonMovement[],
-    ): Promise<void> {
+        id?: number,
+        creatorId?: string,
+    ): Promise<Pokemon> {
         this._logger.log(`[${this.create.name}] INIT :: id: ${id}`);
-        await this._pgPokemonModel.create({
+        const pokemon = await this._pgPokemonModel.create({
             id,
             name,
             height,
@@ -90,16 +95,26 @@ export class PgPokemonRepository implements PokemonRepository {
             specialAttack,
             speed,
             specialDefense,
+            creatorId,
         });
+        const pokemonId: number = id ?? pokemon.id;
         await this._pgPokemonTypeRelationModel.bulkCreate(
             pokemonTypes.map((pokemonTypeId, i) => ({
-                pokemonId: id,
+                pokemonId,
                 pokemonTypeId,
                 order: i + 1,
             })),
         );
-        await this._pgPokemonMovementModel.bulkCreate(PokemonMovementMappers.pokemonMovements2DTOs(movements));
+        await this._pgPokemonMovementModel.bulkCreate(
+            movements.map((movement) => ({
+                pokemonId,
+                name: movement.name,
+                levelLearnedAt: movement.levelLearnedAt,
+            })),
+        );
+        const mapped: Pokemon = PokemonMappers.DTO2Pokemon(pokemon);
         this._logger.log(`[${this.create.name}] FINISH ::`);
+        return mapped;
     }
 
     /**
@@ -227,5 +242,105 @@ export class PgPokemonRepository implements PokemonRepository {
         );
         this._logger.log(`[${this.getDetailById.name}] FINISH ::`);
         return pokemonDetails;
+    }
+
+    /**
+     * Get a Pokémon evolution chain by its Pokémon id.
+     * @param id - The id of the Pokémon to search for.
+     * @returns The Pokémon evolution chain if found, otherwise undefined.
+     */
+    async getEvolutionChainByPokemon(id: number): Promise<PokemonEvolutionChain> {
+        this._logger.log(`[${this.getEvolutionChainByPokemon.name}] INIT :: id: ${id}`);
+        const found: PgPokemonEvolutionChainModel = await this._pgPokemonEvolutionChainModel.findOne({
+            where: { pokemonId: id },
+        });
+        const mapped: PokemonEvolutionChain = PokemonEvolutionChainMapper.DTO2EvolutionChain(found);
+        this._logger.log(`[${this.getEvolutionChainByPokemon.name}] FINISH ::`);
+        return mapped;
+    }
+
+    /**
+     * Update a Pokémon.
+     * @param id - The id of the Pokémon.
+     * @param name The name of the Pokémon.
+     * @param pokemonTypes The types of the Pokémon.
+     * @param frontImageUrl The front image URL of the Pokémon.
+     * @param description The description of the Pokémon.
+     * @param weight The weight of the Pokémon.
+     * @param height The height of the Pokémon.
+     * @param hp The HP of the Pokémon.
+     * @param attack The attack of the Pokémon.
+     * @param defense The defense of the Pokémon.
+     * @param specialAttack The special attack of the Pokémon.
+     * @param specialDefense The special defense of the Pokémon.
+     * @param speed The speed of the Pokémon.
+     * @param movements The movements of the Pokémon.
+     * @param evolutionChain The evolution chain of the Pokémon.
+     */
+    async update(
+        id: number,
+        name: string,
+        pokemonTypes: number[],
+        frontImageUrl: string,
+        description: string,
+        weight: number,
+        height: number,
+        hp: number,
+        attack: number,
+        defense: number,
+        specialAttack: number,
+        specialDefense: number,
+        speed: number,
+        movements: PokemonMovement[],
+        evolutionChain: PokemonEvolutionChain,
+    ): Promise<void> {
+        this._logger.log(`[${this.update.name}] INIT :: Pokémon ID: ${id}`);
+        await this._pgPokemonMovementModel.destroy({ where: { pokemonId: id } });
+        await this._pgPokemonTypeRelationModel.destroy({ where: { pokemonId: id } });
+        await this._pgPokemonEvolutionChainModel.destroy({ where: { pokemonId: id } });
+        await this._pgPokemonModel.update(
+            {
+                name,
+                height,
+                weight,
+                frontImageUrl,
+                description,
+                hp,
+                attack,
+                defense,
+                specialAttack,
+                speed,
+                specialDefense,
+            },
+            { where: { id } },
+        );
+        await this._pgPokemonTypeRelationModel.bulkCreate(
+            pokemonTypes.map((pokemonTypeId, i) => ({
+                pokemonId: id,
+                pokemonTypeId,
+                order: i + 1,
+            })),
+        );
+        await this._pgPokemonMovementModel.bulkCreate(
+            movements.map((movement) => ({
+                pokemonId: id,
+                name: movement.name,
+                levelLearnedAt: movement.levelLearnedAt,
+            })),
+        );
+        await this._pgPokemonEvolutionChainModel.create(PokemonEvolutionChainMapper.evolutionChain2DTO(evolutionChain));
+        this._logger.log(`[${this.update.name}] FINISH ::`);
+    }
+
+    /**
+     * Update the pokémon autoincrement.
+     * @param lastId - The last Pokémon id.
+     */
+    async updatePokemonAutoincrement(lastId: number): Promise<void> {
+        this._logger.log(`[${this.updatePokemonAutoincrement.name}] INIT :: lastId: ${lastId}`);
+        await this._pgPokemonMovementModel.sequelize.query(
+            `ALTER SEQUENCE ${process.env.POSTGRES_SCHEMA}.${PgPokemonConstants.POKEMON_TABLE_NAME}_id_seq RESTART WITH ${lastId + 1}`,
+        );
+        this._logger.log(`[${this.updatePokemonAutoincrement.name}] FINISH ::`);
     }
 }

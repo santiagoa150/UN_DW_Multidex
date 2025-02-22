@@ -1,5 +1,5 @@
 import { PickType } from '@nestjs/swagger';
-import { HttpPokemonModel } from '../model/http-pokemon.model';
+import { HttpPokemonModel } from '../models/http-pokemon.model';
 
 /**
  * DTO (Data Transfer Object) that represents the payload for a get pokémon detail by type and ID request.

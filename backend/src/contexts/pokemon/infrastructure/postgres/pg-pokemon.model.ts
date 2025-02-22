@@ -1,5 +1,6 @@
 import {
     AllowNull,
+    AutoIncrement,
     BelongsTo,
     BelongsToMany,
     Column,
@@ -20,11 +21,12 @@ import { PgPokemonMovementModel } from './pg-pokemon-movement.model';
 import { PgPokemonEvolutionChainModel } from './pg-pokemon-evolution-chain.model';
 
 /**
- * The Pokémon model for PostgresSQL.
+ * The Pokémon models for PostgresSQL.
  */
 @Table({ tableName: PgPokemonConstants.POKEMON_TABLE_NAME, timestamps: false })
 export class PgPokemonModel extends Model<PokemonDto> implements PokemonDto {
     @PrimaryKey
+    @AutoIncrement
     @AllowNull(false)
     @Column({ type: DataType.INTEGER })
     id: number;

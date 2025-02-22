@@ -109,6 +109,7 @@ export class LoadPokemonApplication {
         const pokemonTypes: Map<string, number> = await this.getPokemonTypesMap();
         let currentPage: number = metadata.pokemonPage;
         let totalElements: number = 1;
+        let lastId: number = 0;
         do {
             this._logger.warn(
                 `https://pokeapi.co/api/v2/pokemon?limit=${universeType.elementsPerPage}&offset=${currentPage * universeType.elementsPerPage}`,
@@ -158,7 +159,6 @@ export class LoadPokemonApplication {
                         (res) => ({ stats: res[0], movements: res[1] }),
                     );
                     await this._repository.create(
-                        rawPokemon.id,
                         rawPokemon.name,
                         pokemonTypeIds,
                         frontImageUrl,
@@ -172,7 +172,9 @@ export class LoadPokemonApplication {
                         stats.specialDefense,
                         stats.speed,
                         movements,
+                        rawPokemon.id,
                     );
+                    lastId = rawPokemon.id;
                 }
                 currentPage++;
             } finally {
@@ -186,6 +188,7 @@ export class LoadPokemonApplication {
                 await this._commandBus.execute(new UpdateUniverseTypeCommand(universeType));
             }
         } while (currentPage * universeType.elementsPerPage < totalElements);
+        await this._repository.updatePokemonAutoincrement(lastId);
         this._logger.log(`[${this.loadPokemon.name}] FINISH ::`);
     }
 

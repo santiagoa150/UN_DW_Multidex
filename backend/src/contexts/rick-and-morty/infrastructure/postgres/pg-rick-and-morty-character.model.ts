@@ -1,15 +1,26 @@
-import { AllowNull, BelongsTo, Column, DataType, ForeignKey, Model, PrimaryKey, Table } from 'sequelize-typescript';
+import {
+    AllowNull,
+    AutoIncrement,
+    BelongsTo,
+    Column,
+    DataType,
+    ForeignKey,
+    Model,
+    PrimaryKey,
+    Table,
+} from 'sequelize-typescript';
 import { RickAndMortyCharacterDto } from '../rick-and-morty-character.dto';
 import { PgRickAndMortyConstants } from './pg-rick-and-morty.constants';
 import { UniverseTypeNameConstants } from '../../../universe/domain/constants/universe-type-name.constants';
 import { PgUserModel } from '../../../user/infrastructure/postgres/pg-user.model';
 
 /**
- * The Rick and Morty character model for PostgresSQL.
+ * The Rick and Morty character models for PostgresSQL.
  */
 @Table({ tableName: PgRickAndMortyConstants.CHARACTERS_TABLE_NAME, timestamps: false })
 export class PgRickAndMortyCharacterModel extends Model implements RickAndMortyCharacterDto {
     @PrimaryKey
+    @AutoIncrement
     @AllowNull(false)
     @Column({ type: DataType.INTEGER })
     id: number;

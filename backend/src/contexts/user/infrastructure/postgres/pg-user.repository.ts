@@ -13,7 +13,7 @@ export class PgUserRepository implements UserRepository {
     private readonly _logger: Logger = new Logger(PgUserRepository.name);
 
     /**
-     * @param pgUserModel - The Postgres user model.
+     * @param pgUserModel - The Postgres user models.
      */
     constructor(@InjectModel(PgUserModel) private readonly pgUserModel: typeof PgUserModel) {}
 

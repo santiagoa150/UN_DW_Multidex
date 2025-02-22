@@ -1,7 +1,7 @@
 import { DefaultResponse } from 'src/contexts/shared/api/responses/default.response';
-import { HttpPokemonModel } from '../model/http-pokemon.model';
+import { HttpPokemonModel } from '../models/http-pokemon.model';
 import { ApiProperty } from '@nestjs/swagger';
-import { HttpPokemonMovementModel } from '../model/http-pokemon-movement.model';
+import { HttpPokemonMovementModel } from '../models/http-pokemon-movement.model';
 
 /**
  * The response for the get pokémon detail by ID request.

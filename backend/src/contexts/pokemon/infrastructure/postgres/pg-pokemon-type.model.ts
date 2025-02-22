@@ -5,7 +5,7 @@ import { PgPokemonModel } from './pg-pokemon.model';
 import { PgPokemonTypeRelationModel } from './pg-pokemon-type-relation.model';
 
 /**
- * The Pokémon type model for PostgresSQL.
+ * The Pokémon type models for PostgresSQL.
  */
 @Table({ tableName: PgPokemonConstants.POKEMON_TYPES_TABLE_NAME, timestamps: false })
 export class PgPokemonTypeModel extends Model<PokemonTypeDto> implements PokemonTypeDto {

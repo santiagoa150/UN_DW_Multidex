@@ -1,5 +1,5 @@
 /**
- * User domain model
+ * User domain models
  */
 export class User {
     /**

@@ -7,6 +7,8 @@ import { RickAndMortyCharacterMappers } from '../mappers/rick-and-morty-characte
 import { PgUserModel } from '../../../user/infrastructure/postgres/pg-user.model';
 import { Pagination } from '../../../shared/domain/pagination';
 import { Op } from 'sequelize';
+import { PgRickAndMortyConstants } from './pg-rick-and-morty.constants';
+import * as process from 'node:process';
 
 /**
  * The Rick and Morty repository for Postgres.
@@ -16,7 +18,7 @@ export class PgRickAndMortyRepository implements RickAndMortyRepository {
     private readonly _logger: Logger = new Logger(PgRickAndMortyRepository.name);
 
     /**
-     * @param _pgCharacterModel - The Postgres Rick and Morty character model.
+     * @param _pgCharacterModel - The Postgres Rick and Morty character models.
      */
     constructor(
         @InjectModel(PgRickAndMortyCharacterModel)
@@ -25,7 +27,6 @@ export class PgRickAndMortyRepository implements RickAndMortyRepository {
 
     /**
      * Create a Rick and Morty character.
-     * @param id - The ID of the character.
      * @param name - The name of the character.
      * @param type - The type of the character.
      * @param frontImageUrl - The URL of the character's front image.
@@ -34,9 +35,10 @@ export class PgRickAndMortyRepository implements RickAndMortyRepository {
      * @param gender - The gender of the character.
      * @param location - The location of the character.
      * @param origin - The origin of the character.
+     * @param [id] - The ID of the character.
+     * @param [creatorId] - The creator ID.
      */
     async createCharacter(
-        id: number,
         name: string,
         type: string,
         frontImageUrl: string,
@@ -45,6 +47,8 @@ export class PgRickAndMortyRepository implements RickAndMortyRepository {
         gender: string,
         location: string,
         origin: string,
+        id?: number,
+        creatorId?: string,
     ): Promise<void> {
         this._logger.log(`[${this.createCharacter.name}] INIT :: id: ${id}`);
         await this._pgCharacterModel.create({
@@ -57,6 +61,7 @@ export class PgRickAndMortyRepository implements RickAndMortyRepository {
             frontImageUrl,
             description,
             entityType: type,
+            creatorId,
         });
         this._logger.log(`[${this.createCharacter.name}] FINISH ::`);
     }
@@ -129,5 +134,57 @@ export class PgRickAndMortyRepository implements RickAndMortyRepository {
             : undefined;
         this._logger.log(`[${this.getCharacterById.name}] FINISH ::`);
         return mapped;
+    }
+
+    /**
+     * Update a Rick and Morty character.
+     * @param id - The ID of the character.
+     * @param name - The name of the character.
+     * @param type - The type of the character.
+     * @param frontImageUrl - The URL of the character's front image.
+     * @param description - The description of the character.
+     * @param status - The status of the character.
+     * @param gender - The gender of the character.
+     * @param location - The location of the character.
+     * @param origin - The origin of the character.
+     */
+    async updateCharacter(
+        id: number,
+        name: string,
+        type: string,
+        frontImageUrl: string,
+        description: string,
+        status: string,
+        gender: string,
+        location: string,
+        origin: string,
+    ): Promise<void> {
+        this._logger.log(`[${this.updateCharacter.name}] INIT :: name: ${name}`);
+        await this._pgCharacterModel.update(
+            {
+                name,
+                status,
+                gender,
+                location,
+                origin,
+                frontImageUrl,
+                description,
+                entityType: type,
+            },
+            { where: { id } },
+        );
+        this._logger.log(`[${this.updateCharacter.name}] FINISH ::`);
+    }
+
+    /**
+     * Update the last ID of the character autoincrement.
+     * @param lastId - The last ID of the character.
+     */
+    async updateCharacterAutoincrement(lastId: number): Promise<void> {
+        this._logger.log(`[${this.updateCharacterAutoincrement.name}] INIT :: lastId: ${lastId}`);
+        await this._pgCharacterModel.sequelize.query(
+            `ALTER SEQUENCE ${process.env.POSTGRES_SCHEMA}.${PgRickAndMortyConstants.CHARACTERS_TABLE_NAME}_id_seq RESTART WITH ${lastId + 1}`,
+        );
+        this._logger.log(`[${this.updateCharacterAutoincrement.name}] FINISH ::`);
     }
 }

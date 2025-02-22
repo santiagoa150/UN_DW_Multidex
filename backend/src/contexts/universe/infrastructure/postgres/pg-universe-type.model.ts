@@ -3,7 +3,7 @@ import { UniverseTypeDto } from '../universe-type.dto';
 import { PgUniverseConstants } from './pg-universe.constants';
 
 /**
- * The universe type model for PostgresSQL.
+ * The universe type models for PostgresSQL.
  */
 @Table({ tableName: PgUniverseConstants.UNIVERSE_TYPES_TABLE_NAME, timestamps: false })
 export class PgUniverseTypeModel extends Model<UniverseTypeDto> implements UniverseTypeDto {

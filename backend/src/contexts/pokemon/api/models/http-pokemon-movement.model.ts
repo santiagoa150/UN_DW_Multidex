@@ -5,7 +5,7 @@ import { IsInt, IsNotEmpty, IsString } from 'class-validator';
 import { PokemonExceptionMessagesConstants } from '../../domain/exceptions/pokemon-exception-messages.constants';
 
 /**
- * Represents a pokémon movement model in the HTTP layer.
+ * Represents a pokémon movement models in the HTTP layer.
  */
 export class HttpPokemonMovementModel implements PokemonMovementDto {
     @ApiProperty({ description: 'The entity id.' })

@@ -26,4 +26,13 @@ export abstract class PokemonEvolutionChainMapper {
     static evolutionChains2DTOs(evolutionChains: PokemonEvolutionChain[]): PokemonEvolutionChainDto[] {
         return evolutionChains.map(PokemonEvolutionChainMapper.evolutionChain2DTO);
     }
+
+    /**
+     * Maps a Pokémon Evolution Chain DTO to a Pokémon Evolution Chain.
+     * @param dto - The Pokémon Evolution Chain DTO to map.
+     * @returns The Pokémon Evolution Chain.
+     */
+    static DTO2EvolutionChain(dto: PokemonEvolutionChainDto): PokemonEvolutionChain {
+        return new PokemonEvolutionChain(dto.chainId, dto.pokemonId, dto.evolvesFrom);
+    }
 }

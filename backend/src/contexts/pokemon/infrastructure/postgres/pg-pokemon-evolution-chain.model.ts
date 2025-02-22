@@ -4,7 +4,7 @@ import { PgPokemonConstants } from './pg-pokemon.constants';
 import { PgPokemonModel } from './pg-pokemon.model';
 
 /**
- * The Pokémon evolution chain model for PostgresSQL.
+ * The Pokémon evolution chain models for PostgresSQL.
  */
 @Table({ tableName: PgPokemonConstants.POKEMON_EVOLUTION_CHAINS_TABLE_NAME, timestamps: false })
 export class PgPokemonEvolutionChainModel extends Model<PokemonEvolutionChainDto> implements PokemonEvolutionChainDto {

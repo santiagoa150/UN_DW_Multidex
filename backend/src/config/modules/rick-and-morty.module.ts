@@ -6,12 +6,17 @@ import { GetRickAndMortyCharacterByIdQueryHandler } from '../../contexts/rick-an
 import { GetRickAndMortyCharacterByIdApplication } from '../../contexts/rick-and-morty/applications/get/character-by-id/get-rick-and-morty-character-by-id.application';
 import { LoadRickAndMortyCharactersCommandHandler } from '../../contexts/rick-and-morty/applications/load/load-rick-and-morty-characters.command-handler';
 import { LoadRickAndMortyCharactersApplication } from '../../contexts/rick-and-morty/applications/load/load-rick-and-morty-characters.application';
-import { CommandBus } from '@nestjs/cqrs';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { HttpService } from '@nestjs/axios';
 import { DeleteRickAndMortyCharacterByIdAndUserCommandHandler } from '../../contexts/rick-and-morty/applications/delete/delete-rick-and-morty-character-by-id-and-user.command-handler';
 import { DeleteRickAndMortyCharacterByIdAndUserApplication } from '../../contexts/rick-and-morty/applications/delete/delete-rick-and-morty-character-by-id-and-user.application';
 import { GetAllRickAndMortyCharactersQueryHandler } from '../../contexts/rick-and-morty/applications/get/all/get-all-rick-and-morty-characters.query-handler';
 import { GetAllRickAndMortyCharactersApplication } from '../../contexts/rick-and-morty/applications/get/all/get-all-rick-and-morty-characters.application';
+import { CreateRickAndMortyCharacterCommandHandler } from '../../contexts/rick-and-morty/applications/create/create-rick-and-morty-character.command-handler';
+import { CreateRickAndMortyCharacterApplication } from '../../contexts/rick-and-morty/applications/create/create-rick-and-morty-character.application';
+import { HttpRickAndMortyController } from '../../contexts/rick-and-morty/api/http-rick-and-morty.controller';
+import { UpdateRickAndMortyCharacterCommandHandler } from '../../contexts/rick-and-morty/applications/update/update-rick-and-morty-character.command-handler';
+import { UpdateRickAndMortyCharacterApplication } from '../../contexts/rick-and-morty/applications/update/update-rick-and-morty-character.application';
 
 /**
  * `PROVIDERS` is an array of NestJS providers related to Rick and Morty module.
@@ -50,6 +55,20 @@ const APPLICATIONS: Provider[] = [
             return new GetAllRickAndMortyCharactersApplication(repository);
         },
     },
+    {
+        inject: [PgRickAndMortyRepository],
+        provide: CreateRickAndMortyCharacterApplication,
+        useFactory: (repository: PgRickAndMortyRepository) => {
+            return new CreateRickAndMortyCharacterApplication(repository);
+        },
+    },
+    {
+        inject: [PgRickAndMortyRepository, QueryBus],
+        provide: UpdateRickAndMortyCharacterApplication,
+        useFactory: (repository: PgRickAndMortyRepository, queryBus: QueryBus) => {
+            return new UpdateRickAndMortyCharacterApplication(repository, queryBus);
+        },
+    },
 ];
 
 /**
@@ -62,10 +81,13 @@ const QUERIES: Provider[] = [GetRickAndMortyCharacterByIdQueryHandler, GetAllRic
  */
 const COMMANDS: Provider[] = [
     LoadRickAndMortyCharactersCommandHandler,
+    CreateRickAndMortyCharacterCommandHandler,
+    UpdateRickAndMortyCharacterCommandHandler,
     DeleteRickAndMortyCharacterByIdAndUserCommandHandler,
 ];
 
 @Module({
+    controllers: [HttpRickAndMortyController],
     imports: [SequelizeModule.forFeature([PgRickAndMortyCharacterModel])],
     providers: [...PROVIDERS, ...APPLICATIONS, ...QUERIES, ...COMMANDS],
 })

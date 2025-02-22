@@ -85,6 +85,7 @@ export class LoadRickAndMortyCharactersApplication {
         this._logger.log(`[${this.loadRickAndMortyCharacters.name}] INIT :: universeType: ${universeType.name}`);
         let currentPage: number = metadata.charactersPage;
         let totalPages: number = 1;
+        let lastId: number = 0;
         do {
             this._logger.warn(`https://rickandmortyapi.com/api/character?page=${currentPage}`);
             const response = await this._httpService.axiosRef
@@ -98,7 +99,6 @@ export class LoadRickAndMortyCharactersApplication {
                         .get<RickAndMortyApiEpisodeResponse>(rawCharacter.episode[0])
                         .then((res) => res.data);
                     await this._repository.createCharacter(
-                        rawCharacter.id,
                         rawCharacter.name,
                         rawCharacter.species,
                         rawCharacter.image,
@@ -107,7 +107,9 @@ export class LoadRickAndMortyCharactersApplication {
                         rawCharacter.gender,
                         rawCharacter.location.name,
                         rawCharacter.origin.name,
+                        rawCharacter.id,
                     );
+                    lastId = rawCharacter.id;
                 }
                 currentPage++;
             } finally {
@@ -121,6 +123,7 @@ export class LoadRickAndMortyCharactersApplication {
                 await this._commandBus.execute(new UpdateUniverseTypeCommand(universeType));
             }
         } while (currentPage < totalPages);
+        await this._repository.updateCharacterAutoincrement(lastId);
         this._logger.log(`[${this.loadRickAndMortyCharacters.name}] FINISH ::`);
     }
 }

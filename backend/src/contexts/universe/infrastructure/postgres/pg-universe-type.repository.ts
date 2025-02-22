@@ -13,7 +13,7 @@ export class PgUniverseTypeRepository implements UniverseTypeRepository {
     private readonly _logger: Logger = new Logger(PgUniverseTypeRepository.name);
 
     /**
-     * @param _model - The Postgres Universe Type model.
+     * @param _model - The Postgres Universe Type models.
      */
     constructor(@InjectModel(PgUniverseTypeModel) private readonly _model: typeof PgUniverseTypeModel) {}
 

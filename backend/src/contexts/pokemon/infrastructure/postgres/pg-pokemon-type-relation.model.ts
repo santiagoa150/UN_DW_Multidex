@@ -4,7 +4,7 @@ import { PgPokemonModel } from './pg-pokemon.model';
 import { PgPokemonTypeModel } from './pg-pokemon-type.model';
 
 /**
- * The Pokémon type relation model for PostgresSQL.
+ * The Pokémon type relation models for PostgresSQL.
  */
 @Table({ tableName: PgPokemonConstants.POKEMON_TYPE_RELATIONS_TABLE_NAME, timestamps: false })
 export class PgPokemonTypeRelationModel extends Model {

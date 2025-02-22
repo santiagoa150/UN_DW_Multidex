@@ -22,6 +22,10 @@ import { DeletePokemonByIdAndUserCommandHandler } from '../../contexts/pokemon/a
 import { DeletePokemonByIdAndUserApplication } from '../../contexts/pokemon/applications/delete/delete-pokemon-by-id-and-user.application';
 import { GetAllPokemonQueryHandler } from '../../contexts/pokemon/applications/get/pokemon/all/get-all-pokemon.query-handler';
 import { GetAllPokemonApplication } from '../../contexts/pokemon/applications/get/pokemon/all/get-all-pokemon.application';
+import { CreatePokemonCommandHandler } from '../../contexts/pokemon/applications/create/create-pokemon.command-handler';
+import { CreatePokemonApplication } from '../../contexts/pokemon/applications/create/create-pokemon.application';
+import { UpdatePokemonCommandHandler } from '../../contexts/pokemon/applications/update/update-pokemon.command-handler';
+import { UpdatePokemonApplication } from '../../contexts/pokemon/applications/update/update-pokemon.application';
 
 /**
  * `PROVIDERS` is an array of NestJS providers related to pokémon module.
@@ -79,6 +83,20 @@ const APPLICATIONS: Provider[] = [
             return new GetAllPokemonApplication(repository);
         },
     },
+    {
+        inject: [PgPokemonRepository, QueryBus],
+        provide: CreatePokemonApplication,
+        useFactory: (repository: PokemonRepository, queryBus: QueryBus) => {
+            return new CreatePokemonApplication(repository, queryBus);
+        },
+    },
+    {
+        inject: [PgPokemonRepository, QueryBus],
+        provide: UpdatePokemonApplication,
+        useFactory: (repository: PokemonRepository, queryBus: QueryBus) => {
+            return new UpdatePokemonApplication(repository, queryBus);
+        },
+    },
 ];
 
 /**
@@ -94,7 +112,12 @@ const QUERIES: Provider[] = [
 /**
  * `COMMANDS` is an array of command handlers related to pokémon module.
  */
-const COMMANDS: Provider[] = [LoadPokemonCommandHandler, DeletePokemonByIdAndUserCommandHandler];
+const COMMANDS: Provider[] = [
+    LoadPokemonCommandHandler,
+    CreatePokemonCommandHandler,
+    UpdatePokemonCommandHandler,
+    DeletePokemonByIdAndUserCommandHandler,
+];
 
 @Module({
     controllers: [HttpPokemonController],

@@ -7,7 +7,6 @@ import { Pagination } from '../../../shared/domain/pagination';
 export interface RickAndMortyRepository {
     /**
      * Create a Rick and Morty character.
-     * @param id - The ID of the character.
      * @param name - The name of the character.
      * @param type - The type of the character.
      * @param frontImageUrl - The URL of the character's front image.
@@ -16,9 +15,10 @@ export interface RickAndMortyRepository {
      * @param gender - The gender of the character.
      * @param location - The location of the character.
      * @param origin - The origin of the character.
+     * @param [id] - The ID of the character.
+     * @param [creatorId] - The creator ID.
      */
     createCharacter(
-        id: number,
         name: string,
         type: string,
         frontImageUrl: string,
@@ -27,6 +27,8 @@ export interface RickAndMortyRepository {
         gender: string,
         location: string,
         origin: string,
+        id?: number,
+        creatorId?: string,
     ): Promise<void>;
 
     /**
@@ -51,4 +53,34 @@ export interface RickAndMortyRepository {
      * @returns The character if found, otherwise undefined.
      */
     getCharacterById(id: number): Promise<RickAndMortyCharacter | undefined>;
+
+    /**
+     * Update a Rick and Morty character.
+     * @param id - The ID of the character.
+     * @param name - The name of the character.
+     * @param type - The type of the character.
+     * @param frontImageUrl - The URL of the character's front image.
+     * @param description - The description of the character.
+     * @param status - The status of the character.
+     * @param gender - The gender of the character.
+     * @param location - The location of the character.
+     * @param origin - The origin of the character.
+     */
+    updateCharacter(
+        id: number,
+        name: string,
+        type: string,
+        frontImageUrl: string,
+        description: string,
+        status: string,
+        gender: string,
+        location: string,
+        origin: string,
+    ): Promise<void>;
+
+    /**
+     * Update the last ID of the character autoincrement.
+     * @param lastId - The last ID of the character.
+     */
+    updateCharacterAutoincrement(lastId: number): Promise<void>;
 }
