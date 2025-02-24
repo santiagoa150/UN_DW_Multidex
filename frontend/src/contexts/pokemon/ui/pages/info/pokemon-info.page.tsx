@@ -21,16 +21,20 @@ export default function PokemonInfoPage(): JSX.Element {
      * Get the universe entity by id and type.
      */
     useEffect(() => {
-        if (!pokemonLoaded && universeType) {
+        setPokemonLoaded(false); 
+        if (universeType) { 
             getPokemonDetailByIdApplication
                 .exec(Number(id))
-                .then((res) => {
-                    setPokemonLoaded(true);
+                .then((res) => {  
                     setPokemon(res);
+                    setPokemonLoaded(true);
+                    window.scroll(0, 0);
                 })
                 .catch(() => navigate(RoutesConstants.HOME));
         }
-    }, [navigate, pokemonLoaded, id, universeType]);
+    }, [id, universeType, navigate]);
+    
+    
     if (universeType && pokemon) {
         return (
             <main
