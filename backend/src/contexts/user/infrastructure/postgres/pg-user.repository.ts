@@ -18,6 +18,16 @@ export class PgUserRepository implements UserRepository {
     constructor(@InjectModel(PgUserModel) private readonly pgUserModel: typeof PgUserModel) {}
 
     /**
+     * Create a user.
+     * @param user - The user to create.
+     */
+    async create(user: User): Promise<void> {
+        this._logger.log(`[${this.create.name}] INIT ::`);
+        await this.pgUserModel.create(UserMappers.user2DTO(user));
+        this._logger.log(`[${this.create.name}] FINISH ::`);
+    }
+
+    /**
      * Retrieves a user by their email address.
      * @param email - The email address of the user to retrieve.
      * @returns A promise that resolves to the user, or `undefined` if the user is not found.

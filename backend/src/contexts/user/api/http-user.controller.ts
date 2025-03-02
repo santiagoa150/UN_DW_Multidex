@@ -1,4 +1,4 @@
-import { Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { HttpUserConstants } from './http-user.constants';
 import { ApiAcceptedResponse, ApiBody, ApiTags } from '@nestjs/swagger';
 import { LoginRequest } from './requests/login.request';
@@ -8,6 +8,9 @@ import { UserAuthData } from '../domain/user-auth-data';
 import { CommandBus } from '@nestjs/cqrs';
 import { LoginResponse } from './responses/login.response';
 import { CreateUserAccessTokenCommand } from '../applications/access-token/create/create-user-access-token.command';
+import { DefaultResponse } from '../../shared/api/responses/default.response';
+import { SignUpRequest } from './requests/sign-up.request';
+import { SignUpCommand } from '../applications/sign-up/sign-up.command';
 
 /**
  * Controller for the User HTTP API.
@@ -35,5 +38,19 @@ export class HttpUserController {
             new CreateUserAccessTokenCommand(authData),
         );
         return response;
+    }
+
+    /**
+     * Endpoint that executes the sign-up operation.
+     * @param body - The sign-up request body.
+     * @returns A promise that resolves with the default response.
+     */
+    @Post(HttpUserConstants.SIGN_UP_URI)
+    @ApiAcceptedResponse({ type: DefaultResponse })
+    async signUp(@Body() body: SignUpRequest): Promise<DefaultResponse> {
+        await this._commandBus.execute<SignUpCommand>(
+            new SignUpCommand(body.email, body.username, body.password, body.names, body.lastNames),
+        );
+        return new DefaultResponse();
     }
 }
