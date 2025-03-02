@@ -17,5 +17,7 @@ export type UniverseType = {
     logo_1: string;
     logo_2: string;
     logo_3: string;
+    logo_4: string;
     search: string;
+    info: string;
 };

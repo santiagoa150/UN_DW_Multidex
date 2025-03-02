@@ -3,7 +3,10 @@ import { UniverseRepository } from '../../domain/interfaces/universe.repository.
 import { UniverseEntity } from '../../domain/universe-entity.ts';
 import { UniverseTypeNameConstants } from '../../domain/constants/universe-type-name.constants.ts';
 import { BackendUniverseConstants } from './backend-universe.constants.ts';
-import { GetUniverseEntityByIdAndTypeResponse } from './responses/get-universe-entity-by-id-and-type.response.ts';
+import {
+    GetUniverseEntityByIdAndTypeResponse,
+    GetUniverseEntityByIdResponse,
+} from './responses/get-universe-entity-by-id-and-type.response.ts';
 
 /**
  * Backend implementation of the universe repository.
@@ -49,6 +52,48 @@ export class BackendUniverseRepository implements UniverseRepository {
                 universeType: entity.universeType as UniverseTypeNameConstants,
                 weight: entity.weight,
             };
+        } catch (e) {
+            console.error(e);
+        }
+        return mapped;
+    }
+
+    async getUniverseEntityByType(
+        type: UniverseTypeNameConstants,
+        page: number,
+        limit: number,
+        nameFilter: string | undefined,
+    ): Promise<UniverseEntity[] | undefined> {
+        let mapped: UniverseEntity[] | undefined;
+        try {
+            const { entities } = await axios
+                .get<GetUniverseEntityByIdResponse>(BackendUniverseConstants.GET_UNIVERSE_ENTITY_BY_ID_URI, {
+                    baseURL: import.meta.env.VITE_BACKEND_BASE_URL,
+                    params: {
+                        page,
+                        limit,
+                        universeType: type,
+                        nameFilter,
+                    },
+                })
+                .then((res) => res.data);
+            mapped = entities.map((entity) => {
+                return {
+                    creator: entity.creatorName,
+                    description: entity.description,
+                    entityTypes: entity.entityTypes,
+                    frontImageUrl: entity.frontImageUrl,
+                    gender: entity.gender,
+                    height: entity.height,
+                    id: entity.id,
+                    location: entity.location,
+                    name: entity.name,
+                    origin: entity.origin,
+                    status: entity.status,
+                    universeType: entity.universeType as UniverseTypeNameConstants,
+                    weight: entity.weight,
+                };
+            });
         } catch (e) {
             console.error(e);
         }
