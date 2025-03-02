@@ -54,7 +54,7 @@ export function PokemonInfoData({ pokemon, pokemonMovement }: { pokemon: Pokemon
                                 ))}
                     </div>
                 </div>
-                {pokemon.creatorName && (
+                {pokemon.creatorId && (
                 <div className="p-4">
                     <div className="flex items-center justify-between bg-[#ee9af4] p-4 text-white font-bold text-lg rounded-lg sm:min-h-auto max-h-auto">
                         <span>Creador</span>
