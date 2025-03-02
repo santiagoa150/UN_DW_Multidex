@@ -11,10 +11,10 @@ export function PokemonInfoTitle({ pokemon }: { pokemon: Pokemon }) {
                 <CgArrowLeft size="4rem" className="cursor-pointer" onClick={() => navigate(-1)} />
 
                 <p className="text-lg font-semibold text-center">{pokemon.name[0].toUpperCase() + pokemon.name.substring(1)}</p>
-
-                <p className="text-lg bg-[#ef6bf9] w-32 h-12 flex items-center justify-center font-bold text-white rounded-md justify-self-end m-4">
+                <div className="flex md:justify-end">
+                <p className="text-lg bg-[#ef6bf9] w-32 h-12 flex items-center justify-center font-bold text-white rounded-md m-4">
                     {pokemon.id}
-                </p>
+                </p></div>
             </section>
 
             <img
