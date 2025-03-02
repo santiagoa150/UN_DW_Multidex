@@ -5,6 +5,7 @@ import { SetCurrentUniverseTypeApplication } from '../contexts/universe/applicat
 import { GetCurrentUniverseTypeApplication } from '../contexts/universe/applications/get/current-universe-type/get-current-universe-type.application.ts';
 import { BackendPokemonRepository } from '../contexts/pokemon/infrastructure/backend/backend-pokemon.repository.ts';
 import { GetPokemonDetailByIdApplication } from '../contexts/pokemon/applications/get/detail-by-id/get-pokemon-detail-by-id.application.ts';
+import { GetUniverseEntityByTypeApplication } from '../contexts/universe/applications/get/get-universe-entity-by-type.application.ts';
 
 /**
  * This file is used to define the providers of the application.
@@ -29,3 +30,5 @@ export const getCurrentUniverseApplication = new GetCurrentUniverseTypeApplicati
     setCurrentUniverseApplication,
 );
 export const getPokemonDetailByIdApplication = new GetPokemonDetailByIdApplication(backendPokemonRepository);
+
+export const getUniverseEntityByType = new GetUniverseEntityByTypeApplication(backendUniverseRepository);
