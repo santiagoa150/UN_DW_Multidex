@@ -1,29 +1,46 @@
-import { JSX } from 'react';
+import { JSX, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RoutesConstants } from '../../../domain/constants/routes.constants.ts';
 
 export default function HomePage(): JSX.Element {
     const navigate = useNavigate();
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+    useEffect(() => {
+        const token = localStorage.getItem("authToken");
+        if (token) {
+            setIsAuthenticated(true);
+        }
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem("authToken");
+        setIsAuthenticated(false);
+        navigate(RoutesConstants.LOGIN_PAGE);
+    };
 
     return (
         <div>
-            <div className="flex justify-between items-center p-[1%]">
-                <h1 className="text-[48px] font-[Mansalva]">Multipokedex</h1>
-                <div className="flex justify-end w-1/2">
-                    <button
-                        className="font-[Karla] text-[24px] font-semibold rounded-[15px] w-[240px] bg-[#FEEAEA] border-2 border-black"
-                        onClick={() => navigate(RoutesConstants.LOGIN_PAGE)}
-                    >
-                        Iniciar Sesión
-                    </button>
-                    <button
-                        className="font-[Karla] text-[24px] font-semibold ml-[2%] rounded-[15px] w-[240px] bg-[#FEEAEA] border-2 border-black"
-                        onClick={() => navigate(RoutesConstants.SIGNUP_PAGE)}
-                    >
-                        Registrarse
-                    </button>
+            {!isAuthenticated && (
+                <div className="flex justify-between items-center p-[1%]">
+                    <h1 className="text-[48px] font-[Mansalva]">Multipokedex</h1>
+                    <div className="flex justify-end w-1/2">
+                        <button
+                            className="font-[Karla] text-[24px] font-semibold rounded-[15px] w-[240px] bg-[#FEEAEA] border-2 border-black"
+                            onClick={() => navigate(RoutesConstants.LOGIN_PAGE)}
+                        >
+                            Iniciar Sesión
+                        </button>
+                        <button
+                            className="font-[Karla] text-[24px] font-semibold ml-[2%] rounded-[15px] w-[240px] bg-[#FEEAEA] border-2 border-black"
+                            onClick={() => navigate(RoutesConstants.SIGNUP_PAGE)}
+                        >
+                            Registrarse
+                        </button>
+                    </div>
                 </div>
-            </div>
+            )}
+
             <div className="font-[Mansalva] text-[64px] font-bold text-center my-[4%] mb-[5%]">
                 <h1>Bienvenido a los Multiversos</h1>
                 <h1>Rick and Morty x Pokémon</h1>
@@ -41,6 +58,16 @@ export default function HomePage(): JSX.Element {
                     ¡Vamos a explorar!
                 </button>
             </div>
+            {isAuthenticated && (
+                <div className="flex justify-center my-[3%]">
+                    <button
+                        className="font-[Karla] text-[24px] font-semibold rounded-[15px] w-[240px] bg-red-500 text-white border-2 border-black"
+                        onClick={handleLogout}
+                    >
+                        Cerrar Sesión
+                    </button>
+                </div>
+            )}
             <div className="absolute bottom-0 flex w-full justify-end">
                 <i className="fa fa-github text-[80px] mx-[1%]"></i>
                 <i className="fa fa-linkedin-square text-[80px] mx-[1%]"></i>
