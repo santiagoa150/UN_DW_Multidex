@@ -6,6 +6,8 @@ import { GetCurrentUniverseTypeApplication } from '../contexts/universe/applicat
 import { BackendPokemonRepository } from '../contexts/pokemon/infrastructure/backend/backend-pokemon.repository.ts';
 import { GetPokemonDetailByIdApplication } from '../contexts/pokemon/applications/get/detail-by-id/get-pokemon-detail-by-id.application.ts';
 import { GetUniverseEntityByTypeApplication } from '../contexts/universe/applications/get/get-universe-entity-by-type.application.ts';
+import { BackendUserRepository } from '../contexts/shared/infrastructure/backend/backend-user.repository.ts';
+import { LoginApplication } from '../contexts/shared/applications/login/login.application.ts';
 
 /**
  * This file is used to define the providers of the application.
@@ -16,19 +18,20 @@ import { GetUniverseEntityByTypeApplication } from '../contexts/universe/applica
  */
 const backendPokemonRepository = new BackendPokemonRepository();
 const backendUniverseRepository = new BackendUniverseRepository();
+const backendUserRepository = new BackendUserRepository();
 const localStorageRepository = new LocalStorageRepository();
 
 /**
  * These are the public dependencies of the application.
  */
-export const getUniverseEntityByIdAndTypeApplication = new GetUniverseEntityByIdAndTypeApplication(
-    backendUniverseRepository,
-);
+export const loginApplication = new LoginApplication(backendUserRepository, localStorageRepository);
 export const setCurrentUniverseApplication = new SetCurrentUniverseTypeApplication(localStorageRepository);
 export const getCurrentUniverseApplication = new GetCurrentUniverseTypeApplication(
     localStorageRepository,
     setCurrentUniverseApplication,
 );
+export const getUniverseEntityByIdAndTypeApplication = new GetUniverseEntityByIdAndTypeApplication(
+    backendUniverseRepository,
+);
 export const getPokemonDetailByIdApplication = new GetPokemonDetailByIdApplication(backendPokemonRepository);
-
 export const getUniverseEntityByType = new GetUniverseEntityByTypeApplication(backendUniverseRepository);

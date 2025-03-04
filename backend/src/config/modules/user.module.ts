@@ -18,6 +18,8 @@ import { ValidateUserAccessTokenApplication } from '../../contexts/user/applicat
 import { ValidateUserAccessTokenQueryHandler } from '../../contexts/user/applications/access-token/validate/validate-user-access-token.query-handler';
 import { SignUpCommandHandler } from '../../contexts/user/applications/sign-up/sign-up.command-handler';
 import { SignUpApplication } from '../../contexts/user/applications/sign-up/sign-up.application';
+import { GetUserByIdQueryHandler } from '../../contexts/user/applications/get/by-id/get-user-by-id.query-handler';
+import { GetUserByIdApplication } from '../../contexts/user/applications/get/by-id/get-user-by-id.application';
 
 /**
  * `PROVIDERS` is an array of NestJS providers related to user module.
@@ -63,12 +65,23 @@ const APPLICATIONS: Provider[] = [
             return new SignUpApplication(queryBus, repository);
         },
     },
+    {
+        inject: [PgUserRepository],
+        provide: GetUserByIdApplication,
+        useFactory: (repository: UserRepository): GetUserByIdApplication => {
+            return new GetUserByIdApplication(repository);
+        },
+    },
 ];
 
 /**
  * `QUERIES` is an array of query handlers related to user module.
  */
-const QUERIES: Type<IQueryHandler>[] = [GetUserByEmailQueryHandler, ValidateUserAccessTokenQueryHandler];
+const QUERIES: Type<IQueryHandler>[] = [
+    GetUserByEmailQueryHandler,
+    GetUserByIdQueryHandler,
+    ValidateUserAccessTokenQueryHandler,
+];
 
 /**
  * `COMMANDS` is an array of command handlers related to user module.

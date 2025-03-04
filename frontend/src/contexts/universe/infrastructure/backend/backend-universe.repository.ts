@@ -38,6 +38,7 @@ export class BackendUniverseRepository implements UniverseRepository {
                 )
                 .then((res) => res.data);
             mapped = {
+                creatorId: entity.creatorId,
                 creator: entity.creatorName,
                 description: entity.description,
                 entityTypes: entity.entityTypes,

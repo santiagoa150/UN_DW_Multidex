@@ -4,7 +4,7 @@ import { UniverseTypeNameConstants } from '../../../domain/constants/universe-ty
 
 /**
  * Get Universe Entity By ID Application.
- */ 
+ */
 export class GetUniverseEntityByIdAndTypeApplication {
     /**
      * @param repository - The universe repository.

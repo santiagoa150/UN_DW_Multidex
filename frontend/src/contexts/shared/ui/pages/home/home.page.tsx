@@ -7,14 +7,14 @@ export default function HomePage(): JSX.Element {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     useEffect(() => {
-        const token = localStorage.getItem("authToken");
+        const token = localStorage.getItem('authToken');
         if (token) {
             setIsAuthenticated(true);
         }
     }, []);
 
     const handleLogout = () => {
-        localStorage.removeItem("authToken");
+        localStorage.removeItem('authToken');
         setIsAuthenticated(false);
         navigate(RoutesConstants.LOGIN_PAGE);
     };

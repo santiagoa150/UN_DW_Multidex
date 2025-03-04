@@ -2,7 +2,7 @@ import axios from 'axios';
 import { JSX, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RoutesConstants } from '../../../domain/constants/routes.constants.ts';
-import { BackendUserConstants } from '../../../infrastructure/backend-user.constants.ts';
+import { BackendUserConstants } from '../../../infrastructure/backend/backend-user.constants.ts';
 import Background from '../../images/pokeR&MBackground.png';
 
 export default function SignupPage(): JSX.Element {
@@ -15,12 +15,12 @@ export default function SignupPage(): JSX.Element {
 
     // State for form inputs
     const [formData, setFormData] = useState({
-        nombre: "",
-        apellido: "",
-        usuario: "",
-        email: "",
-        password: "",
-        confirmPassword: ""
+        nombre: '',
+        apellido: '',
+        usuario: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,7 +29,7 @@ export default function SignupPage(): JSX.Element {
 
     const handleSubmit = async () => {
         if (formData.password !== formData.confirmPassword) {
-            alert("Las contraseñas no coinciden.");
+            alert('Las contraseñas no coinciden.');
             return;
         }
 
@@ -41,22 +41,21 @@ export default function SignupPage(): JSX.Element {
                 body: JSON.stringify(formData),
             });
             */
-           /*TODO: Probar con nuevo endpoint para signup */
-           const response = await axios
+            /*TODO: Probar con nuevo endpoint para signup */
+            const response = await axios
                 .post(BackendUserConstants.POST_SIGNUP_OPERATION, formData)
-                .then((res) => res.data)
+                .then((res) => res.data);
             if (response.ok) {
-                alert("Usuario creado exitosamente");
+                alert('Usuario creado exitosamente');
                 navigate(RoutesConstants.UNIVERSE_LIST);
             } else {
-                alert("Error al crear usuario");
+                alert('Error al crear usuario');
             }
         } catch (error) {
-            console.error("Error en el registro:", error);
-            alert("Hubo un problema con el registro.");
+            console.error('Error en el registro:', error);
+            alert('Hubo un problema con el registro.');
         }
     };
-
 
     return (
         <div className="w-full flex flex-col justify-center items-center" style={backgroundStyle}>
@@ -68,7 +67,7 @@ export default function SignupPage(): JSX.Element {
                             <input
                                 className="w-full rounded-[20px] text-[24px] pl-[10%] bg-[#FFF4CE] border border-black"
                                 name="nombre"
-                                placeholder='Nombre'
+                                placeholder="Nombre"
                                 value={formData.nombre}
                                 onChange={handleChange}
                             />
@@ -78,7 +77,7 @@ export default function SignupPage(): JSX.Element {
                             <input
                                 className="w-full rounded-[20px] text-[24px] pl-[10%] bg-[#FFF4CE] border border-black"
                                 name="usuario"
-                                placeholder='Nombre de usuario'
+                                placeholder="Nombre de usuario"
                                 value={formData.usuario}
                                 onChange={handleChange}
                             />
@@ -89,7 +88,7 @@ export default function SignupPage(): JSX.Element {
                                 type="password"
                                 className="w-full rounded-[20px] text-[24px] pl-[10%] bg-[#FFF4CE] border border-black"
                                 name="password"
-                                placeholder='Contraseña'
+                                placeholder="Contraseña"
                                 value={formData.password}
                                 onChange={handleChange}
                             />
@@ -101,7 +100,7 @@ export default function SignupPage(): JSX.Element {
                             <input
                                 className="w-full rounded-[20px] text-[24px] pl-[10%] bg-[#FFF4CE] border border-black"
                                 name="apellido"
-                                placeholder='Apellido'
+                                placeholder="Apellido"
                                 value={formData.apellido}
                                 onChange={handleChange}
                             />
@@ -112,7 +111,7 @@ export default function SignupPage(): JSX.Element {
                                 type="email"
                                 className="w-full rounded-[20px] text-[24px] pl-[10%] bg-[#FFF4CE] border border-black"
                                 name="email"
-                                placeholder='Correo electrónico'
+                                placeholder="Correo electrónico"
                                 value={formData.email}
                                 onChange={handleChange}
                             />
@@ -124,7 +123,7 @@ export default function SignupPage(): JSX.Element {
                                 type="password"
                                 className="w-full rounded-[20px] text-[24px] pl-[10%] bg-[#FFF4CE] border border-black"
                                 name="confirmPassword"
-                                placeholder='Confirmar contraseña'
+                                placeholder="Confirmar contraseña"
                                 value={formData.confirmPassword}
                                 onChange={handleChange}
                             />

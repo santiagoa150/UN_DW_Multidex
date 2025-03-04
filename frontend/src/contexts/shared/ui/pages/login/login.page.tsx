@@ -1,58 +1,48 @@
-import axios from 'axios';
-import { JSX, useState } from 'react';
+import React, { JSX, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RoutesConstants } from '../../../domain/constants/routes.constants.ts';
-import { BackendUserConstants } from '../../../infrastructure/backend-user.constants.ts';
 import Background from '../../images/pokeR&MBackground.png';
+import { loginApplication } from '../../../../../config/app.providers.ts';
 
 export default function LoginPage(): JSX.Element {
     const navigate = useNavigate();
 
     const [loginData, setLoginData] = useState({
-        email: "",
-        password: "",
+        email: '',
+        password: '',
     });
 
-    const [error, setError] = useState("");
+    const [error, setError] = useState('');
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setLoginData({ ...loginData, [e.target.name]: e.target.value});
+        setLoginData({ ...loginData, [e.target.name]: e.target.value });
     };
 
     const handleLogin = async () => {
         if (!loginData.email || !loginData.password) {
-            setError("Por favor, complete todos los campos.");
+            setError('Por favor, complete todos los campos.');
             return;
         }
 
         try {
-            localStorage.setItem("authToken", "test");
-            navigate(RoutesConstants.HOME);
-            /*TODO: Probar con endpoint de login */
-            /*
-            const response = await axios
-                .post(BackendUserConstants.POST_LOGIN_OPERATION, loginData)
-                .then((res) => res.data)
-
-            const data = await response.json();
-
-            if (response.ok) {
-                // Store user token (JWT) or session
-                localStorage.setItem("authToken", data.accessToken);
-                alert("Inicio de sesión exitoso");
+            const response = await loginApplication.exec(loginData.email, loginData.password);
+            if (response) {
+                alert('Inicio de sesión exitoso');
                 navigate(RoutesConstants.HOME);
             } else {
-                setError("Usuario o contraseña incorrectos.");
+                setError('Usuario o contraseña incorrectos.');
             }
-            */
         } catch (error) {
-            console.error("Error en el inicio de sesión:", error);
-            setError("Error en el servidor. Intente nuevamente.");
+            console.error('Error en el inicio de sesión:', error);
+            setError('Error en el servidor. Intente nuevamente.');
         }
     };
 
     return (
-        <div className="w-full flex flex-col justify-center items-center" style={{ background: `url(${Background}) no-repeat center`, backgroundSize: "cover" }}>
+        <div
+            className="w-full flex flex-col justify-center items-center"
+            style={{ background: `url(${Background}) no-repeat center`, backgroundSize: 'cover' }}
+        >
             <div className="w-[24%] flex flex-col justify-center items-center border border-[#FFFFFF] bg-[rgba(255,255,255,0.4)]   rounded-[24px] py-[8%] pb-[2%]">
                 <div className="mx-[5%] flex flex-row items-center mb-[10%]">
                     <i className="fa fa-user text-[40px] mr-[6%]"></i>
@@ -60,7 +50,7 @@ export default function LoginPage(): JSX.Element {
                         type="email"
                         className="w-full rounded-[20px] text-[24px] pl-[10%] bg-[#FFF4CE] border border-black"
                         name="email"
-                        placeholder='Email'
+                        placeholder="Email"
                         value={loginData.email}
                         onChange={handleChange}
                     />
@@ -71,7 +61,7 @@ export default function LoginPage(): JSX.Element {
                         type="password"
                         className="w-full rounded-[20px] text-[24px] pl-[10%] bg-[#FFF4CE] border border-black"
                         name="password"
-                        placeholder='Contraseña'
+                        placeholder="Contraseña"
                         value={loginData.password}
                         onChange={handleChange}
                     />

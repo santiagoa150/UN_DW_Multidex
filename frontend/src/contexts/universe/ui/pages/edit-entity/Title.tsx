@@ -1,7 +1,7 @@
 import { CgArrowLeft } from 'react-icons/cg';
 import { RoutesConstants } from '../../../../shared/domain/constants/routes.constants';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
     getCurrentUniverseApplication,
     getUniverseEntityByIdAndTypeApplication,
@@ -38,11 +38,7 @@ export function Title() {
     return (
         <>
             <section>
-                <CgArrowLeft
-                    size="4rem"
-                    className="cursor-pointer m-4"
-                    onClick={() => navigate(RoutesConstants.HOME)}
-                />
+                <CgArrowLeft size="4rem" className="cursor-pointer m-4" onClick={() => navigate(-1)} />
 
                 <p
                     style={{ backgroundColor: universeType?.indexEdit }}

@@ -8,6 +8,7 @@ import { RoutesConstants } from '../../../../shared/domain/constants/routes.cons
 import { UniverseEntity } from '../../../domain/universe-entity.ts';
 import Triangle from '../../images/triangle.png';
 import { useUniverse } from '../../../../../config/universe/use-universe.hook.ts';
+import { SharedStorageConstants } from '../../../../shared/domain/constants/shared-storage.constants.ts';
 
 /**
  * The page that displays information about one element of the universe.
@@ -19,6 +20,10 @@ export default function UniverseInfoPage(): JSX.Element {
     const { universeType } = useUniverse();
     const [universeEntityLoaded, setUniverseEntityLoaded] = useState<boolean>(false);
     const [universeEntity, setUniverseEntity] = useState<UniverseEntity | undefined>();
+
+    const tokenData: {
+        userId: string;
+    } = JSON.parse(atob(localStorage.getItem(SharedStorageConstants.AUTH_TOKEN)?.split('.')[1] || '{}'));
 
     /**
      * Load the universe entity when the component is mounted.
@@ -41,9 +46,9 @@ export default function UniverseInfoPage(): JSX.Element {
                 className="grow w-full flex justify-center items-center"
                 style={{ backgroundColor: universeType.tertiaryColor }}
             >
-                <div className="flex w-4/5 h-4/5">
+                <div className="flex flex-col items-center justify-center lg:flex-row w-[95%] h-[90%] lg:h-4/5 lg:w-4/5">
                     <div
-                        className="w-4/6 rounded-l border-x border-white shadow-2xl shadow-gray-400 overflow-hidden"
+                        className="lg:w-7/12 h-4/6 lg:h-full rounded-l border-x border-white shadow-2xl shadow-gray-400 overflow-hidden"
                         style={{ backgroundColor: universeType.mainColor }}
                     >
                         <div className="w-full h-1/6 border-b border-black flex gap-x-10">
@@ -62,46 +67,50 @@ export default function UniverseInfoPage(): JSX.Element {
                         <div className="w-full h-4/6 flex justify-center flex-col">
                             <div className="h-4/5 w-full flex items-center justify-end">
                                 <div
-                                    className="flex h-4/5 w-4/5 mr-10 items-center text-xs 2xl:text-xl"
+                                    className="flex h-4/5 w-5/6 mr-10 items-center text-xs 2xl:text-xl"
                                     style={{ backgroundColor: universeType.secondaryColor }}
                                 >
                                     <div className="w-1/2 h-full box-border p-5 flex flex-col justify-center">
-                                        <div className="text-white flex gap-x-2">
+                                        <div className=" flex gap-x-2 text-lg">
                                             <p className="font-bold">{`Tipo${universeEntity.entityTypes.length > 1 ? 's' : ''}:`}</p>
-                                            <p>{universeEntity.entityTypes.join(', ')}</p>
+                                            <p>
+                                                {universeEntity.entityTypes
+                                                    .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
+                                                    .join(', ')}
+                                            </p>
                                         </div>
-                                        {universeEntity.height && (
-                                            <div className="text-white flex gap-x-2">
+                                        {universeEntity.height !== undefined && (
+                                            <div className=" flex gap-x-2 text-lg">
                                                 <p className="font-bold">Altura:</p>
                                                 <p>{`${universeEntity.height} m`}</p>
                                             </div>
                                         )}
-                                        {universeEntity.weight && (
-                                            <div className="text-white flex gap-x-2">
+                                        {universeEntity.weight !== undefined && (
+                                            <div className=" flex gap-x-2 text-lg">
                                                 <p className="font-bold">Peso:</p>
                                                 <p>{`${universeEntity.weight} kg`}</p>
                                             </div>
                                         )}
                                         {universeEntity.status && (
-                                            <div className="text-white flex gap-x-2">
+                                            <div className=" flex gap-x-2 text-lg">
                                                 <p className="font-bold">Estado:</p>
                                                 <p>{universeEntity.status}</p>
                                             </div>
                                         )}
                                         {universeEntity.gender && (
-                                            <div className="text-white flex gap-x-2">
+                                            <div className=" flex gap-x-2 text-lg">
                                                 <p className="font-bold">Género:</p>
                                                 <p>{universeEntity.gender}</p>
                                             </div>
                                         )}
                                         {universeEntity.location && (
-                                            <div className="text-white flex gap-x-2">
+                                            <div className=" flex gap-x-2 text-lg">
                                                 <p className="font-bold">Ubicación:</p>
                                                 <p>{universeEntity.location}</p>
                                             </div>
                                         )}
                                         {universeEntity.origin && (
-                                            <div className="text-white flex gap-x-2">
+                                            <div className=" flex gap-x-2 text-lg">
                                                 <p className="font-bold">Origen:</p>
                                                 <p>{universeEntity.origin}</p>
                                             </div>
@@ -114,19 +123,20 @@ export default function UniverseInfoPage(): JSX.Element {
                                             src={universeEntity.frontImageUrl}
                                             alt={universeEntity.name}
                                         />
-                                        <p className="text-white font-bold">
-                                            {universeEntity.id.toString().padStart(4, '0')}
-                                        </p>
+                                        <p className=" font-bold">{universeEntity.id.toString().padStart(4, '0')}</p>
                                     </div>
                                 </div>
                             </div>
                             <div className="flex h-1/5 items-center justify-center gap-x-10">
                                 <div className="bg-green-300 py-3 px-10">
-                                    <p className="font-bold">{universeEntity.name}</p>
+                                    <p className="font-bold">
+                                        {universeEntity.name.charAt(0).toUpperCase() + universeEntity.name.slice(1)}
+                                    </p>
                                 </div>
                                 {universeType.allowDetail && universeType.detailPath && (
                                     <button
-                                        className="font-bold"
+                                        className="font-bold py-3 px-10 cursor-pointer rounded-lg hover:shadow-xl transition delay-0 duration-300"
+                                        style={{ backgroundColor: universeType.secondaryColor }}
                                         onClick={() =>
                                             navigate(
                                                 universeType.detailPath!.replace(':id', universeEntity.id.toString()),
@@ -139,11 +149,23 @@ export default function UniverseInfoPage(): JSX.Element {
                             </div>
                         </div>
                         <div className="w-full h-1/6 flex items-center justify-end gap-x-10">
-                            <HiPencil size="2rem" />
-                            <MdDelete size="2.4rem" className="mr-10" />
+                            {tokenData.userId && tokenData.userId == universeEntity.creatorId && (
+                                <>
+                                    <HiPencil
+                                        className="cursor-pointer"
+                                        size="2rem"
+                                        onClick={() =>
+                                            navigate(
+                                                RoutesConstants.UNIVERSE_EDIT.replace(':id', String(universeEntity.id)),
+                                            )
+                                        }
+                                    />
+                                    <MdDelete size="2.4rem" className="mr-10" />
+                                </>
+                            )}
                         </div>
                     </div>
-                    <div className="w-3/6 flex items-center">
+                    <div className="lg:w-5/12 h-3/6 lg:h-full flex items-center">
                         <div
                             className="w-full h-4/5 flex items-center justify-center flex-col"
                             style={{ backgroundColor: universeType.mainColor }}
@@ -153,7 +175,7 @@ export default function UniverseInfoPage(): JSX.Element {
                                 className="w-4/5 h-3/6 flex items-center box-border p-10"
                                 style={{ backgroundColor: universeType.secondaryColor }}
                             >
-                                <p className="text-white text-xl">{universeEntity.description}</p>
+                                <p className=" lg:text-xl">{universeEntity.description}</p>
                             </div>
                             <div className="w-full h-1/6"></div>
                             <div className="w-full h-1/6 flex justify-around items-center">
@@ -162,7 +184,7 @@ export default function UniverseInfoPage(): JSX.Element {
                                     <div className="h-4/5 w-[2px] bg-black"></div>
                                     <div className="h-3/5 w-[2px] bg-black"></div>
                                 </div>
-                                <div className="w-1/5">
+                                <div className="w-1/12 lg:w-1/5">
                                     <img className="w-full" src={Triangle} alt="Triangle" />
                                 </div>
                                 <div className="w-1/5"></div>
@@ -173,7 +195,6 @@ export default function UniverseInfoPage(): JSX.Element {
             </main>
         );
     } else if (!universeEntity && !universeEntityLoaded) {
-        /* TODO: Add Loader. */
         return <div>Loader Here</div>;
     } else {
         return <>{navigate(RoutesConstants.HOME)}</>;
