@@ -19,7 +19,6 @@ import { PokemonDetail } from '../../domain/pokemon-detail';
 import { Pagination } from '../../../shared/domain/pagination';
 import { Op } from 'sequelize';
 import { PgPokemonConstants } from './pg-pokemon.constants';
-import * as process from 'node:process';
 
 /**
  * The Pokémon repository for Postgres.
@@ -339,8 +338,42 @@ export class PgPokemonRepository implements PokemonRepository {
     async updatePokemonAutoincrement(lastId: number): Promise<void> {
         this._logger.log(`[${this.updatePokemonAutoincrement.name}] INIT :: lastId: ${lastId}`);
         await this._pgPokemonMovementModel.sequelize.query(
-            `ALTER SEQUENCE ${process.env.POSTGRES_SCHEMA}.${PgPokemonConstants.POKEMON_TABLE_NAME}_id_seq RESTART WITH ${lastId + 1}`,
+            `ALTER SEQUENCE core.${PgPokemonConstants.POKEMON_TABLE_NAME}_id_seq RESTART WITH ${lastId + 1}`,
         );
         this._logger.log(`[${this.updatePokemonAutoincrement.name}] FINISH ::`);
+    }
+
+    /**
+     * Create a new Pokémon type.
+     * @returns The created Pokémon type.
+     */
+    async createPokemonTypes(): Promise<PokemonType[]> {
+        this._logger.log(`[${this.createPokemonTypes.name}] INIT ::`);
+        await this._pgPokemonModel.sequelize.query(`
+            INSERT INTO core.pokemon_types (id, name)
+            VALUES (10, 'flying'),
+                   (6, 'ice'),
+                   (8, 'poison'),
+                   (11, 'psychic'),
+                   (1, 'normal'),
+                   (18, 'fairy'),
+                   (5, 'electric'),
+                   (13, 'rock'),
+                   (12, 'bug'),
+                   (17, 'steel'),
+                   (16, 'dark'),
+                   (2, 'fire'),
+                   (3, 'water'),
+                   (15, 'dragon'),
+                   (14, 'ghost'),
+                   (9, 'ground'),
+                   (7, 'fighting'),
+                   (19, 'stellar'),
+                   (20, 'unknown'),
+                   (4, 'grass');
+        `);
+        const found: PokemonType[] = await this.getAllPokemonTypes();
+        this._logger.log(`[${this.createPokemonTypes.name}] FINISH ::`);
+        return found;
     }
 }

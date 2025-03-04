@@ -22,10 +22,12 @@ import { DeletePokemonByIdAndUserCommandHandler } from '../../contexts/pokemon/a
 import { DeletePokemonByIdAndUserApplication } from '../../contexts/pokemon/applications/delete/delete-pokemon-by-id-and-user.application';
 import { GetAllPokemonQueryHandler } from '../../contexts/pokemon/applications/get/pokemon/all/get-all-pokemon.query-handler';
 import { GetAllPokemonApplication } from '../../contexts/pokemon/applications/get/pokemon/all/get-all-pokemon.application';
-import { CreatePokemonCommandHandler } from '../../contexts/pokemon/applications/create/create-pokemon.command-handler';
-import { CreatePokemonApplication } from '../../contexts/pokemon/applications/create/create-pokemon.application';
+import { CreatePokemonCommandHandler } from '../../contexts/pokemon/applications/create/pokemon/create-pokemon.command-handler';
+import { CreatePokemonApplication } from '../../contexts/pokemon/applications/create/pokemon/create-pokemon.application';
 import { UpdatePokemonCommandHandler } from '../../contexts/pokemon/applications/update/update-pokemon.command-handler';
 import { UpdatePokemonApplication } from '../../contexts/pokemon/applications/update/update-pokemon.application';
+import { CreatePokemonTypesCommandHandler } from '../../contexts/pokemon/applications/create/pokemon-types/create-pokemon-types.command-handler';
+import { CreatePokemonTypesApplication } from '../../contexts/pokemon/applications/create/pokemon-types/create-pokemon-types.application';
 
 /**
  * `PROVIDERS` is an array of NestJS providers related to pokémon module.
@@ -97,6 +99,13 @@ const APPLICATIONS: Provider[] = [
             return new UpdatePokemonApplication(repository, queryBus);
         },
     },
+    {
+        inject: [PgPokemonRepository],
+        provide: CreatePokemonTypesApplication,
+        useFactory: (repository: PokemonRepository) => {
+            return new CreatePokemonTypesApplication(repository);
+        },
+    },
 ];
 
 /**
@@ -117,6 +126,7 @@ const COMMANDS: Provider[] = [
     CreatePokemonCommandHandler,
     UpdatePokemonCommandHandler,
     DeletePokemonByIdAndUserCommandHandler,
+    CreatePokemonTypesCommandHandler,
 ];
 
 @Module({

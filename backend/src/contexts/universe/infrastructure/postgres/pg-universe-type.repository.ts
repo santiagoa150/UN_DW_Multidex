@@ -40,4 +40,20 @@ export class PgUniverseTypeRepository implements UniverseTypeRepository {
         });
         this._logger.log(`[${this.update.name}] FINISH ::`);
     }
+
+    /**
+     * Create universe types.
+     * @returns The created universe types.
+     */
+    async createUniverseTypes(): Promise<UniverseType[]> {
+        this._logger.log(`[${this.createUniverseTypes.name}] INIT ::`);
+        await this._model.sequelize.query(`
+            INSERT INTO core.universe_types (name, priority, "taskWasExecuted", "elementsPerPage", metadata)
+            VALUES ('RICK_AND_MORTY', 2, false, 20, ''),
+                   ('POKEMON', 1, false, 30, '');
+        `);
+        const found: UniverseType[] = await this.getAll();
+        this._logger.log(`[${this.createUniverseTypes.name}] FINISH ::`);
+        return found;
+    }
 }

@@ -16,6 +16,8 @@ import { DeleteUniverseEntityByIdAndUserCommandHandler } from '../../contexts/un
 import { DeleteUniverseEntityByIdAndUserApplication } from '../../contexts/universe/applications/delete/by-id-and-user/delete-universe-entity-by-id-and-user.application';
 import { GetUniverseEntitiesByTypeQueryHandler } from '../../contexts/universe/applications/get/universe-entity/by-type/get-universe-entities-by-type.query-handler';
 import { GetUniverseEntitiesByTypeApplication } from '../../contexts/universe/applications/get/universe-entity/by-type/get-universe-entities-by-type.application';
+import { CreateUniverseTypesCommandHandler } from '../../contexts/universe/applications/create/create-universe-types.command-handler';
+import { CreateUniverseTypesApplication } from '../../contexts/universe/applications/create/create-universe-types.application';
 
 /**
  * `PROVIDERS` is an array of providers related to universe module.
@@ -61,6 +63,13 @@ const APPLICATIONS: Provider[] = [
             return new GetUniverseEntitiesByTypeApplication(queryBus);
         },
     },
+    {
+        inject: [PgUniverseTypeRepository],
+        provide: CreateUniverseTypesApplication,
+        useFactory: (pgUniverseTypeRepository: PgUniverseTypeRepository): CreateUniverseTypesApplication => {
+            return new CreateUniverseTypesApplication(pgUniverseTypeRepository);
+        },
+    },
 ];
 
 /**
@@ -75,7 +84,11 @@ const QUERIES: Provider[] = [
 /**
  * `COMMANDS` is an array of command handlers related to universe module.
  */
-const COMMANDS: Provider[] = [UpdateUniverseTypeCommandHandler, DeleteUniverseEntityByIdAndUserCommandHandler];
+const COMMANDS: Provider[] = [
+    UpdateUniverseTypeCommandHandler,
+    DeleteUniverseEntityByIdAndUserCommandHandler,
+    CreateUniverseTypesCommandHandler,
+];
 
 /**
  * `UniverseModule` is a module that groups all universe-related features.

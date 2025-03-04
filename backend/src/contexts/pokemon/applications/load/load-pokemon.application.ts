@@ -11,6 +11,7 @@ import { UpdateUniverseTypeCommand } from '../../../universe/applications/update
 import { PokemonEvolutionChain } from '../../domain/pokemon-evolution-chain';
 import { v4 as uuidV4 } from 'uuid';
 import { PokemonMetadata } from '../../domain/pokemon-metadata';
+import { CreatePokemonTypesCommand } from '../create/pokemon-types/create-pokemon-types.command';
 
 type PokeApiPokemonResponse = {
     height: number;
@@ -324,9 +325,14 @@ export class LoadPokemonApplication {
      * @returns The pokémon types map.
      */
     async getPokemonTypesMap(): Promise<Map<string, number>> {
-        const pokemonTypes = await this._queryBus.execute<GetAllPokemonTypesQuery, PokemonType[]>(
+        let pokemonTypes = await this._queryBus.execute<GetAllPokemonTypesQuery, PokemonType[]>(
             new GetAllPokemonTypesQuery(),
         );
+        if (pokemonTypes.length == 0) {
+            pokemonTypes = await this._commandBus.execute<CreatePokemonTypesCommand, PokemonType[]>(
+                new CreatePokemonTypesCommand(),
+            );
+        }
         return new Map(pokemonTypes.map((type) => [type.name, type.id]));
     }
 }

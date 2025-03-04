@@ -10,6 +10,9 @@ import { UniverseTypeNameConstants } from '../domain/constants/universe-type-nam
 import { LoadRickAndMortyCharactersCommand } from '../../rick-and-morty/applications/load/load-rick-and-morty-characters.command';
 import { GetAllPokemonTypesQueryHandler } from '../../pokemon/applications/get/pokemon-types/all/get-all-pokemon-types.query-handler';
 import { UpdateUniverseTypeCommandHandler } from '../applications/update/update-universe-type.command-handler';
+import { CreateUniverseTypesCommand } from '../applications/create/create-universe-types.command';
+import { CreateUniverseTypesCommandHandler } from '../applications/create/create-universe-types.command-handler';
+import { CreatePokemonTypesCommandHandler } from '../../pokemon/applications/create/pokemon-types/create-pokemon-types.command-handler';
 
 /**
  * `NestjsUniverseTask` is a task controller that is responsible for execute processes related to pokémon module.
@@ -31,6 +34,8 @@ export class NestjsUniverseTask implements OnModuleInit {
             LoadPokemonCommandHandler,
             LoadRickAndMortyCharactersCommandHandler,
             UpdateUniverseTypeCommandHandler,
+            CreateUniverseTypesCommandHandler,
+            CreatePokemonTypesCommandHandler,
         ]);
     }
 
@@ -39,7 +44,12 @@ export class NestjsUniverseTask implements OnModuleInit {
      */
     async onModuleInit(): Promise<void> {
         try {
-            const universeTypes: UniverseType[] = await this._queryBus.execute(new GetAllUniverseTypesQuery());
+            let universeTypes: UniverseType[] = await this._queryBus.execute(new GetAllUniverseTypesQuery());
+            if (universeTypes.length === 0) {
+                universeTypes = await this._commandBus.execute<CreateUniverseTypesCommand, UniverseType[]>(
+                    new CreateUniverseTypesCommand(),
+                );
+            }
             for (const universeType of universeTypes.filter((ut) => !ut.taskWasExecuted)) {
                 try {
                     switch (universeType.name) {

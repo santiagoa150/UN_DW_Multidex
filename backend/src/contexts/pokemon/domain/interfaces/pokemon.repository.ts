@@ -53,6 +53,12 @@ export interface PokemonRepository {
     createEvolutionChain(chain: PokemonEvolutionChain[]): Promise<void>;
 
     /**
+     * Create a new Pokémon type.
+     * @returns The created Pokémon type.
+     */
+    createPokemonTypes(): Promise<PokemonType[]>;
+
+    /**
      * Delete a Pokémon by its id.
      * @param id - The id of the Pokémon to delete.
      * @param userId - The owner of the Pokémon.

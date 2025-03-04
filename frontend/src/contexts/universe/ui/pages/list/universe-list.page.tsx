@@ -62,7 +62,7 @@ export default function UniverseListPage(): JSX.Element {
             >
                 <input
                     value={searchInput}
-                    onChange={(e) => setSearchInput(e.target.value.toLowerCase())}
+                    onChange={(e) => setSearchInput(e.target.value)}
                     type="text"
                     placeholder="Filtrar por nombre"
                     className="px-4 py-2 border w-11/12 sm:w-3/5 md:w-2/5 lg:w-1/4 xl:w-1/5 h-auto rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-200"

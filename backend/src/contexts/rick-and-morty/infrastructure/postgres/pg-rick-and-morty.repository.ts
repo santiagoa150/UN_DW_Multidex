@@ -8,7 +8,6 @@ import { PgUserModel } from '../../../user/infrastructure/postgres/pg-user.model
 import { Pagination } from '../../../shared/domain/pagination';
 import { Op } from 'sequelize';
 import { PgRickAndMortyConstants } from './pg-rick-and-morty.constants';
-import * as process from 'node:process';
 
 /**
  * The Rick and Morty repository for Postgres.
@@ -183,7 +182,7 @@ export class PgRickAndMortyRepository implements RickAndMortyRepository {
     async updateCharacterAutoincrement(lastId: number): Promise<void> {
         this._logger.log(`[${this.updateCharacterAutoincrement.name}] INIT :: lastId: ${lastId}`);
         await this._pgCharacterModel.sequelize.query(
-            `ALTER SEQUENCE ${process.env.POSTGRES_SCHEMA}.${PgRickAndMortyConstants.CHARACTERS_TABLE_NAME}_id_seq RESTART WITH ${lastId + 1}`,
+            `ALTER SEQUENCE core.${PgRickAndMortyConstants.CHARACTERS_TABLE_NAME}_id_seq RESTART WITH ${lastId + 1}`,
         );
         this._logger.log(`[${this.updateCharacterAutoincrement.name}] FINISH ::`);
     }
