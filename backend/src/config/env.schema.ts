@@ -9,7 +9,6 @@ export const EnvSchema: Joi.ObjectSchema = Joi.object({
     POSTGRES_USER: Joi.string(),
     POSTGRES_PASSWORD: Joi.string(),
     POSTGRES_DB: Joi.string(),
-    POSTGRES_SCHEMA: Joi.string(),
     POSTGRES_SHOW_LOGS: Joi.number().valid(0, 1),
     ACCESS_TOKEN_SECRET: Joi.string(),
     ACCESS_TOKEN_EXPIRATION_TIME: Joi.number().integer().min(1),

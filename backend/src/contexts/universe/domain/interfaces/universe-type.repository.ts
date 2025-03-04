@@ -5,6 +5,12 @@ import { UniverseType } from '../universe-type';
  */
 export interface UniverseTypeRepository {
     /**
+     * Create universe types.
+     * @returns The created universe types.
+     */
+    createUniverseTypes(): Promise<UniverseType[]>;
+
+    /**
      * Get all universe types.
      * @returns All universe types.
      */

@@ -1,9 +1,9 @@
 import { Logger } from '@nestjs/common';
-import { PokemonRepository } from '../../domain/interfaces/pokemon.repository';
-import { PokemonMovement } from '../../domain/pokemon-movement';
-import { PokemonEvolutionChain } from '../../domain/pokemon-evolution-chain';
+import { PokemonRepository } from '../../../domain/interfaces/pokemon.repository';
+import { PokemonMovement } from '../../../domain/pokemon-movement';
+import { PokemonEvolutionChain } from '../../../domain/pokemon-evolution-chain';
 import { QueryBus } from '@nestjs/cqrs';
-import { GetPokemonByIdQuery } from '../get/pokemon/by-id/get-pokemon-by-id.query';
+import { GetPokemonByIdQuery } from '../../get/pokemon/by-id/get-pokemon-by-id.query';
 import { v4 as uuidV4 } from 'uuid';
 
 /**

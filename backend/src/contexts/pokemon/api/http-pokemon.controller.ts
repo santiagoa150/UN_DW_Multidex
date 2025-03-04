@@ -14,7 +14,7 @@ import { CreatePokemonRequest } from './requests/create-pokemon.request';
 import { UpdatePokemonRequest } from './requests/update-pokemon.request';
 import { GetUserAuthData } from '../../user/infrastructure/nestjs/guards/get-user-auth-data.decorattor';
 import { UserAuthData } from '../../user/domain/user-auth-data';
-import { CreatePokemonCommand } from '../applications/create/create-pokemon.command';
+import { CreatePokemonCommand } from '../applications/create/pokemon/create-pokemon.command';
 import { UpdatePokemonCommand } from '../applications/update/update-pokemon.command';
 
 /**

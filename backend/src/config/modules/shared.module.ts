@@ -34,7 +34,7 @@ const PROVIDERS: Provider[] = [Logger, JwtTokenRepository];
             username: process.env.POSTGRES_USER,
             password: process.env.POSTGRES_PASSWORD,
             database: process.env.POSTGRES_DB,
-            schema: process.env.POSTGRES_SCHEMA,
+            schema: 'core',
             autoLoadModels: true,
             synchronize: true,
             logging: Number(process.env.POSTGRES_SHOW_LOGS)
