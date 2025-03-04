@@ -11,6 +11,8 @@ export type UniverseType = {
     entityColor: string;
     allowDetail: boolean;
     detailPath?: string;
+    createPath: string;
+    editPath: string;
     editColor: string;
     boxEditColor: string;
     indexEdit: string;

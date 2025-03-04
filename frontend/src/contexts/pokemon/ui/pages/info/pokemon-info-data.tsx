@@ -1,7 +1,7 @@
-import Stats from '../images/Stats.png';
-import Info from '../images/Info.png';
-import Creator from '../images/Creator.png';
-import Moves from '../images/Moves.png';
+import Stats from '../../images/Stats.png';
+import Info from '../../images/Info.png';
+import Creator from '../../images/Creator.png';
+import Moves from '../../images/Moves.png';
 import { Pokemon } from '../../../domain/pokemon';
 import { PokemonMovement } from '../../../domain/pokemon-movement';
 import { UniverseType } from '../../../../universe/domain/universe-type.ts';

@@ -6,6 +6,14 @@ import { UniverseTypeNameConstants } from '../constants/universe-type-name.const
  */
 export interface UniverseRepository {
     /**
+     * Create a new universe entity.
+     * @param token - The token to authenticate the request.
+     * @param id - The ID of the universe entity to create.
+     * @param type - The type of the universe entity to create.
+     */
+    deleteUniverseEntity(token: string, id: number, type: UniverseTypeNameConstants): Promise<void>;
+
+    /**
      * Get a universe entity by its ID.
      * @param id - The ID of the universe entity to retrieve.
      * @param type - The type of the universe entity to retrieve.

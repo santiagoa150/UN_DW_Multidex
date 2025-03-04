@@ -4,11 +4,14 @@ import { EnvironmentConstants } from '../contexts/shared/domain/constants/enviro
 import { RoutesConstants } from '../contexts/shared/domain/constants/routes.constants.ts';
 import UniverseInfoPage from '../contexts/universe/ui/pages/info/universe-info.page.tsx';
 import UniverseListPage from '../contexts/universe/ui/pages/list/universe-list.page.tsx';
-import EditUniverseEntityPage from '../contexts/universe/ui/pages/edit-entity/edit-universe-entity.page.tsx';
 import PokemonInfoPage from '../contexts/pokemon/ui/pages/info/pokemon-info.page.tsx';
 import LoginPage from '../contexts/shared/ui/pages/login/login.page.tsx';
 import SignupPage from '../contexts/shared/ui/pages/signup/signup.page.tsx';
 import HomePage from '../contexts/shared/ui/pages/home/home.page.tsx';
+import CreatePokemonPage from '../contexts/pokemon/ui/pages/create/create-pokemon.page.tsx';
+import CreateRickAndMortyCharacterPage from '../contexts/r&m/ui/pages/create/create-rick-and-morty-character.page.tsx';
+import EditRickAndMortyCharacterPage from '../contexts/r&m/ui/pages/edit/edit-rick-and-morty-character.page.tsx';
+import EditPokemonPage from '../contexts/pokemon/ui/pages/edit/edit-pokemon.page.tsx';
 
 /**
  * Routes component that defines the routes of the application.
@@ -28,12 +31,24 @@ export default function Routes(props: { children: ReactNode }): JSX.Element {
                     element: <UniverseInfoPage />,
                 },
                 {
-                    path: RoutesConstants.UNIVERSE_EDIT,
-                    element: <EditUniverseEntityPage />,
-                },
-                {
                     path: RoutesConstants.POKEMON_INFO,
                     element: <PokemonInfoPage />,
+                },
+                {
+                    path: RoutesConstants.POKEMON_CREATE,
+                    element: <CreatePokemonPage />,
+                },
+                {
+                    path: RoutesConstants.POKEMON_EDIT,
+                    element: <EditPokemonPage />,
+                },
+                {
+                    path: RoutesConstants.RICK_AND_MORTY_CREATE,
+                    element: <CreateRickAndMortyCharacterPage />,
+                },
+                {
+                    path: RoutesConstants.RICK_AND_MORTY_EDIT,
+                    element: <EditRickAndMortyCharacterPage />,
                 },
                 {
                     path: RoutesConstants.LOGIN_PAGE,

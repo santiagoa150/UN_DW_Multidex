@@ -38,9 +38,12 @@ export default function ListEntity({ universeEntity, onClick }: ListEntityProps)
 
             {/* Información del Pokémon */}
             <div className="p-4 text-left sm:ml-5">
-                <h1 className="text-xl sm:text-xl  font-bold ">{universeEntity.name}</h1>
+                <h1 className="text-xl sm:text-xl  font-bold ">
+                    {universeEntity.name.charAt(0).toUpperCase() + universeEntity.name.slice(1)}
+                </h1>
                 <p>
-                    <strong>Tipo:</strong> {universeEntity.entityTypes.join('/')}
+                    <strong>Tipo:</strong>{' '}
+                    {universeEntity.entityTypes.map((s) => s.charAt(0).toUpperCase() + s.slice(1)).join('/')}
                 </p>
                 {universeEntity.location && (
                     <p>

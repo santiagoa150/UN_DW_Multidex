@@ -14,6 +14,29 @@ import {
  */
 export class BackendUniverseRepository implements UniverseRepository {
     /**
+     * Create a new universe entity.
+     * @param token - The token of the user creating the universe entity.
+     * @param id - The ID of the universe entity to create.
+     * @param type - The type of the universe entity to create.
+     */
+    async deleteUniverseEntity(token: string, id: number, type: UniverseTypeNameConstants): Promise<void> {
+        try {
+            await axios.delete(BackendUniverseConstants.DELETE_UNIVERSE_ENTITY_URI, {
+                baseURL: import.meta.env.VITE_BACKEND_BASE_URL,
+                params: {
+                    id,
+                    universeType: type,
+                },
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    /**
      * Retrieves a universe entity by its ID from the backend.
      * @param id - The ID of the universe entity to retrieve.
      * @param type - The type of the universe entity to retrieve.
@@ -59,6 +82,14 @@ export class BackendUniverseRepository implements UniverseRepository {
         return mapped;
     }
 
+    /**
+     * Retrieves a universe entity by its type from the backend.
+     * @param type - The type of the universe entity to retrieve.
+     * @param page - The page of the universe entity to retrieve.
+     * @param limit - The limit of the universe entity to retrieve.
+     * @param nameFilter - The name filter of the universe entity to retrieve.
+     * @returns The universe entity with the specified ID, or `undefined` if no entity was found.
+     */
     async getUniverseEntityByType(
         type: UniverseTypeNameConstants,
         page: number,
