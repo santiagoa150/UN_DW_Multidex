@@ -1,7 +1,6 @@
 import { JSX, useEffect, useState } from 'react';
 import { PokemonInfoTitle } from './pokemon-info-title.tsx';
 import { PokemonInfoData } from './pokemon-info-data.tsx';
-import { UniverseTypeNameToPropertiesConstants } from '../../../../universe/domain/constants/universe-type-name-to-properties.constants';
 import { PokemonInfoEvolution } from './pokemon-info-evolution.tsx';
 import { useNavigate, useParams } from 'react-router-dom';
 import { RoutesConstants } from '../../../../shared/domain/constants/routes.constants.ts';
@@ -21,11 +20,11 @@ export default function PokemonInfoPage(): JSX.Element {
      * Get the universe entity by id and type.
      */
     useEffect(() => {
-        setPokemonLoaded(false); 
-        if (universeType) { 
+        setPokemonLoaded(false);
+        if (universeType) {
             getPokemonDetailByIdApplication
                 .exec(Number(id))
-                .then((res) => {  
+                .then((res) => {
                     setPokemon(res);
                     setPokemonLoaded(true);
                     window.scroll(0, 0);
@@ -33,22 +32,25 @@ export default function PokemonInfoPage(): JSX.Element {
                 .catch(() => navigate(RoutesConstants.HOME));
         }
     }, [id, universeType, navigate]);
-    
-    
+
     if (universeType && pokemon) {
         return (
-            <main
-                className="w-full min-h-screen "
-                style={{ backgroundColor: UniverseTypeNameToPropertiesConstants.POKEMON.tertiaryColor }}
-            >
-                <PokemonInfoTitle pokemon={pokemon.pokemon} />
+            <main className="w-full min-h-screen " style={{ backgroundColor: universeType.tertiaryColor }}>
+                <PokemonInfoTitle pokemon={pokemon.pokemon} universeType={universeType} />
                 <div className="h-4"></div>
-                <PokemonInfoData pokemon={pokemon.pokemon} pokemonMovement={pokemon.movements} />
-                <PokemonInfoEvolution pokemon={pokemon.evolutionChain}/>
+                <PokemonInfoData
+                    universeType={universeType}
+                    pokemon={pokemon.pokemon}
+                    pokemonMovement={pokemon.movements}
+                />
+                <PokemonInfoEvolution
+                    pokemon={pokemon.pokemon}
+                    lineEvolution={pokemon.evolutionChain}
+                    universeType={universeType}
+                />
             </main>
         );
     } else if (!pokemon && !pokemonLoaded) {
-        /* TODO: Add Loader. */
         return <div>Loader Here</div>;
     } else {
         return <>{navigate(RoutesConstants.HOME)}</>;

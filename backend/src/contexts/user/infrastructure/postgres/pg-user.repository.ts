@@ -39,4 +39,17 @@ export class PgUserRepository implements UserRepository {
         this._logger.log(`[${this.getByEmail.name}] FINISH ::`);
         return mapped;
     }
+
+    /**
+     * Get user by id.
+     * @param userId - The user id to search for.
+     * @returns The user if found, otherwise undefined.
+     */
+    async getById(userId: string): Promise<User | undefined> {
+        this._logger.log(`[${this.getById.name}] INIT :: userId: ${userId}`);
+        const found: PgUserModel = await this.pgUserModel.findOne({ where: { userId: userId } });
+        const mapped: User | undefined = found ? UserMappers.DTO2User(found) : undefined;
+        this._logger.log(`[${this.getById.name}] FINISH ::`);
+        return mapped;
+    }
 }

@@ -17,4 +17,5 @@ export type UniverseEntity = {
     location?: string;
     origin?: string;
     creator?: string;
+    creatorId?: string;
 };

@@ -6,4 +6,5 @@ export enum HttpUserConstants {
     API_TAG = 'User Operations',
     LOGIN_URI = 'login',
     SIGN_UP_URI = 'sign-up',
+    GET_USER_URI = 'id',
 }

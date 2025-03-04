@@ -35,6 +35,8 @@ export class BackendPokemonRepository implements PokemonRepository {
             specialAttack: pokemon.specialAttack,
             specialDefense: pokemon.specialDefense,
             speed: pokemon.speed,
+            creatorName: pokemon.creatorName,
+            creatorId: pokemon.creatorId,
         });
 
         try {

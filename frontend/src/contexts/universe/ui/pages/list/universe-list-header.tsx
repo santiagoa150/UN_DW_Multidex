@@ -2,11 +2,12 @@ import { JSX } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RoutesConstants } from '../../../../shared/domain/constants/routes.constants.ts';
 import { useUniverse } from '../../../../../config/universe/use-universe.hook.ts';
+import { SharedStorageConstants } from '../../../../shared/domain/constants/shared-storage.constants.ts';
 
 export default function UniverseListHeader(): JSX.Element {
     const { universeType, toggleUniverse } = useUniverse();
     const navigate = useNavigate();
-    const token = localStorage.getItem("authToken");
+    const token = localStorage.getItem(SharedStorageConstants.AUTH_TOKEN);
 
     return (
         <div
@@ -27,7 +28,11 @@ export default function UniverseListHeader(): JSX.Element {
                     className="relative group bg-transparent hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer"
                     onClick={() => navigate(RoutesConstants.HOME)}
                 >
-                    <img src={universeType?.logo_4} alt="home" className="w-[25px] sm:w-[30px] h-auto object-contain max-[370px]:w-[20px]" />
+                    <img
+                        src={universeType?.logo_4}
+                        alt="home"
+                        className="w-[25px] sm:w-[30px] h-auto object-contain max-[370px]:w-[20px]"
+                    />
 
                     {/* Tooltip */}
                     <div className="absolute right-0 bottom-full mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/20 text-white text-xs rounded py-1 px-2 pointer-events-none whitespace-nowrap">
@@ -52,12 +57,12 @@ export default function UniverseListHeader(): JSX.Element {
                 >
                     ¡A viajar!
                 </button>
-                
+
                 {token && (
                     <div className="relative group">
                         <button
                             onClick={() => {
-                                localStorage.removeItem("authToken"); 
+                                localStorage.removeItem(SharedStorageConstants.AUTH_TOKEN);
                                 navigate(RoutesConstants.HOME);
                             }}
                             className="transition-transform duration-300 hover:scale-110 focus:outline-none flex items-center justify-center"

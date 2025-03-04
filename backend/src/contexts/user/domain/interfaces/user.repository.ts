@@ -12,8 +12,15 @@ export interface UserRepository {
 
     /**
      * Get user by email.
-     * @param email The email to search for.
+     * @param email - The email to search for.
      * @returns The user if found, otherwise undefined.
      */
     getByEmail(email: string): Promise<User | undefined>;
+
+    /**
+     * Get user by id.
+     * @param userId - The user id to search for.
+     * @returns The user if found, otherwise undefined.
+     */
+    getById(userId: string): Promise<User | undefined>;
 }
