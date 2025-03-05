@@ -96,8 +96,6 @@ export default function EditPokemonPage(): JSX.Element {
             const type1 =
                 entityType1 && entityType1 !== '0' ? Number(entityType1) : pokemonTypes[pokemon.pokemon.entityTypes[0]];
             const types = [type1];
-            console.log(entityType2);
-            console.log(pokemon.pokemon.entityTypes[1]);
             if ((entityType2 && entityType2 !== '0') || pokemon.pokemon.entityTypes[1]) {
                 const type2 =
                     entityType2 && entityType2 !== '0'
@@ -122,7 +120,7 @@ export default function EditPokemonPage(): JSX.Element {
                     movements,
                     types,
                 )
-                .then(() => navigate(RoutesConstants.UNIVERSE_LIST));
+                .then(() => navigate(RoutesConstants.UNIVERSE_INFO.replace(':id', String(pokemon.pokemon.id))));
         }
     };
 
@@ -151,6 +149,7 @@ export default function EditPokemonPage(): JSX.Element {
                                     setIsImageLoaded(false);
                                     setFrontImageUrl(e.target.value);
                                 }}
+                                disabled={!isEditing}
                                 style={{ backgroundColor: universeType?.secondaryColor }}
                                 className="text-lg rounded-lg p-2 border-2 font-semibold border-black w-full max-w-full h-auto min-h-[50px] break-words resize-none overflow-hidden"
                             />
@@ -163,6 +162,7 @@ export default function EditPokemonPage(): JSX.Element {
                                     value={newMovement}
                                     onChange={(e) => setNewMovement(e.target.value)}
                                     style={{ backgroundColor: universeType?.secondaryColor }}
+                                    disabled={!isEditing}
                                     className="text-lg rounded-lg flex font-semibold border-2 h-[50px] w-full max-w-full border-black p-2 resize-none overflow-hidden"
                                 />
                                 <button
@@ -189,6 +189,7 @@ export default function EditPokemonPage(): JSX.Element {
                                         key={i}
                                         className="w-full p-2 text-center cursor-pointer"
                                         onClick={() => {
+                                            if (!isEditing) return;
                                             movements.splice(i, 1);
                                             setMovements([...movements]);
                                         }}
@@ -207,6 +208,7 @@ export default function EditPokemonPage(): JSX.Element {
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                                 style={{ backgroundColor: universeType?.secondaryColor }}
+                                disabled={!isEditing}
                                 className="text-lg rounded-lg flex font-semibold border-2 h-[50px] w-full max-w-full border-black p-2 resize-none overflow-hidden"
                             />
                         </div>
@@ -218,6 +220,7 @@ export default function EditPokemonPage(): JSX.Element {
                                     value={entityType1}
                                     onChange={(e) => setEntityType1(e.target.value)}
                                     style={{ backgroundColor: universeType?.secondaryColor }}
+                                    disabled={!isEditing}
                                     className="text-lg rounded-lg flex font-semibold border-2 h-[50px] w-full max-w-full border-black p-2 resize-none overflow-hidden"
                                 >
                                     <option value="0"></option>
@@ -250,6 +253,7 @@ export default function EditPokemonPage(): JSX.Element {
                                     value={entityType2}
                                     onChange={(e) => setEntityType2(e.target.value)}
                                     style={{ backgroundColor: universeType?.secondaryColor }}
+                                    disabled={!isEditing}
                                     className="text-lg rounded-lg flex font-semibold border-2 h-[50px] w-full max-w-full border-black p-2 resize-none overflow-hidden"
                                 >
                                     <option value="0"></option>
@@ -286,6 +290,7 @@ export default function EditPokemonPage(): JSX.Element {
                                     min={0}
                                     onChange={(e) => setHeight(e.target.value)}
                                     style={{ backgroundColor: universeType?.secondaryColor }}
+                                    disabled={!isEditing}
                                     className="text-lg rounded-lg flex font-semibold border-2 h-[50px] w-full max-w-full border-black p-2 resize-none overflow-hidden"
                                 />
                             </div>
@@ -298,6 +303,7 @@ export default function EditPokemonPage(): JSX.Element {
                                     min={0}
                                     onChange={(e) => setWeight(e.target.value)}
                                     style={{ backgroundColor: universeType?.secondaryColor }}
+                                    disabled={!isEditing}
                                     className="text-lg rounded-lg flex font-semibold border-2 h-[50px] w-full max-w-full border-black p-2 resize-none overflow-hidden"
                                 />
                             </div>
@@ -312,6 +318,7 @@ export default function EditPokemonPage(): JSX.Element {
                                     min={0}
                                     onChange={(e) => setHp(e.target.value)}
                                     style={{ backgroundColor: universeType?.secondaryColor }}
+                                    disabled={!isEditing}
                                     className="text-lg rounded-lg flex font-semibold border-2 h-[50px] w-full max-w-full border-black p-2 resize-none overflow-hidden"
                                 />
                             </div>
@@ -324,6 +331,7 @@ export default function EditPokemonPage(): JSX.Element {
                                     min={0}
                                     onChange={(e) => setSpeed(e.target.value)}
                                     style={{ backgroundColor: universeType?.secondaryColor }}
+                                    disabled={!isEditing}
                                     className="text-lg rounded-lg flex font-semibold border-2 h-[50px] w-full max-w-full border-black p-2 resize-none overflow-hidden"
                                 />
                             </div>
@@ -338,6 +346,7 @@ export default function EditPokemonPage(): JSX.Element {
                                     min={0}
                                     onChange={(e) => setAttack(e.target.value)}
                                     style={{ backgroundColor: universeType?.secondaryColor }}
+                                    disabled={!isEditing}
                                     className="text-lg rounded-lg flex font-semibold border-2 h-[50px] w-full max-w-full border-black p-2 resize-none overflow-hidden"
                                 />
                             </div>
@@ -350,6 +359,7 @@ export default function EditPokemonPage(): JSX.Element {
                                     min={0}
                                     onChange={(e) => setDefense(e.target.value)}
                                     style={{ backgroundColor: universeType?.secondaryColor }}
+                                    disabled={!isEditing}
                                     className="text-lg rounded-lg flex font-semibold border-2 h-[50px] w-full max-w-full border-black p-2 resize-none overflow-hidden"
                                 />
                             </div>
@@ -364,6 +374,7 @@ export default function EditPokemonPage(): JSX.Element {
                                     min={0}
                                     onChange={(e) => setSpecialAttack(e.target.value)}
                                     style={{ backgroundColor: universeType?.secondaryColor }}
+                                    disabled={!isEditing}
                                     className="text-lg rounded-lg flex font-semibold border-2 h-[50px] w-full max-w-full border-black p-2 resize-none overflow-hidden"
                                 />
                             </div>
@@ -376,6 +387,7 @@ export default function EditPokemonPage(): JSX.Element {
                                     min={0}
                                     onChange={(e) => setSpecialDefense(e.target.value)}
                                     style={{ backgroundColor: universeType?.secondaryColor }}
+                                    disabled={!isEditing}
                                     className="text-lg rounded-lg flex font-semibold border-2 h-[50px] w-full max-w-full border-black p-2 resize-none overflow-hidden"
                                 />
                             </div>
@@ -387,6 +399,7 @@ export default function EditPokemonPage(): JSX.Element {
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
                                 style={{ backgroundColor: universeType?.secondaryColor }}
+                                disabled={!isEditing}
                                 className="text-lg rounded-lg p-2 border-2 font-semibold border-black w-full max-w-full h-auto min-h-[50px] break-words resize-none overflow-hidden"
                             />
                         </div>
