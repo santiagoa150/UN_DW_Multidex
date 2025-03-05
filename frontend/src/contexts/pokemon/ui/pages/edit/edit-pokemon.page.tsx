@@ -96,8 +96,6 @@ export default function EditPokemonPage(): JSX.Element {
             const type1 =
                 entityType1 && entityType1 !== '0' ? Number(entityType1) : pokemonTypes[pokemon.pokemon.entityTypes[0]];
             const types = [type1];
-            console.log(entityType2);
-            console.log(pokemon.pokemon.entityTypes[1]);
             if ((entityType2 && entityType2 !== '0') || pokemon.pokemon.entityTypes[1]) {
                 const type2 =
                     entityType2 && entityType2 !== '0'
@@ -122,7 +120,7 @@ export default function EditPokemonPage(): JSX.Element {
                     movements,
                     types,
                 )
-                .then(() => navigate(RoutesConstants.UNIVERSE_LIST));
+                .then(() => navigate(RoutesConstants.UNIVERSE_INFO.replace(':id', String(pokemon.pokemon.id))));
         }
     };
 
