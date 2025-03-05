@@ -7,9 +7,7 @@ export class SignupApplication {
     /**
      * @param _repository - The user repository.
      */
-    constructor(
-        private readonly _repository: UserRepository,
-    ) {}
+    constructor(private readonly _repository: UserRepository) {}
 
     /**
      * Executes the application.

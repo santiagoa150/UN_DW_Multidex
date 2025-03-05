@@ -10,7 +10,6 @@ export interface UserRepository {
      */
     login(email: string, password: string): Promise<string | undefined>;
 
-
     /**
      * Service to signup a new user.
      * @param email - The new user email.
@@ -20,5 +19,5 @@ export interface UserRepository {
      * @param password - The new user password.
      * @returns .
      */
-    signup(email: string, names: string, username: string, lastNames: string, password: string): Promise<boolean>
+    signup(email: string, names: string, username: string, lastNames: string, password: string): Promise<boolean>;
 }

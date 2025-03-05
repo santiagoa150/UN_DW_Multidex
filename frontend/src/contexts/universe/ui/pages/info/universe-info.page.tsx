@@ -24,9 +24,13 @@ export default function UniverseInfoPage(): JSX.Element {
 
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-    const tokenData: {
-        userId: string;
-    } = JSON.parse(atob(localStorage.getItem(SharedStorageConstants.AUTH_TOKEN)?.split('.')[1] || '{}'));
+    const tokenData:
+        | {
+              userId: string;
+          }
+        | undefined = localStorage.getItem(SharedStorageConstants.AUTH_TOKEN)
+        ? JSON.parse(atob(localStorage.getItem(SharedStorageConstants.AUTH_TOKEN)?.split('.')[1] || '{}'))
+        : undefined;
 
     /**
      * Load the universe entity when the component is mounted.
@@ -166,7 +170,7 @@ export default function UniverseInfoPage(): JSX.Element {
                                 </div>
                             </div>
                             <div className="w-full h-1/6 flex items-center justify-end gap-x-10">
-                                {tokenData.userId && tokenData.userId == universeEntity.creatorId && (
+                                {tokenData && tokenData.userId && tokenData.userId == universeEntity.creatorId && (
                                     <>
                                         <HiPencil
                                             className="cursor-pointer"

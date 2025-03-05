@@ -24,7 +24,9 @@ export default function HomePage(): JSX.Element {
         <div>
             {!isAuthenticated && (
                 <div className="flex flex-col md:flex-row justify-between items-center p-[1%]">
-                    <h1 className="text-5xl sm:text-4xl md:text-5xl font-[Mansalva] text-center md:text-left">Multipokedex</h1>
+                    <h1 className="text-5xl sm:text-4xl md:text-5xl font-[Mansalva] text-center md:text-left">
+                        Multipokedex
+                    </h1>
                     <div className="flex flex-col md:flex-row justify-center md:justify-end w-full md:w-1/2 mt-4 md:mt-0">
                         <button
                             className="font-[Karla] text-lg sm:text-xl md:text-2xl font-semibold rounded-lg md:rounded-xl w-full md:w-60 bg-[#FEEAEA] border-2 border-black p-2"
@@ -70,7 +72,9 @@ export default function HomePage(): JSX.Element {
                 </div>
             )}
             <div className="relative md:absolute bottom-0 flex w-full justify-center md:justify-end">
-                <a href="https://github.com/santiagoa150/UN_DW_Multidex" target="_blank" className="mx-[1%]"><i className="fa fa-github text-[80px] "></i></a>
+                <a href="https://github.com/santiagoa150/UN_DW_Multidex" target="_blank" className="mx-[1%]">
+                    <i className="fa fa-github text-[80px] "></i>
+                </a>
             </div>
         </div>
     );

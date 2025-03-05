@@ -39,7 +39,13 @@ export class BackendUserRepository implements UserRepository {
      * @param password - The new user password.
      * @returns `true` if the user was signed up successfully, `false` otherwise.
      */
-    async signup(email: string, names: string, username: string, lastNames: string, password: string): Promise<boolean> {
+    async signup(
+        email: string,
+        names: string,
+        username: string,
+        lastNames: string,
+        password: string,
+    ): Promise<boolean> {
         try {
             await axios.post(
                 BackendUserConstants.POST_SIGNUP_OPERATION,
@@ -50,7 +56,7 @@ export class BackendUserRepository implements UserRepository {
                     email,
                     password,
                 },
-                { baseURL: import.meta.env.VITE_BACKEND_BASE_URL }
+                { baseURL: import.meta.env.VITE_BACKEND_BASE_URL },
             );
             return true; // Signup successful
         } catch {
