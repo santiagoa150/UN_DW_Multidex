@@ -8,6 +8,7 @@ import { GetPokemonDetailByIdApplication } from '../contexts/pokemon/application
 import { GetUniverseEntityByTypeApplication } from '../contexts/universe/applications/get/by-type/get-universe-entity-by-type.application.ts';
 import { BackendUserRepository } from '../contexts/shared/infrastructure/backend/backend-user.repository.ts';
 import { LoginApplication } from '../contexts/shared/applications/login/login.application.ts';
+import { SignupApplication } from '../contexts/shared/applications/signup/signup.application.ts';
 import { DeleteUniverseEntityApplication } from '../contexts/universe/applications/delete/delete-universe-entity.application.ts';
 import { BackendRickAndMortyRepository } from '../contexts/r&m/infrastructure/backend/backend-rick-and-morty.repository.ts';
 import { CreateRickAndMortyCharacterApplication } from '../contexts/r&m/applications/create/create-rick-and-morty-character.application.ts';
@@ -32,6 +33,7 @@ const localStorageRepository = new LocalStorageRepository();
  * These are the public dependencies of the application.
  */
 export const loginApplication = new LoginApplication(backendUserRepository, localStorageRepository);
+export const registerApplication = new SignupApplication(backendUserRepository);
 export const setCurrentUniverseApplication = new SetCurrentUniverseTypeApplication(localStorageRepository);
 export const getCurrentUniverseApplication = new GetCurrentUniverseTypeApplication(
     localStorageRepository,

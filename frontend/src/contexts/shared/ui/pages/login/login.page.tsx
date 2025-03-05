@@ -40,26 +40,26 @@ export default function LoginPage(): JSX.Element {
 
     return (
         <div
-            className="w-full flex flex-col justify-center items-center"
+            className="w-full flex flex-col justify-center items-center min-h-screen bg-cover bg-center p-4"
             style={{ background: `url(${Background}) no-repeat center`, backgroundSize: 'cover' }}
         >
-            <div className="w-[24%] flex flex-col justify-center items-center border border-[#FFFFFF] bg-[rgba(255,255,255,0.4)]   rounded-[24px] py-[8%] pb-[2%]">
-                <div className="mx-[5%] flex flex-row items-center mb-[10%]">
-                    <i className="fa fa-user text-[40px] mr-[6%]"></i>
+            <div className="w-full sm:w-3/5 md:w-2/5 lg:w-1/3 xl:w-1/4 flex flex-col justify-center items-center border border-white bg-[rgba(255,255,255,0.4)] rounded-2xl py-8 sm:py-10 px-6">
+                <div className="w-full flex items-center mb-6">
+                    <i className="fa fa-user text-3xl sm:text-4xl mr-[7%]"></i>
                     <input
                         type="email"
-                        className="w-full rounded-[20px] text-[24px] pl-[10%] bg-[#FFF4CE] border border-black"
+                        className="w-full rounded-[20px] text-lg sm:text-xl p-3 bg-[#FFF4CE] border border-black"
                         name="email"
                         placeholder="Email"
                         value={loginData.email}
                         onChange={handleChange}
                     />
                 </div>
-                <div className="mx-[5%] flex flex-row items-center mb-[10%]">
-                    <i className="fa fa-id-card-o text-[40px] mr-[3%]"></i>
+                <div className="w-full flex items-center mb-6">
+                    <i className="fa fa-id-card-o text-3xl sm:text-4xl mr-[3%]"></i>
                     <input
                         type="password"
-                        className="w-full rounded-[20px] text-[24px] pl-[10%] bg-[#FFF4CE] border border-black"
+                        className="w-full rounded-[20px] text-lg sm:text-xl p-3 bg-[#FFF4CE] border border-black"
                         name="password"
                         placeholder="Contraseña"
                         value={loginData.password}
@@ -67,11 +67,11 @@ export default function LoginPage(): JSX.Element {
                     />
                 </div>
 
-                {error && <p className="text-red-600 text-[18px]">{error}</p>}
+                {error && <p className="text-red-600 text-sm sm:text-base">{error}</p>}
 
-                <div className="flex flex-col items-center font-[Karla] text-[24px]">
+                <div className="flex flex-col items-center font-[Karla] text-lg sm:text-xl w-full">
                     <button
-                        className="my-[10%] font-bold font-[Karla] text-[24px] ml-[2%] w-[240px] bg-[#8E6995]"
+                        className="my-6 font-bold w-full sm:w-60 bg-[#8E6995] rounded-xl p-3 cursor-pointer"
                         onClick={handleLogin}
                     >
                         Iniciar Sesión
